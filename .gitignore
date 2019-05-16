@@ -1,0 +1,6 @@
+# Ignore build output directory
+build
+bin
+
+# Ignore Ant properties file
+ant/environment.properties
