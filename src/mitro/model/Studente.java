@@ -1,5 +1,7 @@
 package mitro.model;
 
+import java.util.Objects;
+
 public class Studente extends Iscritto {
 
 	private Classe classe;
@@ -36,7 +38,7 @@ public class Studente extends Iscritto {
 		if(o instanceof Studente) {
 			Studente that = (Studente) o;
 			return super.equals(that)
-					&& this.getClasse().equals(that.getClasse());
+					&& Objects.equals(this.getClasse(), that.getClasse());
 		}
 		return false;
 	}

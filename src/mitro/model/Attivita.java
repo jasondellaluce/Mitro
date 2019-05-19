@@ -1,6 +1,7 @@
 package mitro.model;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 public class Attivita {
 
@@ -73,12 +74,12 @@ public class Attivita {
 	public boolean equals(Object o) {
 		if(o instanceof Attivita) {
 			Attivita that = (Attivita) o;
-			return this.getProfessore().equals(that.getProfessore())
-					&& this.getData().equals(that.getData())
+			return Objects.equals(getProfessore(), that.getProfessore())
+					&& Objects.equals(this.getData(), that.getData())
 					&& this.getOraInizio() == that.getOraInizio()
-					&& this.getMateria().equals(that.getMateria())
-					&& this.getAnnotazione().equals(that.getAnnotazione())
-					&& this.getClasse().equals(that.getClasse());
+					&& Objects.equals(this.getMateria(), that.getMateria())
+					&& Objects.equals(this.getAnnotazione(), that.getAnnotazione())
+					&& Objects.equals(this.getClasse(), that.getClasse());
 		}
 		return false;
 	}

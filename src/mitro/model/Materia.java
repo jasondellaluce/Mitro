@@ -1,5 +1,7 @@
 package mitro.model;
 
+import java.util.Objects;
+
 public class Materia {
 
 	private String id;
@@ -43,9 +45,9 @@ public class Materia {
 	public boolean equals(Object o) {
 		if(o instanceof Materia) {
 			Materia that = (Materia) o;
-			return getId().equals(that.getId())
-					&& this.getNome().equals(that.getNome())
-					&& this.getDescrizione().equals(that.getDescrizione());
+			return Objects.equals(this.getId(), that.getId())
+					&& Objects.equals(this.getNome(), that.getNome())
+					&& Objects.equals(this.getDescrizione(), that.getDescrizione());
 		}
 		return false;
 	}

@@ -1,5 +1,7 @@
 package mitro.model;
 
+import java.util.Objects;
+
 public abstract class Archiviazione {
 
 	private Studente studente;
@@ -29,8 +31,8 @@ public abstract class Archiviazione {
 	public boolean equals(Object o) {
 		if(o instanceof Archiviazione) {
 			Archiviazione that = (Archiviazione) o;
-			return this.getStudente().equals(that.getStudente())
-					&& this.getAttivita().equals(that.getAttivita());
+			return Objects.equals(getStudente(), that.getStudente())
+					&& Objects.equals(this.getAttivita(), that.getAttivita());
 		}
 		return false;
 	}

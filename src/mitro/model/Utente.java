@@ -1,5 +1,7 @@
 package mitro.model;
 
+import java.util.Objects;
+
 public class Utente {
 
 	private String id;
@@ -34,8 +36,8 @@ public class Utente {
 	public boolean equals(Object o) {
 		if(o instanceof Utente) {
 			Utente that = (Utente) o;
-			return getId().equals(that.getId())
-					&& this.getRuolo().equals(that.getRuolo());
+			return Objects.equals(this.getId(), that.getId())
+					&& Objects.equals(this.getRuolo(), that.getRuolo());
 		}
 		return false;
 	}

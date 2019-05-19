@@ -1,6 +1,7 @@
 package mitro.model;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 public class Comunicazione {
 
@@ -54,10 +55,10 @@ public class Comunicazione {
 	public boolean equals(Object o) {
 		if(o instanceof Comunicazione) {
 			Comunicazione that = (Comunicazione) o;
-			return this.getDestinatario().equals(that.getDestinatario())
-					&& this.getDataOra().equals(that.getDataOra())
-					&& this.getOggetto().equals(that.getOggetto())
-					&& this.getContenuto().equals(that.getContenuto());
+			return Objects.equals(this.getDestinatario(), that.getDestinatario())
+					&& Objects.equals(this.getDataOra(), that.getDataOra())
+					&& Objects.equals(this.getOggetto(), that.getOggetto())
+					&& Objects.equals(this.getContenuto(), that.getContenuto());
 		}
 		return false;
 	}

@@ -1,6 +1,7 @@
 package mitro.model;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 public abstract class Iscritto extends Utente {
 
@@ -68,12 +69,12 @@ public abstract class Iscritto extends Utente {
 		if(o instanceof Iscritto) {
 			Iscritto that = (Iscritto) o;
 			return super.equals(that)
-					&& this.getNome().equals(that.getNome())
-					&& this.getCognome().equals(that.getCognome())
-					&& this.getEmail().equals(that.getEmail())
-					&& this.getIndirizzoResidenza().equals(that.getIndirizzoResidenza())
-					&& this.getTelefono().equals(that.getTelefono())
-					&& this.getDataNascita().equals(that.getDataNascita());
+					&& Objects.equals(this.getNome(), that.getNome())
+					&& Objects.equals(this.getCognome(), that.getCognome())
+					&& Objects.equals(this.getEmail(), that.getEmail())
+					&& Objects.equals(this.getIndirizzoResidenza(), that.getIndirizzoResidenza())
+					&& Objects.equals(this.getTelefono(), that.getTelefono())
+					&& Objects.equals(this.getDataNascita(), that.getDataNascita());
 		}
 		return false;
 	}
