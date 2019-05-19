@@ -1,5 +1,6 @@
-package mitro.view.log;
+package mitro.controller.log;
 
+import java.io.IOException;
 import java.io.Writer;
 
 public class WriterLoggerOperazioni implements LoggerOperazioni {
@@ -12,7 +13,12 @@ public class WriterLoggerOperazioni implements LoggerOperazioni {
 	
 	@Override
 	public void scrivi(String operazione) {
-		
+		try {
+			writer.write(operazione + "\n");
+		}
+		catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 }

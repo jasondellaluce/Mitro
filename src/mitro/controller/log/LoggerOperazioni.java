@@ -1,4 +1,4 @@
-package mitro.view.log;
+package mitro.controller.log;
 
 public interface LoggerOperazioni {
 

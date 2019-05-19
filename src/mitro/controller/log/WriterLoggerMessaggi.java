@@ -1,5 +1,6 @@
-package mitro.view.log;
+package mitro.controller.log;
 
+import java.io.IOException;
 import java.io.Writer;
 
 public class WriterLoggerMessaggi implements LoggerMessaggi {
@@ -12,7 +13,12 @@ public class WriterLoggerMessaggi implements LoggerMessaggi {
 	
 	@Override
 	public void scrivi(String messaggio) {
-		
+		try {
+			writer.write(messaggio + "\n");
+		}
+		catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 }

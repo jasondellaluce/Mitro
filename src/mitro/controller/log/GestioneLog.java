@@ -1,4 +1,4 @@
-package mitro.view.log;
+package mitro.controller.log;
 
 import java.time.LocalDateTime;
 import java.util.List;
