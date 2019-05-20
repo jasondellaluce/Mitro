@@ -1,4 +1,4 @@
-package mitro.persistenza.mock;
+package mitro.persistenza.collection;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,13 +6,13 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import mitro.exceptions.PersistenzaException;
 import mitro.model.Archiviazione;
 import mitro.model.Attivita;
 import mitro.model.Classe;
 import mitro.model.Professore;
 import mitro.model.Studente;
 import mitro.persistenza.DAOArchiviazione;
-import mitro.persistenza.PersistenzaException;
 
 public class CollectionDAOArchiviazione implements DAOArchiviazione {
 

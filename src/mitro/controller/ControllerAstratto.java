@@ -13,6 +13,9 @@ public abstract class ControllerAstratto {
 		this.logger = logger;
 	}
 	
+	/**
+	 * Scrive un'operazione richiesta da un utente autenticato
+	 * */
 	protected void eseguiLogOperazione(Utente utente, String operazione) {
 		String voce = LocalDateTime.now() + ", "
 				+ utente.getId() + ", "
@@ -21,6 +24,9 @@ public abstract class ControllerAstratto {
 		logger.scrivi(voce);
 	}
 	
+	/**
+	 * Scrive un'operazione richiesta da un utente non autenticato
+	 * */
 	protected void eseguiLogOperazione(String operazione) {
 		String voce = LocalDateTime.now() + ", "
 				+ "NOID, "

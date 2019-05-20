@@ -1,4 +1,4 @@
-package mitro.persistenza.mock;
+package mitro.persistenza.collection;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -7,10 +7,10 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import mitro.exceptions.PersistenzaException;
 import mitro.model.Comunicazione;
 import mitro.model.Iscritto;
 import mitro.persistenza.DAOComunicazione;
-import mitro.persistenza.PersistenzaException;
 
 public class CollectionDAOComunicazione implements DAOComunicazione {
 

@@ -3,6 +3,7 @@ package mitro.persistenza;
 import java.time.LocalDate;
 import java.util.List;
 
+import mitro.exceptions.PersistenzaException;
 import mitro.model.Comunicazione;
 import mitro.model.Iscritto;
 

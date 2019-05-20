@@ -1,4 +1,4 @@
-package mitro.persistenza;
+package mitro.exceptions;
 
 public class PersistenzaException extends Exception {
 

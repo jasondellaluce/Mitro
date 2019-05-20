@@ -5,7 +5,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
 import mitro.controller.login.Login;
 import mitro.model.Ruolo;
 import mitro.model.Utente;
@@ -22,6 +21,7 @@ public abstract class ViewUtenteAstratta extends ViewAstratta {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) 
 			throws ServletException, IOException {
+		
 		gestisciRichiestaGet(ottieniUtenteAutenticato(req, resp), req, resp);
 	}
 

@@ -2,6 +2,7 @@ package mitro.persistenza;
 
 import java.util.List;
 
+import mitro.exceptions.PersistenzaException;
 import mitro.model.Archiviazione;
 import mitro.model.Attivita;
 import mitro.model.Classe;

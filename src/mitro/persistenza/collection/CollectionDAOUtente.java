@@ -1,4 +1,4 @@
-package mitro.persistenza.mock;
+package mitro.persistenza.collection;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -8,10 +8,10 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import mitro.exceptions.PersistenzaException;
 import mitro.model.Iscritto;
 import mitro.model.Utente;
 import mitro.persistenza.DAOUtente;
-import mitro.persistenza.PersistenzaException;
 
 public class CollectionDAOUtente implements DAOUtente {
 
