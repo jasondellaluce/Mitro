@@ -1,4 +1,4 @@
-package mitro.controller;
+package mitro.exceptions;
 
 public class OperationException extends Exception {
 

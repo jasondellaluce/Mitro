@@ -1,7 +1,9 @@
-package mitro.controller.log;
+package mitro.controller.log.fileimpl;
 
 import java.io.IOException;
 import java.io.Writer;
+
+import mitro.controller.log.LoggerMessaggi;
 
 public class WriterLoggerMessaggi implements LoggerMessaggi {
 

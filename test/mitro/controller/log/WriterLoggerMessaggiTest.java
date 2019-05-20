@@ -6,7 +6,7 @@ import java.io.StringWriter;
 
 import org.junit.jupiter.api.Test;
 
-import mitro.controller.log.WriterLoggerMessaggi;
+import mitro.controller.log.fileimpl.WriterLoggerMessaggi;
 
 class WriterLoggerMessaggiTest {
 

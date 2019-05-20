@@ -3,7 +3,7 @@ package mitro.controller.log;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import mitro.controller.OperationException;
+import mitro.exceptions.OperationException;
 import mitro.model.Log;
 
 public interface GestioneLog {
