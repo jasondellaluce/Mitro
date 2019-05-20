@@ -7,6 +7,11 @@ import org.junit.jupiter.api.Test;
 class StudenteTest {
 
 	@Test
+	public void testJavaBean() {
+		JavaBeanTestHelper.testAccessor(new Studente());
+	}
+	
+	@Test
 	protected void testVincoloRuolo() {
 		Studente oggetto = new Studente();
 		for(Ruolo ruolo : Ruolo.values()) {

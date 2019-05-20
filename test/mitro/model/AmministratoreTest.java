@@ -8,6 +8,11 @@ import org.junit.jupiter.api.Test;
 class AmministratoreTest {
 	
 	@Test
+	public void testJavaBean() {
+		JavaBeanTestHelper.testAccessor(new Amministratore());
+	}
+	
+	@Test
 	public void testVincoloRuolo() {
 		Amministratore oggetto = new Amministratore();
 		for(Ruolo ruolo : Ruolo.values()) {
