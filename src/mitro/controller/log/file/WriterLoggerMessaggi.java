@@ -1,4 +1,4 @@
-package mitro.controller.log.fileimpl;
+package mitro.controller.log.file;
 
 import java.io.IOException;
 import java.io.Writer;

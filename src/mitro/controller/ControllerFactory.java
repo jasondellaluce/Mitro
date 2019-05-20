@@ -1,10 +1,14 @@
 package mitro.controller;
 
+import java.io.OutputStreamWriter;
+
 import mitro.controller.amministratore.AmministrazioneClassi;
 import mitro.controller.amministratore.AmministrazioneIscritti;
 import mitro.controller.log.GestioneLog;
 import mitro.controller.log.LoggerMessaggi;
 import mitro.controller.log.LoggerOperazioni;
+import mitro.controller.log.file.WriterLoggerMessaggi;
+import mitro.controller.log.file.WriterLoggerOperazioni;
 import mitro.controller.login.Login;
 import mitro.controller.professore.GestioneClasse;
 import mitro.controller.professore.GestioneProfessore;
@@ -53,11 +57,11 @@ public class ControllerFactory {
 	}
 	
 	public LoggerOperazioni getLoggerOperazioni() {
-		return null;
+		return new WriterLoggerOperazioni(new OutputStreamWriter(System.out));
 	}
 	
 	public LoggerMessaggi getLoggerMessaggi() {
-		return null;
+		return new WriterLoggerMessaggi(new OutputStreamWriter(System.out));
 	}
 	
 }
