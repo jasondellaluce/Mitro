@@ -4,6 +4,7 @@ import java.util.List;
 
 import mitro.exceptions.PersistenzaException;
 import mitro.model.Iscritto;
+import mitro.model.Ruolo;
 import mitro.model.Utente;
 
 public interface DAOUtente {
@@ -15,6 +16,7 @@ public interface DAOUtente {
 	public Utente ottieniUtentePerId(String id) throws PersistenzaException;
 	public Utente ottieniUtentePerCredenziali(String username, String password) throws PersistenzaException;
 	public List<Utente> ottieniUtenti() throws PersistenzaException;
+	public List<Utente> ottieniUtentiPerRuolo(Ruolo ruolo) throws PersistenzaException;
 	public List<Iscritto> ottieniIscrittiPerNomeOCognome(String filtro) throws PersistenzaException;
-	
+
 }

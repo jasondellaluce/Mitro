@@ -10,6 +10,7 @@ import java.util.stream.Collectors;
 
 import mitro.exceptions.PersistenzaException;
 import mitro.model.Iscritto;
+import mitro.model.Ruolo;
 import mitro.model.Utente;
 import mitro.persistenza.DAOUtente;
 
@@ -86,6 +87,13 @@ public class CollectionDAOUtente implements DAOUtente {
 				.filter(o -> o instanceof Iscritto)
 				.map(o -> (Iscritto) o)
 				.filter(o -> o.getNome().contains(filtro) || o.getCognome().contains(filtro))
+				.collect(Collectors.toList());
+	}
+
+	@Override
+	public List<Utente> ottieniUtentiPerRuolo(Ruolo ruolo) throws PersistenzaException {
+		return lista.stream()
+				.filter(u -> Objects.equals(u.getRuolo(), ruolo))
 				.collect(Collectors.toList());
 	}
 
