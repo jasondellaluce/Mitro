@@ -1,8 +1,8 @@
 package mitro.controller.professore;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import mitro.controller.ControllerAstratto;
 import mitro.controller.log.LoggerOperazioni;
@@ -37,36 +37,42 @@ public class GestioneProfessoreController extends ControllerAstratto implements 
 	}
 
 	@Override
-	public List<Classe> getListaClassi() throws OperazioneException, PersistenzaException {
-		List<Classe> listaClassi = new ArrayList<Classe>();
-		for (Attivita attivita : daoAttivita.ottieniAttivitaPerProfessore(professore)) {
-			if (!listaClassi.contains(attivita.getClasse()))
-				listaClassi.add(attivita.getClasse());
+	public List<Classe> getListaClassi() throws OperazioneException {
+		try {
+			return daoAttivita.ottieniAttivitaPerProfessore(professore).stream()
+					.map(a -> a.getClasse())
+					.distinct()
+					.collect(Collectors.toList());
 		}
-		return listaClassi;
+		catch (PersistenzaException e) {
+			throw new OperazioneException(e);
+		}
 	}
 
 	@Override
-	public List<Attivita> getListaAttivita(LocalDate from, LocalDate to) throws OperazioneException,
-			PersistenzaException {
-		List<Attivita> listaAttivita = new ArrayList<Attivita>();
-		for (Attivita attivita : daoAttivita.ottieniAttivitaPerProfessore(professore)) {
-			if (attivita.getData().isAfter(from) && attivita.getData().isBefore(to))
-				listaAttivita.add(attivita);
+	public List<Attivita> getListaAttivita(LocalDate from, LocalDate to) throws OperazioneException {
+		try {
+			return daoAttivita.ottieniAttivitaPerProfessore(professore).stream()
+					.filter(a -> a.getData().isAfter(from))
+					.filter(a -> a.getData().isBefore(to))
+					.collect(Collectors.toList());
 		}
-		return listaAttivita;
+		catch (PersistenzaException e) {
+			throw new OperazioneException(e);
+		}
 	}
 
 	@Override
-	public List<Comunicazione> getListaComunicazioni(LocalDate from, LocalDate to) throws OperazioneException,
-			PersistenzaException {
-		List<Comunicazione> listaComunicazioni = new ArrayList<Comunicazione>();
-		for (Comunicazione comunicazione : daoComunicazione.ottieniComunicazioniPerDestinatario(professore)) {
-			if (comunicazione.getDataOra().isAfter(from.atStartOfDay())
-					&& comunicazione.getDataOra().isBefore(to.atStartOfDay()))
-				listaComunicazioni.add(comunicazione);
+	public List<Comunicazione> getListaComunicazioni(LocalDate from, LocalDate to) throws OperazioneException {
+		try {
+			return daoComunicazione.ottieniComunicazioniPerDestinatario(professore).stream()
+					.filter(c -> c.getDataOra().isAfter(from.atStartOfDay()))
+					.filter(c -> c.getDataOra().isBefore(to.atStartOfDay()))
+					.collect(Collectors.toList());
 		}
-		return listaComunicazioni;
+		catch (PersistenzaException e) {
+			throw new OperazioneException(e);
+		}
 	}
 	
 }

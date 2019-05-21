@@ -30,7 +30,7 @@ public class GestioneStudenteController extends ControllerAstratto implements Ge
 		this.daoComunicazione = daoComunicazione;
 		this.daoArchiviazione = daoArchiviazione;
 		this.daoAttivita = daoAttivita;
-		this.studente=studente;
+		this.studente = studente;
 	}
 
 	@Override

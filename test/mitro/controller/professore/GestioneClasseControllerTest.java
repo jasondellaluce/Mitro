@@ -21,7 +21,6 @@ public class GestioneClasseControllerTest {
 	private static GestioneClasseController test;
 	private static Classe classe;
 	private static DAOArchiviazione daoArchiviazione;
-	private static DAOUtente daoUtente;
 	private static DAOAttivita daoAttivita;
 	private static LoggerOperazioni logger;
 	
@@ -31,10 +30,9 @@ public class GestioneClasseControllerTest {
 		classe.setId("TestID");
 		classe.setNome("Amir");
 		daoArchiviazione = new CollectionDAOArchiviazione();
-		daoUtente = new CollectionDAOUtente();
 		daoAttivita = new CollectionDAOAttivita();
 		logger = new MockLoggerOperazioni();
-		test = new GestioneClasseController(daoArchiviazione, daoUtente,
+		test = new GestioneClasseController(daoArchiviazione,
 				daoAttivita, logger);
 	}
 	
