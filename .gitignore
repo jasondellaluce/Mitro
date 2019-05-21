@@ -4,3 +4,5 @@ bin
 
 # Ignore Ant properties file
 ant/environment.properties
+
+*.db
