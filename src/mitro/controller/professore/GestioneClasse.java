@@ -15,9 +15,9 @@ public interface GestioneClasse {
 
 	public Classe getClasse() throws OperazioneException;
 	public void inserisciAnnotazione(Attivita attivita, String annotazione) throws OperazioneException;
-	public void inserisciPresenza(Presenza presenza) throws OperazioneException;
-	public void registraVoto(Voto voto) throws OperazioneException;
-	public List<Studente> getListaStudenti() throws OperazioneException;
+	public void inserisciPresenza(Presenza presenza) throws OperazioneException, PersistenzaException;
+	public void registraVoto(Voto voto) throws OperazioneException, PersistenzaException;
+	public List<Studente> getListaStudenti() throws OperazioneException, PersistenzaException;
 	public List<Attivita> getListaAttivita(LocalDate from, LocalDate to) throws OperazioneException, PersistenzaException;
 	public List<Presenza> getListaPresenze(LocalDate from, LocalDate to) throws OperazioneException, PersistenzaException;
 	public List<Voto> getListaVoti(LocalDate from, LocalDate to) throws OperazioneException, PersistenzaException;
