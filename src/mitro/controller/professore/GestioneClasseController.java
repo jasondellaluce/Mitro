@@ -93,7 +93,7 @@ public class GestioneClasseController extends ControllerAstratto implements Gest
 			PersistenzaException {
 		List<Voto> listaVoti = new ArrayList<Voto>();
 		for (Archiviazione archiviazione : daoArchiviazione.ottieniArchiviazioniPerClasse(classe)) {
-			if (archiviazione instanceof Presenza)
+			if (archiviazione instanceof Voto)
 				listaVoti.add((Voto) archiviazione);
 		}
 		return listaVoti;
