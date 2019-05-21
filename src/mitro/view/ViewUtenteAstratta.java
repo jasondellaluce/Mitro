@@ -21,17 +21,15 @@ public abstract class ViewUtenteAstratta extends ViewAstratta {
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) 
-			throws ServletException, IOException {
-		
+			throws ServletException, IOException {		
 		Utente utenteAutenticato;
 		try {
 			utenteAutenticato = ottieniUtenteAutenticato(req, resp);
 			gestisciRichiestaGet(utenteAutenticato, req, resp);
 		}
 		catch (OperazioneException e) {
-			e.printStackTrace();
+			apriErroreSconosciuto(req, resp);
 		}
-		
 	}
 
 	@Override
@@ -44,7 +42,7 @@ public abstract class ViewUtenteAstratta extends ViewAstratta {
 			gestisciRichiestaPost(utenteAutenticato, req, resp);
 		}
 		catch (OperazioneException e) {
-			e.printStackTrace();
+			apriErroreSconosciuto(req, resp);
 		}
 	}
 	
@@ -87,6 +85,12 @@ public abstract class ViewUtenteAstratta extends ViewAstratta {
 	
 	/* Ridirige alla pagina di errore per mancato privilegio */
 	private void apriErrorePrivilegio(HttpServletRequest req, HttpServletResponse resp) 
+			throws IOException {
+		resp.sendRedirect("/");
+	}
+	
+	/* Ridirige alla pagina di errore per mancato privilegio */
+	private void apriErroreSconosciuto(HttpServletRequest req, HttpServletResponse resp) 
 			throws IOException {
 		resp.sendRedirect("/");
 	}
