@@ -11,6 +11,9 @@ import mitro.model.Professore;
 
 public interface GestioneProfessore {
 	
-
+	public Professore getProfessore() throws OperazioneException;
+	public List<Classe> getListaClassi() throws OperazioneException;
+	public List<Attivita> getListaAttivita(LocalDate from, LocalDate to) throws OperazioneException;
+	public List<Comunicazione> getListaComunicazioni(LocalDate from, LocalDate to) throws OperazioneException;
 	
 }
