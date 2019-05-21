@@ -73,6 +73,7 @@ class GestioneStudenteControllerTest {
 			daoAttivita.registraAttivita(lezioneStoria);
 			daoAttivita.registraAttivita(lezioneMatematica);
 			List<Attivita> listaAttivita = test.getListaAttivita(LocalDate.of(2018, 1, 1), LocalDate.of(2020, 1, 1));
+			//la lista è vuota
 			assertEquals(listaAttivita.get(0), lezioneStoria);
 			assertEquals(listaAttivita.get(1), lezioneMatematica);
 		}
