@@ -27,8 +27,8 @@ public class GestioneClasseController extends ControllerAstratto implements Gest
 	private DAOAttivita daoAttivita;
 	private DAOUtente daoUtente;
 	
-	public GestioneClasseController(DAOArchiviazione daoArchiviazione,
-			DAOAttivita daoAttivita, DAOUtente daoUtente, LoggerOperazioni logger) {
+	public GestioneClasseController(LoggerOperazioni logger, DAOArchiviazione daoArchiviazione,
+			DAOAttivita daoAttivita, DAOUtente daoUtente) {
 		super(logger);
 		this.daoArchiviazione = daoArchiviazione;
 		this.daoAttivita = daoAttivita;

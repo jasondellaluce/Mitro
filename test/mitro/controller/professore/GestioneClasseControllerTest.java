@@ -22,6 +22,7 @@ public class GestioneClasseControllerTest {
 	private static Classe classe;
 	private static DAOArchiviazione daoArchiviazione;
 	private static DAOAttivita daoAttivita;
+	private static DAOUtente daoUtente;
 	private static LoggerOperazioni logger;
 	
 	@BeforeAll
@@ -31,9 +32,10 @@ public class GestioneClasseControllerTest {
 		classe.setNome("Amir");
 		daoArchiviazione = new CollectionDAOArchiviazione();
 		daoAttivita = new CollectionDAOAttivita();
+		daoUtente = new CollectionDAOUtente();
 		logger = new MockLoggerOperazioni();
-		test = new GestioneClasseController(daoArchiviazione,
-				daoAttivita, logger);
+		test = new GestioneClasseController(logger, daoArchiviazione,
+				daoAttivita, daoUtente);
 	}
 	
 	@Test
