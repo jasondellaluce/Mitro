@@ -20,7 +20,6 @@ public class GestioneProfessoreController extends ControllerAstratto implements 
 	private Professore professore;
 	private DAOComunicazione daoComunicazione;
 	private DAOAttivita daoAttivita;
-	private LoggerOperazioni logger;
 	
 	public GestioneProfessoreController(Professore professore,
 			DAOComunicazione daoComunicazione, DAOAttivita daoAttivita,

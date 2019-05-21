@@ -86,7 +86,7 @@ public class JavaBeanTestHelper {
 		
 		/* Controlla consistenza accessor */
 		try {
-			System.out.println(attributo);
+			// System.out.println(attributo);
 			setter.invoke(oggetto, valore);
 			assertEquals(getter.invoke(oggetto), valore);
 		}
