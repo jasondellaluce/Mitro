@@ -82,7 +82,7 @@ public class GestioneClasseController extends ControllerAstratto implements Gest
 	@Override
 	public List<Studente> getListaStudenti() throws OperazioneException {
 		try {
-			return daoUtente.ottieniUtentiPerRuolo(Ruolo.AMMINISTRATORE).stream()
+			return daoUtente.ottieniUtentiPerRuolo(Ruolo.STUDENTE).stream()
 					.filter(u -> u instanceof Studente)
 					.map(u -> (Studente) u)
 					.filter(s -> Objects.equals(s.getClasse(), classe))
