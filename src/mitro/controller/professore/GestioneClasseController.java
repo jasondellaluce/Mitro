@@ -28,11 +28,12 @@ public class GestioneClasseController extends ControllerAstratto implements Gest
 	private DAOUtente daoUtente;
 	
 	public GestioneClasseController(LoggerOperazioni logger, DAOArchiviazione daoArchiviazione,
-			DAOAttivita daoAttivita, DAOUtente daoUtente) {
+			DAOAttivita daoAttivita, DAOUtente daoUtente, Classe classe) {
 		super(logger);
 		this.daoArchiviazione = daoArchiviazione;
 		this.daoAttivita = daoAttivita;
 		this.daoUtente = daoUtente;
+		this.classe= classe;
 	}
 
 	@Override
@@ -58,8 +59,11 @@ public class GestioneClasseController extends ControllerAstratto implements Gest
 			throw new IllegalArgumentException("Precondizione insoddisfatta");
 		
 		try {
-			daoArchiviazione.eliminaArchiviazione(presenza);
-			daoArchiviazione.registraArchiviazione(presenza);
+			if(daoArchiviazione.ottieniArchiviazioni().contains(presenza)) {
+				daoArchiviazione.eliminaArchiviazione(presenza);
+				daoArchiviazione.registraArchiviazione(presenza);
+			}
+			else daoArchiviazione.registraArchiviazione(presenza);
 		}
 		catch (PersistenzaException e) {
 			throw new OperazioneException(e);
