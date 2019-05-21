@@ -20,9 +20,9 @@ import mitro.model.Studente;
 import mitro.persistenza.DAOArchiviazione;
 import mitro.persistenza.DAOAttivita;
 import mitro.persistenza.DAOComunicazione;
-import mitro.persistenza.collection.CollectionDAOArchiviazione;
-import mitro.persistenza.collection.CollectionDAOAttivita;
-import mitro.persistenza.collection.CollectionDAOComunicazione;
+import mitro.persistenza.mock.CollectionDAOArchiviazione;
+import mitro.persistenza.mock.CollectionDAOAttivita;
+import mitro.persistenza.mock.CollectionDAOComunicazione;
 
 class GestioneStudenteControllerTest {
 

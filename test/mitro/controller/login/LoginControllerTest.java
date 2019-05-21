@@ -11,7 +11,7 @@ import mitro.exceptions.UtenteGiaAutenticatoException;
 import mitro.exceptions.UtenteNonRegistratoException;
 import mitro.model.Amministratore;
 import mitro.model.Utente;
-import mitro.persistenza.collection.CollectionDAOUtente;
+import mitro.persistenza.mock.CollectionDAOUtente;
 
 class LoginControllerTest {
 	

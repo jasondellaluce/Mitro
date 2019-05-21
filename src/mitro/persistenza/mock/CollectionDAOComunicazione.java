@@ -1,4 +1,4 @@
-package mitro.persistenza.collection;
+package mitro.persistenza.mock;
 
 import java.time.LocalDate;
 import java.util.ArrayList;

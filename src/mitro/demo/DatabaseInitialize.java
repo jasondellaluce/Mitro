@@ -126,12 +126,8 @@ public class DatabaseInitialize {
 				"        (Ruolo='GS' and Nome IS NULL and Cognome IS NULL\r\n" + 
 				"            and Email IS NULL and Indirizzo IS NULL and Telefono IS NULL\r\n" + 
 				"            and DataNascita IS NULL and IdPartecipaIn IS NULL) or\r\n" + 
-				"        (Ruolo='PR' and Nome IS NOT NULL and Cognome IS NOT NULL\r\n" + 
-				"            and Email IS NOT NULL and Indirizzo IS NOT NULL and Telefono IS NOT NULL\r\n" + 
-				"            and DataNascita IS NOT NULL and IdPartecipaIn IS NULL) or\r\n" + 
-				"        (Ruolo='ST' and Nome IS NOT NULL and Cognome IS NOT NULL\r\n" + 
-				"            and Email IS NOT NULL and Indirizzo IS NOT NULL and Telefono IS NOT NULL\r\n" + 
-				"            and DataNascita IS NOT NULL and IdPartecipaIn IS NOT NULL))\r\n" + 
+				"        (Ruolo='PR' and IdPartecipaIn IS NULL) or\r\n" + 
+				"        (Ruolo='ST'))\r\n" + 
 				");";
 		Statement statement = connection.createStatement();
 		statement.executeUpdate(query);

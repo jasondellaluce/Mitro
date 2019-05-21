@@ -12,9 +12,9 @@ import mitro.model.Classe;
 import mitro.persistenza.DAOArchiviazione;
 import mitro.persistenza.DAOAttivita;
 import mitro.persistenza.DAOUtente;
-import mitro.persistenza.collection.CollectionDAOArchiviazione;
-import mitro.persistenza.collection.CollectionDAOAttivita;
-import mitro.persistenza.collection.CollectionDAOUtente;
+import mitro.persistenza.mock.CollectionDAOArchiviazione;
+import mitro.persistenza.mock.CollectionDAOAttivita;
+import mitro.persistenza.mock.CollectionDAOUtente;
 
 public class GestioneClasseControllerTest {
 
