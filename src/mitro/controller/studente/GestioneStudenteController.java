@@ -17,14 +17,14 @@ import mitro.persistenza.DAOArchiviazione;
 import mitro.persistenza.DAOAttivita;
 import mitro.persistenza.DAOComunicazione;
 
-public class GestionStudenteController extends ControllerAstratto implements GestioneStudente {
+public class GestioneStudenteController extends ControllerAstratto implements GestioneStudente {
 
 	private Studente studente;
 	private DAOComunicazione daoComunicazione;
 	private DAOArchiviazione daoArchiviazione;
 	private DAOAttivita daoAttivita;
 
-	public GestionStudenteController(LoggerOperazioni logger, DAOComunicazione daoComunicazione,
+	public GestioneStudenteController(LoggerOperazioni logger, DAOComunicazione daoComunicazione,
 			DAOArchiviazione daoArchiviazione, DAOAttivita daoAttivita, Studente studente) {		
 		super(logger);
 		this.daoComunicazione = daoComunicazione;
