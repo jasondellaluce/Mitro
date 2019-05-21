@@ -45,7 +45,8 @@ public class GestioneClasseController extends ControllerAstratto implements Gest
 	public void inserisciPresenza(Presenza presenza) throws OperazioneException {
 		try {
 			daoArchiviazione.registraArchiviazione(presenza);
-		} catch (PersistenzaException e) {
+		}
+		catch (PersistenzaException e) {
 			throw new OperazioneException(e);
 		}
 	}
@@ -54,7 +55,8 @@ public class GestioneClasseController extends ControllerAstratto implements Gest
 	public void registraVoto(Voto voto) throws OperazioneException {
 		try {
 			daoArchiviazione.registraArchiviazione(voto);
-		} catch (PersistenzaException e) {
+		}
+		catch (PersistenzaException e) {
 			throw new OperazioneException(e);
 		}
 	}
