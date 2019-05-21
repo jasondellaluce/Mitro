@@ -9,6 +9,6 @@ public interface Login {
 
 	public boolean autentica(String username, String password) throws OperazioneException;
 	public boolean disconnetti() throws OperazioneException;
-	public Optional<Utente> getUtenteAutenticato();
+	public Optional<Utente> getUtenteAutenticato() throws OperazioneException;
 	
 }

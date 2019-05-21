@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import mitro.controller.login.Login;
+import mitro.exceptions.OperazioneException;
 import mitro.model.Ruolo;
 import mitro.model.Utente;
 
@@ -22,17 +23,33 @@ public abstract class ViewUtenteAstratta extends ViewAstratta {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) 
 			throws ServletException, IOException {
 		
-		gestisciRichiestaGet(ottieniUtenteAutenticato(req, resp), req, resp);
+		Utente utenteAutenticato;
+		try {
+			utenteAutenticato = ottieniUtenteAutenticato(req, resp);
+			gestisciRichiestaGet(utenteAutenticato, req, resp);
+		}
+		catch (OperazioneException e) {
+			e.printStackTrace();
+		}
+		
 	}
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) 
 			throws ServletException, IOException {
-		gestisciRichiestaPost(ottieniUtenteAutenticato(req, resp), req, resp);
+		
+		Utente utenteAutenticato;
+		try {
+			utenteAutenticato = ottieniUtenteAutenticato(req, resp);
+			gestisciRichiestaPost(utenteAutenticato, req, resp);
+		}
+		catch (OperazioneException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	private Utente ottieniUtenteAutenticato(HttpServletRequest req, HttpServletResponse resp) 
-			throws IOException {
+			throws IOException, OperazioneException {
 		HttpSession sessioneUtente = req.getSession();
 		
 		/* Controlla Login non eseguito */

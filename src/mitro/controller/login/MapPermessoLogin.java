@@ -3,6 +3,7 @@ package mitro.controller.login;
 import java.util.HashMap;
 import java.util.Map;
 
+import mitro.exceptions.OperazioneException;
 import mitro.model.Utente;
 
 public class MapPermessoLogin implements PermessoLogin {
@@ -14,7 +15,8 @@ public class MapPermessoLogin implements PermessoLogin {
 	}
 	
 	@Override
-	public synchronized boolean ottieniPermesso(Utente utente, Login richiedente) {
+	public synchronized boolean ottieniPermesso(Utente utente, Login richiedente) 
+			throws OperazioneException {
 		if(utente == null || utente.getId() == null || utente.getId().length() == 0)
 			throw new IllegalArgumentException("utente");
 		if(richiedente == null)
@@ -28,7 +30,8 @@ public class MapPermessoLogin implements PermessoLogin {
 	}
 	
 	@Override
-	public synchronized boolean rilasciaPermesso(Utente utente, Login richiedente) {
+	public synchronized boolean rilasciaPermesso(Utente utente, Login richiedente)
+			throws OperazioneException {
 		if(utente == null || utente.getId() == null || utente.getId().length() == 0)
 			throw new IllegalArgumentException("utente");
 		if(richiedente == null)

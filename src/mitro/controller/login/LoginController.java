@@ -73,7 +73,7 @@ public class LoginController extends ControllerAstratto implements Login{
 	}
 
 	@Override
-	public Optional<Utente> getUtenteAutenticato() {
+	public Optional<Utente> getUtenteAutenticato() throws OperazioneException {
 		return Optional.ofNullable(utenteAutenticato);
 	}
 

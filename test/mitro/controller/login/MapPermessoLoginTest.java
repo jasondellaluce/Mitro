@@ -5,13 +5,14 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
+import mitro.exceptions.OperazioneException;
 import mitro.model.Ruolo;
 import mitro.model.Utente;
 
 class MapPermessoLoginTest {
 
 	@Test
-	void testConsistenza() {
+	void testConsistenza() throws OperazioneException {
 		/* Creazione oggetti di test */
 		MapPermessoLogin test = new MapPermessoLogin();
 		Login primoLogin = new MockLogin();
