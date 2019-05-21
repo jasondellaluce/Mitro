@@ -66,6 +66,7 @@ public class GestioneClasseController extends ControllerAstratto implements Gest
 		try {
 			return daoArchiviazione.ottieniArchiviazioniPerClasse(classe).stream()
 					.map(a -> a.getStudente())
+					.distinct()
 					.collect(Collectors.toList());
 		}
 		catch (PersistenzaException e) {
