@@ -11,6 +11,12 @@ public class Materia {
 	public Materia() {
 		
 	}
+	
+	public Materia(String id, String nome, String descrizione) {
+		this.id = id;
+		this.nome = nome;
+		this.descrizione = descrizione;
+	}
 
 	public String getId() {
 		return id;

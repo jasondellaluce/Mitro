@@ -15,6 +15,16 @@ public abstract class Iscritto extends Utente {
 	public Iscritto() {
 		
 	}
+	
+	public Iscritto(String nome, String cognome, String email,
+			String indirizzoResidenza, String telefono, LocalDate dataNascita) {
+		this.nome = nome;
+		this.cognome = cognome;
+		this.email = email;
+		this.indirizzoResidenza = indirizzoResidenza;
+		this.telefono = telefono;
+		this.dataNascita = dataNascita;
+	}
 
 	public String getNome() {
 		return nome;

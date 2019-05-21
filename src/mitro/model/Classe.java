@@ -12,6 +12,14 @@ public class Classe {
 	public Classe() {
 		
 	}
+	
+	public Classe(String id, String nome, String annoScolastico,
+			String descrizione) {
+		this.id = id;
+		this.nome = nome;
+		this.annoScolastico = annoScolastico;
+		this.descrizione = descrizione;
+	}
 
 	public String getId() {
 		return id;

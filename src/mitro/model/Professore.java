@@ -1,8 +1,16 @@
 package mitro.model;
 
+import java.time.LocalDate;
+
 public class Professore extends Iscritto {
 
 	public Professore() {
+		setRuolo(Ruolo.PROFESSORE);
+	}
+	
+	public Professore(String nome, String cognome, String email,
+			String indirizzoResidenza, String telefono, LocalDate dataNascita) {
+		super(nome, cognome, email, indirizzoResidenza, telefono, dataNascita);
 		setRuolo(Ruolo.PROFESSORE);
 	}
 	

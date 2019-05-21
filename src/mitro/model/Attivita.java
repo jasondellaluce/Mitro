@@ -15,6 +15,16 @@ public class Attivita {
 	public Attivita() {
 		
 	}
+	
+	public Attivita(Professore professore, LocalDate data, int oraInizio,
+			Materia materia, String annotazione, Classe classe) {
+		this.professore = professore;
+		this.data = data;
+		this.oraInizio = oraInizio;
+		this.materia = materia;
+		this.annotazione = annotazione;
+		this.classe = classe;
+	}
 
 	public Professore getProfessore() {
 		return professore;
