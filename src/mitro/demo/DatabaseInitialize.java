@@ -89,7 +89,7 @@ public class DatabaseInitialize {
 		String query = 
 				"CREATE TABLE COMUNICAZIONI (\r\n" + 
 				"    Id                 INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,\r\n" + 
-				"    DataOra            DATETIME NOT NULL,\r\n" + 
+				"    DataOra            TIMESTAMP NOT NULL,\r\n" + 
 				"    IdDestinataA       REFERENCES UTENTI NOT NULL,\r\n" + 
 				"    Oggetto            VARCHAR(100) NOT NULL,\r\n" + 
 				"    Contenuto          TEXT NOT NULL,\r\n" + 
