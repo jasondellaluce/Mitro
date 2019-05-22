@@ -104,7 +104,6 @@ public class AmministrazioneClassiController extends ControllerAstratto implemen
 	public List<Classe> cercaClassi(String filtro) throws OperazioneException {
 		try {
 			return daoClasse.ottieniClassi();
-					//TODO
 		} catch (PersistenzaException e) {
 			throw new OperazioneException(e);
 		}
