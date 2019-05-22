@@ -103,8 +103,9 @@ public class AmministrazioneClassiController extends ControllerAstratto implemen
 	@Override
 	public List<Classe> cercaClassi(String filtro) throws OperazioneException {
 		try {
-			return daoClasse.ottieniClassi();
-					//TODO
+			if(filtro.startsWith("Nome: ")) return daoClasse.ottieniClassiPerNome(filtro.substring(6));
+			else if(filtro.startsWith("AnnoScolastico: ")) return daoClasse.ottieniClassiPerNome(filtro.substring(16));
+			else return daoClasse.ottieniClassi();
 		} catch (PersistenzaException e) {
 			throw new OperazioneException(e);
 		}
