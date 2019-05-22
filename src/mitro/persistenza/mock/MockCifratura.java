@@ -14,4 +14,9 @@ public class MockCifratura implements Cifratura {
 		return valore;
 	}
 
+	@Override
+	public String cifraHash(String valore) {
+		return valore;
+	}
+
 }

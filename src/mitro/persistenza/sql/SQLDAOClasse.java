@@ -1,7 +1,5 @@
 package mitro.persistenza.sql;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -9,20 +7,18 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
-import mitro.exceptions.ElementoGiaPersistenteException;
 import mitro.exceptions.ElementoNonPersistenteException;
 import mitro.exceptions.PersistenzaException;
 import mitro.model.Classe;
 import mitro.persistenza.Cifratura;
 import mitro.persistenza.DAOClasse;
 
-public class SQLDAOClasse implements DAOClasse {
+public class SQLDAOClasse extends SQLDAOAstratto implements DAOClasse {
 
-	private DataSource dataSource;
 	private Cifratura cifratura;
 	
 	public SQLDAOClasse(DataSource dataSource, Cifratura cifratura) {
-		this.dataSource = dataSource;
+		super(dataSource);
 		this.cifratura = cifratura;
 	}
 	
@@ -36,15 +32,9 @@ public class SQLDAOClasse implements DAOClasse {
 	}
 	
 	private int getNewId() throws PersistenzaException {
-		String query = "SELECT MAX(Id) FROM CLASSI";
-		
-		try (Connection connection = dataSource.getConnection();
-				PreparedStatement statement = connection.prepareStatement(query)) {
-			return statement.executeQuery().getInt(1) + 1;
-		}
-		catch(Exception e) {
-			throw new PersistenzaException(e);
-		}
+		return this.eseguiQuery("SELECT MAX(Id) FROM CLASSI", (s) -> {
+			return s.executeQuery().getInt(1) + 1;
+		});
 	}
 	
 	@Override
@@ -53,9 +43,7 @@ public class SQLDAOClasse implements DAOClasse {
 				+ "VALUES(?, ?, ?, ?)";
 		
 		int newId = getNewId();
-		try (Connection connection = dataSource.getConnection();
-				PreparedStatement statement = connection.prepareStatement(query)) {
-			
+		this.eseguiUpdate(query, (statement) -> {
 			statement.setInt(1, newId);
 			statement.setString(2, cifratura.cifra(classe.getNome()));
 			statement.setString(3, cifratura.cifra(classe.getAnnoScolastico()));
@@ -63,15 +51,7 @@ public class SQLDAOClasse implements DAOClasse {
 			
 			statement.executeUpdate();
 			classe.setId(String.valueOf(newId));
-		}
-		catch(SQLException e) {
-			if(e.getMessage().contains("UNIQUE"))
-				throw new ElementoGiaPersistenteException("Id=" + classe.getId());
-			throw new PersistenzaException(e);
-		}
-		catch(Exception e) {
-			throw new PersistenzaException(e);
-		}
+		});
 	}
 
 	@Override
@@ -79,9 +59,7 @@ public class SQLDAOClasse implements DAOClasse {
 		String query = "UPDATE CLASSI SET Nome=?, AnnoScolastico=?, Descrizione=? "
 				+ "WHERE Id=?";
 		
-		try (Connection connection = dataSource.getConnection();
-				PreparedStatement statement = connection.prepareStatement(query)) {
-			
+		this.eseguiUpdate(query, (statement) -> {
 			statement.setString(1, cifratura.cifra(classe.getNome()));
 			statement.setString(2, cifratura.cifra(classe.getAnnoScolastico()));
 			statement.setString(3, cifratura.cifra(classe.getDescrizione()));
@@ -89,48 +67,32 @@ public class SQLDAOClasse implements DAOClasse {
 			
 			if(statement.executeUpdate() != 1)
 				throw new ElementoNonPersistenteException("Id=" + classe.getId());
-		}
-		catch(Exception e) {
-			throw new PersistenzaException(e);
-		}
+		});
 	}
 
 	@Override
 	public void eliminaClasse(Classe classe) throws PersistenzaException {
 		String query = "DELETE FROM CLASSI WHERE Id=?";
 		
-		try (Connection connection = dataSource.getConnection();
-				PreparedStatement statement = connection.prepareStatement(query)) {
-			
+		this.eseguiUpdate(query, (statement) -> {
 			statement.setInt(1, Integer.parseInt(classe.getId()));
 			
 			if(statement.executeUpdate() != 1)
 				throw new ElementoNonPersistenteException("Id=" + classe.getId());
 			classe.setId(null);
-		}
-		catch(Exception e) {
-			throw new PersistenzaException(e);
-		}
+		});
 	}
 
 	@Override
 	public Classe ottieniClassePerId(String id) throws PersistenzaException {
 		String query = "SELECT * FROM CLASSI WHERE Id=?";
 		
-		try (Connection connection = dataSource.getConnection();
-				PreparedStatement statement = connection.prepareStatement(query)) {
-			
+		return this.eseguiQuery(query, (statement) -> {
 			statement.setInt(1, Integer.parseInt(id));
 			
 			ResultSet resultSet = statement.executeQuery();
 			return resultSet.isClosed() ? null : parseResultSet(resultSet);
-		}
-		catch(SQLException e) {
-			throw new PersistenzaException(e);
-		}
-		catch(Exception e) {
-			throw new PersistenzaException(e);
-		}
+		});
 	}
 
 	@Override
@@ -138,19 +100,12 @@ public class SQLDAOClasse implements DAOClasse {
 		List<Classe> result = new ArrayList<>();
 		String query = "SELECT * FROM CLASSI";
 		
-		try (Connection connection = dataSource.getConnection();
-				PreparedStatement statement = connection.prepareStatement(query)) {
+		return this.eseguiQuery(query, (statement) -> {
 			ResultSet resultSet = statement.executeQuery();
 			while(resultSet.next())
 				result.add(parseResultSet(resultSet));
 			return result;
-		}
-		catch(SQLException e) {
-			throw new PersistenzaException(e);
-		}
-		catch(Exception e) {
-			throw new PersistenzaException(e);
-		}
+		});
 	}
 
 	@Override
@@ -158,22 +113,14 @@ public class SQLDAOClasse implements DAOClasse {
 		List<Classe> result = new ArrayList<>();
 		String query = "SELECT * FROM CLASSI WHERE Nome=?";
 		
-		try (Connection connection = dataSource.getConnection();
-				PreparedStatement statement = connection.prepareStatement(query)) {
-			
+		return this.eseguiQuery(query, (statement) -> {
 			statement.setString(1, cifratura.cifra(nome));
 			
 			ResultSet resultSet = statement.executeQuery();
 			while(resultSet.next())
 				result.add(parseResultSet(resultSet));
 			return result;
-		}
-		catch(SQLException e) {
-			throw new PersistenzaException(e);
-		}
-		catch(Exception e) {
-			throw new PersistenzaException(e);
-		}
+		});
 	}
 
 	@Override
@@ -181,22 +128,14 @@ public class SQLDAOClasse implements DAOClasse {
 		List<Classe> result = new ArrayList<>();
 		String query = "SELECT * FROM CLASSI WHERE AnnoScolastico=?";
 		
-		try (Connection connection = dataSource.getConnection();
-				PreparedStatement statement = connection.prepareStatement(query)) {
-			
+		return this.eseguiQuery(query, (statement) -> {
 			statement.setString(1, cifratura.cifra(annoScolastico));
 			
 			ResultSet resultSet = statement.executeQuery();
 			while(resultSet.next())
 				result.add(parseResultSet(resultSet));
 			return result;
-		}
-		catch(SQLException e) {
-			throw new PersistenzaException(e);
-		}
-		catch(Exception e) {
-			throw new PersistenzaException(e);
-		}
+		});
 	}
 
 }
