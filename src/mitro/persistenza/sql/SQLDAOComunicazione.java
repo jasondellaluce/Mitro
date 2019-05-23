@@ -79,7 +79,7 @@ public class SQLDAOComunicazione extends SQLDAOAstratto implements DAOComunicazi
 				|| daoUtente.ottieniUtentePerId(comunicazione.getDestinatario().getId()) == null)
 			throw new ElementoNonPersistenteException("destinatario");
 		
-		String query = "UPDATE COMUNICAZIONI SET Oggetto=?, Contenuto=? WhHERE DataOra=? and IdDestinataA=?" ;
+		String query = "UPDATE COMUNICAZIONI SET Oggetto=?, Contenuto=? WHERE DataOra=? and IdDestinataA=?" ;
 		this.eseguiUpdate(query, (s) -> {
 			s.setString(1, cifratura.cifra(comunicazione.getOggetto()));
 			s.setString(2, cifratura.cifra(comunicazione.getContenuto()));
