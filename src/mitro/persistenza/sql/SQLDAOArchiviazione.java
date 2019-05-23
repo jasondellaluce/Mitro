@@ -50,22 +50,21 @@ public class SQLDAOArchiviazione extends SQLDAOAstratto implements DAOArchiviazi
 				throw new IllegalArgumentException("tipo");
 			case "VO":
 				Voto v = new Voto();
+				v.setValore(resultSet.getDouble("ValoreVoto"));
 				v.setStudente(studente);
 				return v;
 			case "PR":
 				Presenza p = new Presenza();
+				p.setValore(resultSet.getBoolean("ValorePresenza"));
 				p.setStudente(studente);
 				return p;
 		}
 	}
 	
 	@Override
-	public void registraArchiviazione(Archiviazione archiviazione) throws PersistenzaException {
-		if(!archiviazione.getAttivita().getClasse().equals(archiviazione.getStudente().getClasse()))
-			throw new IllegalArgumentException("archiviazione - consistenza");
-		
+	public void registraArchiviazione(Archiviazione archiviazione) throws PersistenzaException {	
 		if(archiviazione.getAttivita() == null
-				|| daoAttivita.ottieniAttivitaPerClasse(archiviazione.getAttivita().getClasse()).stream()
+				|| !daoAttivita.ottieniAttivitaPerClasse(archiviazione.getAttivita().getClasse()).stream()
 						.filter(p -> p.equals(archiviazione.getAttivita()))
 						.findAny()
 						.isPresent())
@@ -74,44 +73,47 @@ public class SQLDAOArchiviazione extends SQLDAOAstratto implements DAOArchiviazi
 				|| daoUtente.ottieniUtentePerId(archiviazione.getStudente().getId()) == null)
 			throw new ElementoNonPersistenteException("studente");
 		
+		if(!archiviazione.getAttivita().getClasse().equals(archiviazione.getStudente().getClasse()))
+			throw new IllegalArgumentException("archiviazione - consistenza");
+		
 		if(archiviazione instanceof Voto)
 			registraArchiviazione((Voto) archiviazione);
 		
-		if(archiviazione instanceof Presenza)
+		else if(archiviazione instanceof Presenza)
 			registraArchiviazione((Presenza) archiviazione);
 		
-		throw new IllegalArgumentException("archiviazione");
+		else
+			throw new IllegalArgumentException("archiviazione");
 	}
 
 	private void registraArchiviazione(Presenza presenza) throws PersistenzaException {
-		String query = "INSERT INTO ARCHIVIAZIONI (Tipo, IdRegistrataPer, IdRegistrataIn, ValorePresenza" +
-				"VALUES(" + getCodiceTipo(presenza) + ", ?, ?, ?)";
+		String query = "INSERT INTO ARCHIVIAZIONI (Tipo, IdRegistrataPer, IdRegistrataIn, ValorePresenza)" +
+				" VALUES ('" + getCodiceTipo(presenza) + "', ?, ?, ?)";
 		this.eseguiUpdate(query, (s) -> {
 			s.setInt(1, Integer.parseInt(presenza.getStudente().getId()));
 			s.setInt(2, daoAttivita.ottieniIdAttivita(presenza.getAttivita()));
 			s.setBoolean(3, presenza.isValore());
-			s.executeUpdate();
+			if(s.executeUpdate() != 1)
+				throw new ElementoNonPersistenteException();
 		});		
 	}
 
 	private void registraArchiviazione(Voto voto) throws PersistenzaException {
-		String query = "INSERT INTO ARCHIVIAZIONI (Tipo, IdRegistrataPer, IdRegistrataIn, ValoreVoto" +
-				"VALUES(" + getCodiceTipo(voto) + ", ?, ?, ?)";
+		String query = "INSERT INTO ARCHIVIAZIONI (Tipo, IdRegistrataPer, IdRegistrataIn, ValoreVoto)" +
+				" VALUES ('" + getCodiceTipo(voto) + "', ?, ?, ?)";
 		this.eseguiUpdate(query, (s) -> {
 			s.setInt(1, Integer.parseInt(voto.getStudente().getId()));
 			s.setInt(2, daoAttivita.ottieniIdAttivita(voto.getAttivita()));
 			s.setDouble(3, voto.getValore());
-			s.executeUpdate();
+			if(s.executeUpdate() != 1)
+				throw new ElementoNonPersistenteException();
 		});	
 	}
 
 	@Override
 	public void modificaArchiviazione(Archiviazione archiviazione) throws PersistenzaException {
-		if(!archiviazione.getAttivita().getClasse().equals(archiviazione.getStudente().getClasse()))
-			throw new IllegalArgumentException("archiviazione - consistenza");
-		
 		if(archiviazione.getAttivita() == null
-				|| daoAttivita.ottieniAttivitaPerClasse(archiviazione.getAttivita().getClasse()).stream()
+				|| !daoAttivita.ottieniAttivitaPerClasse(archiviazione.getAttivita().getClasse()).stream()
 						.filter(p -> p.equals(archiviazione.getAttivita()))
 						.findAny()
 						.isPresent())
@@ -120,44 +122,50 @@ public class SQLDAOArchiviazione extends SQLDAOAstratto implements DAOArchiviazi
 				|| daoUtente.ottieniUtentePerId(archiviazione.getStudente().getId()) == null)
 			throw new ElementoNonPersistenteException("studente");
 		
+		if(!archiviazione.getAttivita().getClasse().equals(archiviazione.getStudente().getClasse()))
+			throw new IllegalArgumentException("archiviazione - consistenza");
+		
 		if(archiviazione instanceof Voto)
 			modificaArchiviazione((Voto) archiviazione);
 		
-		if(archiviazione instanceof Presenza)
+		else if(archiviazione instanceof Presenza)
 			modificaArchiviazione((Presenza) archiviazione);
 		
-		throw new IllegalArgumentException("archiviazione");
+		else
+			throw new IllegalArgumentException("archiviazione");
 	}
 	
 	private void modificaArchiviazione(Presenza presenza) throws PersistenzaException {
-		String query = "UPDATE ARCHIVIAZIONI SET ValorePresenza=? WHERE Tipo=" + getCodiceTipo(presenza)
-				+ " and IdRegistrataPer=? and IdRegistrataIn=?";
+		String query = "UPDATE ARCHIVIAZIONI SET ValorePresenza=? WHERE Tipo='" + getCodiceTipo(presenza)
+				+ "' and IdRegistrataPer=? and IdRegistrataIn=?";
 		this.eseguiUpdate(query, (s) -> {
 			s.setBoolean(1, presenza.isValore());
 			s.setInt(2, Integer.parseInt(presenza.getStudente().getId()));
 			s.setInt(3, daoAttivita.ottieniIdAttivita(presenza.getAttivita()));
-			s.executeUpdate();
+			if(s.executeUpdate() != 1)
+				throw new ElementoNonPersistenteException();
 		});		
 	}
 
 	private void modificaArchiviazione(Voto voto) throws PersistenzaException {
-		String query = "UPDATE ARCHIVIAZIONI SET ValoreVoto=? WHERE Tipo=" + getCodiceTipo(voto)
-				+ " and IdRegistrataPer=? and IdRegistrataIn=?";
+		String query = "UPDATE ARCHIVIAZIONI SET ValoreVoto=? WHERE Tipo='" + getCodiceTipo(voto)
+				+ "' and IdRegistrataPer=? and IdRegistrataIn=?";
 		this.eseguiUpdate(query, (s) -> {
 			s.setDouble(1, voto.getValore());
 			s.setInt(2, Integer.parseInt(voto.getStudente().getId()));
 			s.setInt(3, daoAttivita.ottieniIdAttivita(voto.getAttivita()));
-			s.executeUpdate();
+			if(s.executeUpdate() != 1)
+				throw new ElementoNonPersistenteException();
 		});		
 	}
 
 	@Override
 	public void eliminaArchiviazione(Archiviazione archiviazione) throws PersistenzaException {
-		String query = "DELETE FROM ARCHIVIAZIONI WHERE Tipo=" + getCodiceTipo(archiviazione)
-				+ " and IdRegistrataPer=? and IdRegistrataIn=?";
+		String query = "DELETE FROM ARCHIVIAZIONI WHERE Tipo='" + getCodiceTipo(archiviazione)
+				+ "' and IdRegistrataPer=? and IdRegistrataIn=?";
 		this.eseguiUpdate(query, (s) -> {
-			s.setInt(2, Integer.parseInt(archiviazione.getStudente().getId()));
-			s.setInt(3, daoAttivita.ottieniIdAttivita(archiviazione.getAttivita()));
+			s.setInt(1, Integer.parseInt(archiviazione.getStudente().getId()));
+			s.setInt(2, daoAttivita.ottieniIdAttivita(archiviazione.getAttivita()));
 			if(s.executeUpdate() != 1)
 				throw new ElementoNonPersistenteException();
 		});
@@ -167,7 +175,7 @@ public class SQLDAOArchiviazione extends SQLDAOAstratto implements DAOArchiviazi
 	public List<Archiviazione> ottieniArchiviazioni() throws PersistenzaException {
 		List<Archiviazione> result = new ArrayList<>();
 		List<Integer> attivitaId = new ArrayList<>();
-		String query = "SELECT * FROM ARCHIVIAZIONE";
+		String query = "SELECT * FROM ARCHIVIAZIONI";
 		this.eseguiQuery(query, (s) -> {
 			ResultSet resultSet = s.executeQuery();
 			while(resultSet.next()) {

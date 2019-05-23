@@ -213,7 +213,7 @@ public class SQLDAOAttivita extends SQLDAOAstratto implements DAOAttivita {
 	}
 	
 	int ottieniIdAttivita(Attivita attivita) throws PersistenzaException {
-		String query = "SELECT Id FROM ATTIVITA WHERE Data=?, OraInizio=?, IdSvoltaIn=?";
+		String query = "SELECT Id FROM ATTIVITA WHERE Data=? and OraInizio=? and IdSvoltaIn=?";
 		return this.eseguiQuery(query, (s) -> {
 			s.setDate(1, Date.valueOf(attivita.getData()));
 			s.setInt(2, attivita.getOraInizio());
@@ -228,13 +228,17 @@ public class SQLDAOAttivita extends SQLDAOAstratto implements DAOAttivita {
 	
 	Attivita ottieniAttivitaPerId(int id) throws PersistenzaException {
 		String query = "SELECT * FROM ATTIVITA WHERE Id=?";
-		return this.eseguiQuery(query, (s) -> {
+		Attivita a = this.eseguiQuery(query, (s) -> {
 			s.setInt(1, id);
 			ResultSet resultSet = s.executeQuery();
 			if(resultSet.next())
 				return parseResultSet(resultSet);
 			throw new ElementoNonPersistenteException("attivita");
 		});
+		a.setProfessore((Professore) daoUtente.ottieniUtentePerId(a.getProfessore().getId()));
+		a.setClasse(daoClasse.ottieniClassePerId(a.getClasse().getId()));
+		a.setMateria(daoMateria.ottieniMateriaPerId(a.getMateria().getId()));
+		return a;
 	}
 
 }

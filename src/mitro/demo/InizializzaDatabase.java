@@ -4,7 +4,7 @@ import org.sqlite.SQLiteDataSource;
 
 import mitro.persistenza.sql.SQLGestoreTabelle;
 
-public class DatabaseInizializza {
+public class InizializzaDatabase {
 
 	private final static String nomeFileDatabase = "database.db";
 	
