@@ -5,7 +5,6 @@ import java.util.stream.Collectors;
 
 import mitro.controller.ControllerAstratto;
 import mitro.controller.log.LoggerOperazioni;
-import mitro.controller.professore.GestioneClasse;
 import mitro.exceptions.OperazioneException;
 import mitro.exceptions.PersistenzaException;
 import mitro.model.Attivita;
@@ -81,8 +80,7 @@ public class AmministrazioneClassiController extends ControllerAstratto implemen
 	@Override
 	public List<Attivita> getListaAttivita(Classe classe) throws OperazioneException {
 		try {
-			return daoAttivita.ottieniAttivitaPerClasse(classe).stream()
-				   .collect(Collectors.toList());
+			return daoAttivita.ottieniAttivitaPerClasse(classe);
 		} catch (PersistenzaException e) {
 			throw new OperazioneException(e);
 		}
@@ -103,10 +101,14 @@ public class AmministrazioneClassiController extends ControllerAstratto implemen
 	@Override
 	public List<Classe> cercaClassi(String filtro) throws OperazioneException {
 		try {
-			if(filtro.startsWith("Nome: ")) return daoClasse.ottieniClassiPerNome(filtro.substring(6));
-			else if(filtro.startsWith("AnnoScolastico: ")) return daoClasse.ottieniClassiPerNome(filtro.substring(16));
-			else return daoClasse.ottieniClassi();
-		} catch (PersistenzaException e) {
+			if(filtro.startsWith("Nome: "))
+				return daoClasse.ottieniClassiPerNome(filtro.substring(6));
+			else if(filtro.startsWith("AnnoScolastico: "))
+				return daoClasse.ottieniClassiPerNome(filtro.substring(16));
+			else
+				return daoClasse.ottieniClassi();
+		}
+		catch (PersistenzaException e) {
 			throw new OperazioneException(e);
 		}
 	}

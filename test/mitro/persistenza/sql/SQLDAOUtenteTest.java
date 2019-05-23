@@ -19,7 +19,7 @@ import mitro.model.Professore;
 import mitro.model.Ruolo;
 import mitro.model.Studente;
 import mitro.model.Utente;
-import mitro.persistenza.cifrature.TestoInChiaro;
+import mitro.persistenza.cifrature.MockCifratura;
 
 class SQLDAOUtenteTest {
 
@@ -34,8 +34,8 @@ class SQLDAOUtenteTest {
 		new SQLGestoreTabelle(ds).eliminaTabelle();
 		new SQLGestoreTabelle(ds).creaTabelle();
 		
-		daoUtente = new SQLDAOUtente(ds, new TestoInChiaro());	
-		daoClasse = new SQLDAOClasse(ds, new TestoInChiaro());	
+		daoUtente = new SQLDAOUtente(ds, new MockCifratura());	
+		daoClasse = new SQLDAOClasse(ds, new MockCifratura());	
 	}
 
 	@Test

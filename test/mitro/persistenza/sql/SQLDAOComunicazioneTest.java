@@ -15,7 +15,7 @@ import org.sqlite.SQLiteDataSource;
 import mitro.exceptions.PersistenzaException;
 import mitro.model.Comunicazione;
 import mitro.model.Studente;
-import mitro.persistenza.cifrature.TestoInChiaro;
+import mitro.persistenza.cifrature.MockCifratura;
 
 class SQLDAOComunicazioneTest {
 
@@ -29,22 +29,22 @@ class SQLDAOComunicazioneTest {
 		ds.setUrl("jdbc:sqlite:" + dbName); 
 		new SQLGestoreTabelle(ds).eliminaTabelle();
 		new SQLGestoreTabelle(ds).creaTabelle();
-		daoComunicazione = new SQLDAOComunicazione(ds, new TestoInChiaro());
-		daoUtente = new SQLDAOUtente(ds, new TestoInChiaro());
+		daoComunicazione = new SQLDAOComunicazione(ds, new MockCifratura());
+		daoUtente = new SQLDAOUtente(ds, new MockCifratura());
 	}
 
 	@Test
 	void testGenerale() throws Exception {
 		/* Oggetti da rendere persistenti */
 		Studente u1 = new Studente();
-		u1.setNome("Jason");
+		u1.setNome("MArco");
 		u1.setCognome("Dellaluce");
 		
 		Comunicazione c1 = new Comunicazione();
 		Comunicazione c2 = new Comunicazione();
 		Comunicazione c3 = new Comunicazione();
 		c1.setDataOra(LocalDateTime.now());
-		c2.setDataOra(LocalDateTime.now());
+		c2.setDataOra(LocalDateTime.now().minusDays(1));
 		c3.setDataOra(LocalDateTime.now());
 		c1.setDestinatario(u1);
 		c3.setDestinatario(u1);
@@ -93,12 +93,14 @@ class SQLDAOComunicazioneTest {
 		assertTrue(lista.contains(c2));
 		
 		lista = daoComunicazione.ottieniComunicazioniPerData(LocalDate.now(), LocalDate.now());
-		assertEquals(lista.size(), 2);
+		assertEquals(lista.size(), 1);
 		assertTrue(lista.contains(c1));
-		assertTrue(lista.contains(c2));
+		assertFalse(lista.contains(c2));
 		
 		lista = daoComunicazione.ottieniComunicazioniPerData(LocalDate.now().minusDays(2), LocalDate.now().minusDays(1));
-		assertEquals(lista.size(), 0);
+		assertEquals(lista.size(), 1);
+		assertTrue(lista.contains(c2));
+		assertFalse(lista.contains(c1));
 		
 		lista = daoComunicazione.ottieniComunicazioniPerDestinatario(u1);
 		assertEquals(lista.size(), 2);
