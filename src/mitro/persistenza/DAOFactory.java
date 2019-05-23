@@ -4,7 +4,7 @@ import javax.sql.DataSource;
 
 import org.sqlite.SQLiteDataSource;
 
-import mitro.persistenza.mock.MockCifratura;
+import mitro.persistenza.mock.TestoInChiaro;
 import mitro.persistenza.sql.SQLDAOArchiviazione;
 import mitro.persistenza.sql.SQLDAOAttivita;
 import mitro.persistenza.sql.SQLDAOClasse;
@@ -27,23 +27,23 @@ public class DAOFactory {
 	}
 	
 	public DAOUtente getDAOUtente() {
-		return new SQLDAOUtente(dataSourceCondiviso, new MockCifratura());
+		return new SQLDAOUtente(dataSourceCondiviso, new TestoInChiaro());
 	}
 	
 	public DAOComunicazione getDAOComunicazione() {
-		return new SQLDAOComunicazione(dataSourceCondiviso, new MockCifratura());
+		return new SQLDAOComunicazione(dataSourceCondiviso, new TestoInChiaro());
 	}
 	
 	public DAOClasse getDAOClasse() {
-		return new SQLDAOClasse(dataSourceCondiviso, new MockCifratura());
+		return new SQLDAOClasse(dataSourceCondiviso, new TestoInChiaro());
 	}
 	
 	public DAOArchiviazione getDAOArchiviazione() {
-		return new SQLDAOArchiviazione(dataSourceCondiviso, new MockCifratura());
+		return new SQLDAOArchiviazione(dataSourceCondiviso, new TestoInChiaro());
 	}
 	
 	public DAOAttivita getDAOAttivita() {
-		return new SQLDAOAttivita(dataSourceCondiviso, new MockCifratura());
+		return new SQLDAOAttivita(dataSourceCondiviso, new TestoInChiaro());
 	}
 	
 	private DataSource creaDataSource() {

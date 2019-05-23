@@ -2,7 +2,7 @@ package mitro.persistenza.mock;
 
 import mitro.persistenza.Cifratura;
 
-public class MockCifratura implements Cifratura {
+public class TestoInChiaro implements Cifratura {
 
 	@Override
 	public String cifra(String valore) {

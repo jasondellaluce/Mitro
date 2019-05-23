@@ -105,6 +105,7 @@ public class SQLDAOUtente extends SQLDAOAstratto implements DAOUtente {
 				if(resultSet.getInt("IdPartecipaIn") != 0) {
 					Classe classe = new Classe();
 					classe.setId(String.valueOf(resultSet.getInt("IdPartecipaIn")));
+					s.setClasse(classe);
 				}		
 				return s;
 		}
@@ -231,7 +232,7 @@ public class SQLDAOUtente extends SQLDAOAstratto implements DAOUtente {
 			if(daoClasse.ottieniClassePerId(utente.getClasse().getId()) == null)
 				throw new ElementoNonPersistenteException("class");
 		
-		String query = "UPDATE UTENTE SET Ruolo=?, Nome=?, Cognome=?, Email=?, Indirizzo=?,"
+		String query = "UPDATE UTENTI SET Ruolo=?, Nome=?, Cognome=?, Email=?, Indirizzo=?,"
 				+ "Telefono=?, DataNascita=?, IdPartecipaIn=? WHERE Id=?";
 		this.eseguiUpdate(query, (s) -> {
 			s.setString(1, getCodiceRuolo(utente.getRuolo()));
@@ -264,7 +265,7 @@ public class SQLDAOUtente extends SQLDAOAstratto implements DAOUtente {
 		if(password == null || password.length() == 0)
 			throw new IllegalArgumentException("password");
 		
-		String query = "UPDATE UTENTE SET Username=?, Password=? WHERE Id=?";
+		String query = "UPDATE UTENTI SET Username=?, Password=? WHERE Id=?";
 		this.eseguiUpdate(query, (s) -> {
 			s.setString(1, cifratura.cifra(username));
 			s.setString(2, cifratura.cifraHash(password));
