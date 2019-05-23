@@ -132,7 +132,7 @@ public class SQLDAOAttivita extends SQLDAOAstratto implements DAOAttivita {
 		
 		// TODO: Handle Materia deletion (check if still referenced)
 		
-		String query = "DELETE FROM ATTIVITA WHERE WhHERE Data=? and OraInizio=? and IdSvoltaIn=?";
+		String query = "DELETE FROM ATTIVITA WHERE Data=? and OraInizio=? and IdSvoltaIn=?";
 		this.eseguiUpdate(query, (s) -> {
 			s.setDate(1, Date.valueOf(attivita.getData()));
 			s.setInt(2, attivita.getOraInizio());
@@ -209,6 +209,31 @@ public class SQLDAOAttivita extends SQLDAOAstratto implements DAOAttivita {
 			a.setMateria(daoMateria.ottieniMateriaPerId(a.getMateria().getId()));
 		}
 		return result;
+	}
+	
+	int ottieniIdAttivita(Attivita attivita) throws PersistenzaException {
+		String query = "SELECT Id FROM ATTIVITA WHERE Data=?, OraInizio=?, IdSvoltaIn=?";
+		return this.eseguiQuery(query, (s) -> {
+			s.setDate(1, Date.valueOf(attivita.getData()));
+			s.setInt(2, attivita.getOraInizio());
+			s.setInt(3, Integer.parseInt(attivita.getClasse().getId()));
+			ResultSet resultSet = s.executeQuery();
+			if(resultSet.next())
+				return resultSet.getInt("Id");
+
+			throw new ElementoNonPersistenteException("attivita");
+		});
+	}
+	
+	Attivita ottieniAttivitaPerId(int id) throws PersistenzaException {
+		String query = "SELECT * FROM ATTIVITA WHERE Id=?";
+		return this.eseguiQuery(query, (s) -> {
+			s.setInt(1, id);
+			ResultSet resultSet = s.executeQuery();
+			if(resultSet.next())
+				return parseResultSet(resultSet);
+			throw new ElementoNonPersistenteException("attivita");
+		});
 	}
 
 }

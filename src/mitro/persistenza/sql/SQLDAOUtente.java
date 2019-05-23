@@ -67,46 +67,46 @@ public class SQLDAOUtente extends SQLDAOAstratto implements DAOUtente {
 	private Utente parseResultSet(ResultSet resultSet) throws SQLException {
 		Ruolo ruolo = getRuoloDaCodice(resultSet.getString("Ruolo"));
 		switch(ruolo) {
-		default:
-			throw new IllegalArgumentException("ruolo");
-		case GESTORESICUREZZA:
-			Utente g = new Utente();
-			g.setId(String.valueOf(resultSet.getInt("Id")));
-			g.setRuolo(ruolo);
-			return g;
-		case AMMINISTRATORE:
-			Amministratore a = new Amministratore();
-			a.setId(String.valueOf(resultSet.getInt("Id")));
-			a.setRuolo(ruolo);
-			return a;
-		case PROFESSORE:
-			Professore p = new Professore();
-			p.setId(String.valueOf(resultSet.getInt("Id")));
-			p.setRuolo(ruolo);
-			p.setNome(cifratura.decifra(resultSet.getString("Nome")));
-			p.setCognome(cifratura.decifra(resultSet.getString("Cognome")));
-			p.setEmail(cifratura.decifra(resultSet.getString("Email")));
-			p.setIndirizzoResidenza(cifratura.decifra(resultSet.getString("Indirizzo")));
-			p.setTelefono(cifratura.decifra(resultSet.getString("Telefono")));
-			if(resultSet.getDate("DataNascita") != null)
-				p.setDataNascita(resultSet.getDate("DataNascita").toLocalDate());
-			return p;
-		case STUDENTE:
-			Studente s = new Studente();
-			s.setId(String.valueOf(resultSet.getInt("Id")));
-			s.setRuolo(ruolo);
-			s.setNome(cifratura.decifra(resultSet.getString("Nome")));
-			s.setCognome(cifratura.decifra(resultSet.getString("Cognome")));
-			s.setEmail(cifratura.decifra(resultSet.getString("Email")));
-			s.setIndirizzoResidenza(cifratura.decifra(resultSet.getString("Indirizzo")));
-			s.setTelefono(cifratura.decifra(resultSet.getString("Telefono")));
-			if(resultSet.getDate("DataNascita") != null)
-				s.setDataNascita(resultSet.getDate("DataNascita").toLocalDate());
-			if(resultSet.getInt("IdPartecipaIn") != 0) {
-				Classe classe = new Classe();
-				classe.setId(String.valueOf(resultSet.getInt("IdPartecipaIn")));
-			}		
-			return s;
+			default:
+				throw new IllegalArgumentException("ruolo");
+			case GESTORESICUREZZA:
+				Utente g = new Utente();
+				g.setId(String.valueOf(resultSet.getInt("Id")));
+				g.setRuolo(ruolo);
+				return g;
+			case AMMINISTRATORE:
+				Amministratore a = new Amministratore();
+				a.setId(String.valueOf(resultSet.getInt("Id")));
+				a.setRuolo(ruolo);
+				return a;
+			case PROFESSORE:
+				Professore p = new Professore();
+				p.setId(String.valueOf(resultSet.getInt("Id")));
+				p.setRuolo(ruolo);
+				p.setNome(cifratura.decifra(resultSet.getString("Nome")));
+				p.setCognome(cifratura.decifra(resultSet.getString("Cognome")));
+				p.setEmail(cifratura.decifra(resultSet.getString("Email")));
+				p.setIndirizzoResidenza(cifratura.decifra(resultSet.getString("Indirizzo")));
+				p.setTelefono(cifratura.decifra(resultSet.getString("Telefono")));
+				if(resultSet.getDate("DataNascita") != null)
+					p.setDataNascita(resultSet.getDate("DataNascita").toLocalDate());
+				return p;
+			case STUDENTE:
+				Studente s = new Studente();
+				s.setId(String.valueOf(resultSet.getInt("Id")));
+				s.setRuolo(ruolo);
+				s.setNome(cifratura.decifra(resultSet.getString("Nome")));
+				s.setCognome(cifratura.decifra(resultSet.getString("Cognome")));
+				s.setEmail(cifratura.decifra(resultSet.getString("Email")));
+				s.setIndirizzoResidenza(cifratura.decifra(resultSet.getString("Indirizzo")));
+				s.setTelefono(cifratura.decifra(resultSet.getString("Telefono")));
+				if(resultSet.getDate("DataNascita") != null)
+					s.setDataNascita(resultSet.getDate("DataNascita").toLocalDate());
+				if(resultSet.getInt("IdPartecipaIn") != 0) {
+					Classe classe = new Classe();
+					classe.setId(String.valueOf(resultSet.getInt("IdPartecipaIn")));
+				}		
+				return s;
 		}
 	}
 	
