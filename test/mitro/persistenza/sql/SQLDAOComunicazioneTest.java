@@ -15,11 +15,11 @@ import org.sqlite.SQLiteDataSource;
 import mitro.exceptions.PersistenzaException;
 import mitro.model.Comunicazione;
 import mitro.model.Studente;
-import mitro.persistenza.mock.TestoInChiaro;
+import mitro.persistenza.cifrature.TestoInChiaro;
 
 class SQLDAOComunicazioneTest {
 
-	private static final String dbName = "testDaoClasse.db";
+	private static final String dbName = "testDaoComunicazione.db";
 	private static SQLDAOComunicazione daoComunicazione;
 	private static SQLDAOUtente daoUtente;
 	

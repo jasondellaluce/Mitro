@@ -28,8 +28,6 @@ public class SQLDAOMateria extends SQLDAOAstratto {
 	public void registraMateria(Materia materia) throws PersistenzaException {
 		if(materia == null)
 			throw new IllegalArgumentException("materia");
-		if(materia.getId() == null || materia.getId().length() == 0)
-			throw new IllegalArgumentException("id");
 		if(materia.getNome() == null || materia.getNome().length() == 0)
 			throw new IllegalArgumentException("nome");
 		

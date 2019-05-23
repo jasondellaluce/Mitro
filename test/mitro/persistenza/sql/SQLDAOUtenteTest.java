@@ -19,7 +19,7 @@ import mitro.model.Professore;
 import mitro.model.Ruolo;
 import mitro.model.Studente;
 import mitro.model.Utente;
-import mitro.persistenza.mock.TestoInChiaro;
+import mitro.persistenza.cifrature.TestoInChiaro;
 
 class SQLDAOUtenteTest {
 

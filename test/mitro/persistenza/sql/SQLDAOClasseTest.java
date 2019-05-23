@@ -12,7 +12,7 @@ import org.sqlite.SQLiteDataSource;
 
 import mitro.exceptions.PersistenzaException;
 import mitro.model.Classe;
-import mitro.persistenza.mock.TestoInChiaro;
+import mitro.persistenza.cifrature.MockCifratura;
 
 class SQLDAOClasseTest {
 
@@ -25,7 +25,7 @@ class SQLDAOClasseTest {
 		ds.setUrl("jdbc:sqlite:" + dbName); 
 		new SQLGestoreTabelle(ds).eliminaTabelle();
 		new SQLGestoreTabelle(ds).creaTabelle();
-		dao = new SQLDAOClasse(ds, new TestoInChiaro());	
+		dao = new SQLDAOClasse(ds, new MockCifratura());	
 	}
 
 	@Test

@@ -55,19 +55,20 @@ public class SQLDAOAttivita extends SQLDAOAstratto implements DAOAttivita {
 	@Override
 	public void registraAttivita(Attivita attivita) throws PersistenzaException {
 		if(attivita == null)
-			throw new IllegalArgumentException("attivita");
+			throw new ElementoNonPersistenteException("attivita");
 		if(attivita.getData() == null)
-			throw new IllegalArgumentException("data");
+			throw new ElementoNonPersistenteException("data");
 		if(attivita.getClasse() == null
 				|| daoClasse.ottieniClassePerId(attivita.getClasse().getId()) == null)
 			throw new ElementoNonPersistenteException("classe");
 		if(attivita.getProfessore() == null
 				|| daoUtente.ottieniUtentePerId(attivita.getProfessore().getId()) == null)
 			throw new ElementoNonPersistenteException("professore");
-		if(attivita.getMateria() == null || attivita.getMateria().getId() == null)
+		if(attivita.getMateria() == null)
 			throw new ElementoNonPersistenteException("materia");
 		
-		if(daoMateria.ottieniMateriaPerId(attivita.getMateria().getId()) == null)
+		if(attivita.getMateria().getId() == null 
+				|| daoMateria.ottieniMateriaPerId(attivita.getMateria().getId()) == null)
 			daoMateria.registraMateria(attivita.getMateria());
 		
 		String query = "INSERT INTO ATTIVITA (Data, OraInizio, IdSvoltaIn, " +
@@ -87,9 +88,9 @@ public class SQLDAOAttivita extends SQLDAOAstratto implements DAOAttivita {
 	@Override
 	public void modificaAttivita(Attivita attivita) throws PersistenzaException {
 		if(attivita == null)
-			throw new IllegalArgumentException("attivita");
+			throw new ElementoNonPersistenteException("attivita");
 		if(attivita.getData() == null)
-			throw new IllegalArgumentException("data");
+			throw new ElementoNonPersistenteException("data");
 		if(attivita.getClasse() == null
 				|| daoClasse.ottieniClassePerId(attivita.getClasse().getId()) == null)
 			throw new ElementoNonPersistenteException("classe");
@@ -104,8 +105,8 @@ public class SQLDAOAttivita extends SQLDAOAstratto implements DAOAttivita {
 		if(daoMateria.ottieniMateriaPerId(attivita.getMateria().getId()) == null)
 			daoMateria.registraMateria(attivita.getMateria());
 		
-		String query = "UPDATE ATTIVITA SET IdInsegnataIn=, IdReferenteDi=?, Annotazione=? "
-				+ "WhHERE Data=? and OraInizio=? and IdSvoltaIn=?";
+		String query = "UPDATE ATTIVITA SET IdInsegnataIn=?, IdReferenteDi=?, Annotazione=? "
+				+ "WHERE Data=? and OraInizio=? and IdSvoltaIn=?";
 		this.eseguiUpdate(query, (s) -> {
 			s.setInt(1, Integer.parseInt(attivita.getMateria().getId()));
 			s.setInt(2, Integer.parseInt(attivita.getProfessore().getId()));
@@ -121,9 +122,9 @@ public class SQLDAOAttivita extends SQLDAOAstratto implements DAOAttivita {
 	@Override
 	public void eliminaAttivita(Attivita attivita) throws PersistenzaException {
 		if(attivita == null)
-			throw new IllegalArgumentException("attivita");
+			throw new ElementoNonPersistenteException("attivita");
 		if(attivita.getData() == null)
-			throw new IllegalArgumentException("data");
+			throw new ElementoNonPersistenteException("data");
 		if(attivita.getClasse() == null
 				|| daoClasse.ottieniClassePerId(attivita.getClasse().getId()) == null)
 			throw new ElementoNonPersistenteException("classe");

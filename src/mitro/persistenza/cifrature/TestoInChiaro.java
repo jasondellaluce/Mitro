@@ -1,4 +1,4 @@
-package mitro.persistenza.mock;
+package mitro.persistenza.cifrature;
 
 import mitro.persistenza.Cifratura;
 

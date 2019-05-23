@@ -4,7 +4,7 @@ import javax.sql.DataSource;
 
 import org.sqlite.SQLiteDataSource;
 
-import mitro.persistenza.mock.TestoInChiaro;
+import mitro.persistenza.cifrature.TestoInChiaro;
 import mitro.persistenza.sql.SQLDAOArchiviazione;
 import mitro.persistenza.sql.SQLDAOAttivita;
 import mitro.persistenza.sql.SQLDAOClasse;
