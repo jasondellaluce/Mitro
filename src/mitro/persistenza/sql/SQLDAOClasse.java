@@ -66,7 +66,7 @@ public class SQLDAOClasse extends SQLDAOAstratto implements DAOClasse {
 			statement.setInt(4, Integer.parseInt(classe.getId()));
 			
 			if(statement.executeUpdate() != 1)
-				throw new ElementoNonPersistenteException("Id=" + classe.getId());
+				throw new ElementoNonPersistenteException();
 		});
 	}
 

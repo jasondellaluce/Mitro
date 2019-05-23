@@ -62,6 +62,7 @@ public class DatabaseInitialize {
 				"    OraInizio          INT NOT NULL,\r\n" + 
 				"    IdSvoltaIn         REFERENCES CLASSI NOT NULL,\r\n" + 
 				"    IdInsegnataIn      REFERENCES MATERIE NOT NULL,\r\n" + 
+				"    IdReferenteDi      REFERENCES UTENTI NOT NULL,\r\n" +
 				"    Annotazione        VARCHAR(1000),\r\n" + 
 				"    \r\n" + 
 				"    UNIQUE             (Data, OraInizio, IdSvoltaIn)\r\n" + 
