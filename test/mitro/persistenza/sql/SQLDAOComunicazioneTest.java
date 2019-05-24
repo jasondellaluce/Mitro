@@ -12,6 +12,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.sqlite.SQLiteDataSource;
 
+import mitro.controller.deployment.Configurazione;
 import mitro.exceptions.PersistenzaException;
 import mitro.model.Comunicazione;
 import mitro.model.Studente;
@@ -43,9 +44,9 @@ class SQLDAOComunicazioneTest {
 		Comunicazione c1 = new Comunicazione();
 		Comunicazione c2 = new Comunicazione();
 		Comunicazione c3 = new Comunicazione();
-		c1.setDataOra(LocalDateTime.now());
-		c2.setDataOra(LocalDateTime.now().minusDays(1));
-		c3.setDataOra(LocalDateTime.now());
+		c1.setDataOra(LocalDateTime.now(Configurazione.ZONE_ID));
+		c2.setDataOra(LocalDateTime.now(Configurazione.ZONE_ID).minusDays(1));
+		c3.setDataOra(LocalDateTime.now(Configurazione.ZONE_ID));
 		c1.setDestinatario(u1);
 		c3.setDestinatario(u1);
 		c1.setOggetto("Comm1");
@@ -76,7 +77,7 @@ class SQLDAOComunicazioneTest {
 		assertDoesNotThrow(() -> daoComunicazione.modificaComunicazione(c1));
 		
 		/* Eliminazione illecita */
-		c3.setDataOra(LocalDateTime.now().plusDays(1));
+		c3.setDataOra(LocalDateTime.now(Configurazione.ZONE_ID).plusDays(1));
 		assertThrows(PersistenzaException.class, () -> daoComunicazione.eliminaComunicazione(c3));
 		
 		/* Eliminazione lecita */
@@ -92,12 +93,12 @@ class SQLDAOComunicazioneTest {
 		assertTrue(lista.contains(c1));
 		assertTrue(lista.contains(c2));
 		
-		lista = daoComunicazione.ottieniComunicazioniPerData(LocalDate.now(), LocalDate.now());
+		lista = daoComunicazione.ottieniComunicazioniPerData(LocalDate.now(Configurazione.ZONE_ID), LocalDate.now(Configurazione.ZONE_ID));
 		assertEquals(lista.size(), 1);
 		assertTrue(lista.contains(c1));
 		assertFalse(lista.contains(c2));
 		
-		lista = daoComunicazione.ottieniComunicazioniPerData(LocalDate.now().minusDays(2), LocalDate.now().minusDays(1));
+		lista = daoComunicazione.ottieniComunicazioniPerData(LocalDate.now(Configurazione.ZONE_ID).minusDays(2), LocalDate.now(Configurazione.ZONE_ID).minusDays(1));
 		assertEquals(lista.size(), 1);
 		assertTrue(lista.contains(c2));
 		assertFalse(lista.contains(c1));

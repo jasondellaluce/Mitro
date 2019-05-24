@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import mitro.controller.ControllerFactory;
+import mitro.controller.deployment.Configurazione;
 import mitro.controller.log.LoggerMessaggi;
 import mitro.model.Utente;
 
@@ -30,11 +31,18 @@ public abstract class ViewAstratta extends HttpServlet {
 	protected abstract void doPost(HttpServletRequest req, HttpServletResponse resp) 
 			throws ServletException, IOException;
 	
+	
+	@Override
+	protected void service(HttpServletRequest arg0, HttpServletResponse arg1) throws ServletException, IOException {
+		Configurazione.PATH_RELATIVO = getServletConfig().getServletContext().getRealPath("");
+		super.service(arg0, arg1);
+	}
+
 	/**
 	 * Scrive un messaggio ricevuto da un utente autenticato
 	 * */
 	protected void eseguiLogMessaggioRicevuto(Utente utente, String messaggio) {
-		String voce = LocalDateTime.now() + ", "
+		String voce = LocalDateTime.now(Configurazione.ZONE_ID) + ", "
 				+ "R, "
 				+ utente.getId() + ", "
 				+ messaggio;
@@ -45,7 +53,7 @@ public abstract class ViewAstratta extends HttpServlet {
 	 * Scrive un messaggio ricevuto da un utente non autenticato
 	 * */
 	protected void eseguiLogMessaggioRicevuto(String messaggio) {
-		String voce = LocalDateTime.now() + ", "
+		String voce = LocalDateTime.now(Configurazione.ZONE_ID) + ", "
 				+ "R, "
 				+ "NOID, "
 				+ this.getClass().getSimpleName() + ", "
@@ -57,7 +65,7 @@ public abstract class ViewAstratta extends HttpServlet {
 	 * Scrive un messaggio ricevuto inviato ad un utente non autenticato
 	 * */
 	protected void eseguiLogMessaggioInviato(Utente utente, String messaggio) {
-		String voce = LocalDateTime.now() + ", "
+		String voce = LocalDateTime.now(Configurazione.ZONE_ID) + ", "
 				+ "I, "
 				+ this.getClass().getSimpleName() + ", "
 				+ messaggio;
@@ -68,7 +76,7 @@ public abstract class ViewAstratta extends HttpServlet {
 	 * Scrive un messaggio ricevuto inviato ad un utente non autenticato
 	 * */
 	protected void eseguiLogMessaggioInviato(String messaggio) {
-		String voce = LocalDateTime.now() + ", "
+		String voce = LocalDateTime.now(Configurazione.ZONE_ID) + ", "
 				+ "I, "
 				+ this.getClass().getSimpleName() + ", "
 				+ messaggio;

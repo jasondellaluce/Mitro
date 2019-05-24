@@ -4,6 +4,7 @@ import javax.sql.DataSource;
 
 import org.sqlite.SQLiteDataSource;
 
+import mitro.controller.deployment.Configurazione;
 import mitro.persistenza.cifrature.TestoInChiaro;
 import mitro.persistenza.sql.SQLDAOArchiviazione;
 import mitro.persistenza.sql.SQLDAOAttivita;
@@ -49,7 +50,8 @@ public class DAOFactory {
 	
 	private DataSource creaDataSource() {
 		SQLiteDataSource sqliteDataSource = new SQLiteDataSource();
-		sqliteDataSource.setUrl("jdbc:sqlite:" + nomeFileDatabase); 
+		sqliteDataSource.setUrl("jdbc:sqlite:" + Configurazione.PATH_RELATIVO 
+				+ "/" + nomeFileDatabase); 
 		return sqliteDataSource;
 	}
 	

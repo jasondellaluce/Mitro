@@ -10,6 +10,8 @@ import java.lang.reflect.Modifier;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+import mitro.controller.deployment.Configurazione;
+
 public class JavaBeanTestHelper {
 	
 	public static void testAccessor(Object oggetto, String... salta) {
@@ -125,10 +127,10 @@ public class JavaBeanTestHelper {
 			return "example";
 		
 		if(tipo.equals(LocalDateTime.class))
-			return LocalDateTime.now();
+			return LocalDateTime.now(Configurazione.ZONE_ID);
 		
 		if(tipo.equals(LocalDate.class))
-			return LocalDate.now();
+			return LocalDate.now(Configurazione.ZONE_ID);
 		
 		try {
 			return tipo.newInstance();

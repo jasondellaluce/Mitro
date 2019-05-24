@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.sqlite.SQLiteDataSource;
 
-import mitro.persistenza.DAOFactory;
+import mitro.controller.deployment.Configurazione;
 import mitro.persistenza.cifrature.TestoInChiaro;
 import mitro.persistenza.sql.SQLGestoreTabelle;
 
@@ -20,7 +20,7 @@ public class InizializzaDatabase extends ViewAstratta {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		SQLiteDataSource ds = new SQLiteDataSource();
-        ds.setUrl("jdbc:sqlite:" + getServletConfig().getServletContext().getRealPath("") + "/" + nomeFileDatabase); 
+        ds.setUrl("jdbc:sqlite:" + Configurazione.PATH_RELATIVO + "/" + nomeFileDatabase); 
         SQLGestoreTabelle gestore = new SQLGestoreTabelle(ds, new TestoInChiaro());
         
         try {
@@ -29,9 +29,6 @@ public class InizializzaDatabase extends ViewAstratta {
 			
 			resp.getWriter().write("Creazione nuovo DataBase SQLite...\n");
 			gestore.creaTabelle();
-			
-			DAOFactory.nomeFileDatabase = getServletConfig().getServletContext().getRealPath("")
-					+ "/" + nomeFileDatabase;
 			
 			resp.getWriter().write("Inizializzazione informazioni...\n");
 			gestore.creaInformazioniIniziali();
@@ -45,8 +42,7 @@ public class InizializzaDatabase extends ViewAstratta {
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-
+		doGet(req, resp);
 	}
 
 }
