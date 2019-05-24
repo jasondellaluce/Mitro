@@ -68,8 +68,8 @@ class GestioneProfessoreControllerTest {
 		daoComunicazione = new CollectionDAOComunicazione();
 		daoAttivita = new CollectionDAOAttivita();
 		logger = new MockLoggerOperazioni();
-		test = new GestioneProfessoreController(professore, daoComunicazione,
-				daoAttivita, logger);
+		test = new GestioneProfessoreController(logger, daoComunicazione,
+				daoAttivita, professore);
 	}
 	
 

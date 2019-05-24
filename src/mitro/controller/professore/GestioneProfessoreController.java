@@ -21,9 +21,9 @@ public class GestioneProfessoreController extends ControllerAstratto implements 
 	private DAOComunicazione daoComunicazione;
 	private DAOAttivita daoAttivita;
 	
-	public GestioneProfessoreController(Professore professore,
+	public GestioneProfessoreController(LoggerOperazioni logger,
 			DAOComunicazione daoComunicazione, DAOAttivita daoAttivita,
-			LoggerOperazioni logger) {
+			Professore professore) {
 		super(logger);
 		this.professore = professore;
 		this.daoComunicazione = daoComunicazione;

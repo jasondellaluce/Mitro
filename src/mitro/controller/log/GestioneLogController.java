@@ -24,8 +24,8 @@ public class GestioneLogController extends ControllerAstratto implements Gestion
 	private String nomeFileLogMessaggi;
 	
 	public GestioneLogController(LoggerOperazioni logger, String nomeFileLogOperazioni, 
-			String nomeFileLogMessaggi, AnalisiMessaggi analisiMessaggi, 
-			AnalisiOperazioni analisiOperazioni) {
+			String nomeFileLogMessaggi, AnalisiOperazioni analisiOperazioni,
+			AnalisiMessaggi analisiMessaggi) {
 		super(logger);
 		this.analisiMessaggi = analisiMessaggi;
 		this.analisiOperazioni = analisiOperazioni;
@@ -88,14 +88,14 @@ public class GestioneLogController extends ControllerAstratto implements Gestion
 	private VoceOperazioneLog parseVoceOperazione(String line) {
 		StringTokenizer stk = new StringTokenizer(line, ",");
 		LocalDateTime dataOra = LocalDateTime.parse(stk.nextToken().trim());
-		String resto = stk.nextToken("\n");
+		String resto = stk.nextToken("\n").substring(1).trim();
 		return new VoceOperazioneLog(dataOra, resto);
 	}
 	
 	private VoceMessaggioLog parseVoceMessaggio(String line) {
 		StringTokenizer stk = new StringTokenizer(line, ",");
 		LocalDateTime dataOra = LocalDateTime.parse(stk.nextToken().trim());
-		String resto = stk.nextToken("\n");
+		String resto = stk.nextToken("\n").substring(1).trim();
 		return new VoceMessaggioLog(dataOra, resto);
 	}
 }

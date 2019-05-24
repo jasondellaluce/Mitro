@@ -13,6 +13,7 @@ import mitro.persistenza.sql.SQLDAOUtente;
 
 public class DAOFactory {
 
+	private final static String nomeFileDatabase = "database.db";
 	private static DAOFactory instance;
 	private DataSource dataSourceCondiviso;
 	
@@ -48,7 +49,7 @@ public class DAOFactory {
 	
 	private DataSource creaDataSource() {
 		SQLiteDataSource sqliteDataSource = new SQLiteDataSource();
-		sqliteDataSource.setUrl("jdbc:sqlite:database.db"); 
+		sqliteDataSource.setUrl("jdbc:sqlite:" + nomeFileDatabase); 
 		return sqliteDataSource;
 	}
 	

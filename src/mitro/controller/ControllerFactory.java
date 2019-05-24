@@ -3,23 +3,35 @@ package mitro.controller;
 import java.io.OutputStreamWriter;
 
 import mitro.controller.amministratore.AmministrazioneClassi;
+import mitro.controller.amministratore.AmministrazioneClassiController;
 import mitro.controller.amministratore.AmministrazioneIscritti;
 import mitro.controller.log.GestioneLog;
+import mitro.controller.log.GestioneLogController;
 import mitro.controller.log.LoggerMessaggi;
 import mitro.controller.log.LoggerOperazioni;
 import mitro.controller.log.WriterLoggerMessaggi;
 import mitro.controller.log.WriterLoggerOperazioni;
+import mitro.controller.log.analisi.AnalisiMessaggiSemplice;
+import mitro.controller.log.analisi.AnalisiOperazioniSemplice;
 import mitro.controller.login.MapPermessoLogin;
 import mitro.controller.login.PermessoLogin;
 import mitro.controller.login.Login;
 import mitro.controller.login.LoginController;
 import mitro.controller.professore.GestioneClasse;
+import mitro.controller.professore.GestioneClasseController;
 import mitro.controller.professore.GestioneProfessore;
+import mitro.controller.professore.GestioneProfessoreController;
 import mitro.controller.studente.GestioneStudente;
+import mitro.controller.studente.GestioneStudenteController;
+import mitro.model.Classe;
+import mitro.model.Professore;
+import mitro.model.Studente;
 import mitro.persistenza.DAOFactory;
 
 public class ControllerFactory {
 
+	private static final String nomeFileLogOperazioni = "LogOperazioni.log";
+	private static final String nomeFileLogMessaggi = "LogMessaggi.log";
 	private static ControllerFactory instance;
 	private LoggerOperazioni loggerOperazioniCondiviso;
 	private LoggerMessaggi loggerMessaggiCondiviso;
@@ -51,16 +63,28 @@ public class ControllerFactory {
 				DAOFactory.getInstance().getDAOUtente());
 	}
 	
-	public GestioneStudente getGestioneStudente() {
-		return null;
+	public GestioneStudente getGestioneStudente(Studente studente) {
+		return new GestioneStudenteController(getLoggerOperazioni(),
+				DAOFactory.getInstance().getDAOComunicazione(),
+				DAOFactory.getInstance().getDAOArchiviazione(),
+				DAOFactory.getInstance().getDAOAttivita(),
+				studente);
 	}
 	
-	public GestioneProfessore getGestioneProfessore() {
-		return null;
+	public GestioneProfessore getGestioneProfessore(Professore professore) {
+		return new GestioneProfessoreController(getLoggerOperazioni(),
+				DAOFactory.getInstance().getDAOComunicazione(),
+				DAOFactory.getInstance().getDAOAttivita(),
+				professore);
 	}
 	
-	public GestioneClasse getGestioneClasse() {
-		return null;
+	public GestioneClasse getGestioneClasse(Classe classe) {
+		return new GestioneClasseController(getLoggerOperazioni(),
+				DAOFactory.getInstance().getDAOArchiviazione(),
+				DAOFactory.getInstance().getDAOAttivita(),
+				DAOFactory.getInstance().getDAOUtente(),
+				classe);
+				
 	}
 	
 	public AmministrazioneIscritti getAmministrazioneIscritti() {
@@ -68,11 +92,18 @@ public class ControllerFactory {
 	}
 	
 	public AmministrazioneClassi getAmministrazioneClassi() {
-		return null;
+		return new AmministrazioneClassiController(getLoggerOperazioni(),
+				DAOFactory.getInstance().getDAOClasse(),
+				DAOFactory.getInstance().getDAOArchiviazione(),
+				DAOFactory.getInstance().getDAOAttivita());
 	}
 	
 	public GestioneLog getGestioneLog() {
-		return null;
+		return new GestioneLogController(getLoggerOperazioni(),
+				nomeFileLogOperazioni,
+				nomeFileLogMessaggi,
+				new AnalisiOperazioniSemplice(),
+				new AnalisiMessaggiSemplice());
 	}
 	
 }
