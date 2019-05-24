@@ -46,6 +46,34 @@ public abstract class ViewUtenteAstratta extends ViewAstratta {
 		}
 	}
 	
+	protected void eseguiDisconnessione(HttpServletRequest req, HttpServletResponse resp)
+			throws OperazioneException, IOException, ServletException {
+		HttpSession sessioneUtente = req.getSession();
+		
+		/* Controlla Login non eseguito */
+		if(sessioneUtente.getAttribute(nomeAttributoLogin) == null) {
+			return;
+		}
+		
+		/* Controlla se l'attributo Login è compromesso */
+		if(!(sessioneUtente.getAttribute(nomeAttributoLogin) instanceof Login)) {
+			sessioneUtente.removeAttribute(nomeAttributoLogin);
+			return;
+		}
+		
+		/* Controlla se il cliente è stato autenticato */
+		Login loginUtente = (Login) sessioneUtente.getAttribute(nomeAttributoLogin);
+		if(!loginUtente.getUtenteAutenticato().isPresent()) {
+			return;
+		}
+		
+		/* Esegui disconnessione */
+		if(!loginUtente.disconnetti()) {
+			apriErrorePrivilegio(req, resp);
+			return;
+		}
+	}
+	
 	private Utente ottieniUtenteAutenticato(HttpServletRequest req, HttpServletResponse resp) 
 			throws IOException, OperazioneException, ServletException {
 		HttpSession sessioneUtente = req.getSession();
@@ -85,14 +113,14 @@ public abstract class ViewUtenteAstratta extends ViewAstratta {
 	private void apriLogin(HttpServletRequest req, HttpServletResponse resp) 
 			throws IOException, ServletException {
 		req.setAttribute("error", "Non sei ancora stato autenticato");
-		req.getRequestDispatcher("/login.jsp").forward(req, resp);
+		req.getRequestDispatcher("/login").forward(req, resp);
 	}
 	
 	/* Ridirige alla pagina di errore per mancato privilegio */
 	private void apriErrorePrivilegio(HttpServletRequest req, HttpServletResponse resp) 
 			throws IOException, ServletException {
 		req.setAttribute("error", "Non possiedi i privilegi necessari");
-		req.getRequestDispatcher("/login.jsp").forward(req, resp);
+		req.getRequestDispatcher("/login").forward(req, resp);
 	}
 	
 	/* Ridirige alla pagina di errore per mancato privilegio */
