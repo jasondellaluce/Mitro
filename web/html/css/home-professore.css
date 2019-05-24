@@ -28,3 +28,11 @@
 .sidenav a:hover {
   color: #f1f1f1;
 }
+
+.sidenav img:hover {
+	opacity: 0.5;
+}
+
+.logo {
+	 padding: 16px 16px 70px 26px;
+}
