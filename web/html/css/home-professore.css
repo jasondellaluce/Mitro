@@ -1,0 +1,30 @@
+/* The side navigation menu */
+.sidenav {
+  height: 100%;
+  width: 150;
+  position: fixed; 
+  z-index: 1; 
+  top: 0; 
+  left: 0;
+  background-color: #3498DB;
+  overflow-x: hidden; 
+  overflow: scroll;
+  padding-top: 15px;
+  transition: 0.5s; 
+}
+
+.sidenav a {
+  padding: 16px 16px 16px 26px;
+  text-decoration: none;
+  font-size: 20px;
+  color: #111;
+  display: block;
+  transition: 0.3s;
+}
+
+/*
+* quando il mouse va sopra ad un link di navigazione questo cambia colore
+* */
+.sidenav a:hover {
+  color: #f1f1f1;
+}
