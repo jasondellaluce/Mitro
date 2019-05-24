@@ -10,6 +10,7 @@ import mitro.controller.ControllerAstratto;
 import mitro.controller.log.LoggerOperazioni;
 import mitro.exceptions.OperazioneException;
 import mitro.exceptions.PersistenzaException;
+import mitro.exceptions.PrecondizioneNonSoddisfattaException;
 import mitro.model.Attivita;
 import mitro.model.Classe;
 import mitro.model.Presenza;
@@ -56,7 +57,8 @@ public class GestioneClasseController extends ControllerAstratto implements Gest
 	@Override
 	public void inserisciPresenza(Presenza presenza) throws OperazioneException {
 		if(!presenza.getAttivita().getClasse().equals(presenza.getStudente().getClasse()))
-			throw new IllegalArgumentException("Precondizione insoddisfatta");
+			throw new PrecondizioneNonSoddisfattaException(
+					"studente non partecipante all'attività");
 		
 		try {
 			if(daoArchiviazione.ottieniArchiviazioni().contains(presenza)) {

@@ -5,6 +5,7 @@ import java.io.OutputStreamWriter;
 import mitro.controller.amministratore.AmministrazioneClassi;
 import mitro.controller.amministratore.AmministrazioneClassiController;
 import mitro.controller.amministratore.AmministrazioneIscritti;
+import mitro.controller.amministratore.AmministrazioneIscrittiController;
 import mitro.controller.log.GestioneLog;
 import mitro.controller.log.GestioneLogController;
 import mitro.controller.log.LoggerMessaggi;
@@ -88,7 +89,9 @@ public class ControllerFactory {
 	}
 	
 	public AmministrazioneIscritti getAmministrazioneIscritti() {
-		return null;
+		return new AmministrazioneIscrittiController(getLoggerOperazioni(),
+				DAOFactory.getInstance().getDAOUtente(),
+				DAOFactory.getInstance().getDAOComunicazione());
 	}
 	
 	public AmministrazioneClassi getAmministrazioneClassi() {
