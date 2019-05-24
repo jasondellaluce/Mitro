@@ -7,39 +7,72 @@
 
     <display-name>Mitro</display-name>
     <description>
-      Mitro è una Web Application sviluppata come progetto di gruppo per il corso di Ingegneria del Software T
+      Mitro e' una Web Application sviluppata come progetto di gruppo per il corso di Ingegneria del Software T
     </description>
 
 	<!-- Context attributes to be used throughout the application -->
 	
     <!-- Define servlets that are included in the application -->
+    
     <servlet> 
-    	<servlet-name>StatisticheServlet</servlet-name> 
-	    <servlet-class>it.unibo.tw.es1.servlets.StatisticheServlet</servlet-class> 
+    	<servlet-name>Init</servlet-name> 
+	    <servlet-class>mitro.view.InizializzaDatabase</servlet-class> 
+    </servlet> 
+    <servlet> 
+    	<servlet-name>ViewLogin</servlet-name> 
+	    <servlet-class>mitro.view.login.ViewLogin</servlet-class> 
+    </servlet> 
+     <servlet> 
+    	<servlet-name>HomeAmministratore</servlet-name> 
+	    <servlet-class>mitro.view.amministratore.HomeAmministratore</servlet-class> 
+    </servlet> 
+     <servlet> 
+    	<servlet-name>HomeStudente</servlet-name> 
+	    <servlet-class>mitro.view.studente.HomeStudente</servlet-class> 
+    </servlet> 
+     <servlet> 
+    	<servlet-name>HomeProfessore</servlet-name> 
+	    <servlet-class>mitro.view.professore.HomeProfessore</servlet-class> 
+    </servlet>
+     <servlet> 
+    	<servlet-name>HomeLog</servlet-name> 
+	    <servlet-class>mitro.view.log.HomeLog</servlet-class> 
     </servlet> 
     
     <!-- Map some URL's to the  servlet --> 
+    
+     <servlet-mapping> 
+    	<servlet-name>Init</servlet-name> 
+        <url-pattern>/init</url-pattern> 
+    </servlet-mapping>
     <servlet-mapping> 
-    	<servlet-name>StatisticheServlet</servlet-name> 
-        <url-pattern>/statisticheServlet</url-pattern> 
+    	<servlet-name>ViewLogin</servlet-name> 
+        <url-pattern>/login</url-pattern> 
+    </servlet-mapping>
+    <servlet-mapping> 
+    	<servlet-name>HomeStudente</servlet-name> 
+        <url-pattern>/studente</url-pattern> 
+    </servlet-mapping>
+    <servlet-mapping> 
+    	<servlet-name>HomeProfessore</servlet-name> 
+        <url-pattern>/professore</url-pattern> 
+    </servlet-mapping>
+    <servlet-mapping> 
+    	<servlet-name>HomeAmministratore</servlet-name> 
+        <url-pattern>/amministratore</url-pattern> 
+    </servlet-mapping>
+    <servlet-mapping> 
+    	<servlet-name>HomeLog</servlet-name> 
+        <url-pattern>/log</url-pattern> 
     </servlet-mapping>
     
 	<!-- Welcome pages -->
 	
 	<welcome-file-list>
-		<welcome-file>login.jsp</welcome-file>
+		<welcome-file>/login</welcome-file>
 	</welcome-file-list>
 		
 	<!-- Handle exceptions and errors -->
 	
-	<error-page>
-		<error-code>404</error-code>
-		<location>/errors/notfound.html</location>
-	</error-page>
-
-	<error-page>
-		<exception-type>javax.servlet.ServletException</exception-type>
-		<location>/errors/failure.jsp</location>
-	</error-page>
 	 
 </web-app>

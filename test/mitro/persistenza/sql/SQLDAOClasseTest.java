@@ -23,8 +23,8 @@ class SQLDAOClasseTest {
 	static void setUpBeforeClass() throws Exception {
 		SQLiteDataSource ds = new SQLiteDataSource();
 		ds.setUrl("jdbc:sqlite:" + dbName); 
-		new SQLGestoreTabelle(ds).eliminaTabelle();
-		new SQLGestoreTabelle(ds).creaTabelle();
+		new SQLGestoreTabelle(ds, new MockCifratura()).eliminaTabelle();
+		new SQLGestoreTabelle(ds, new MockCifratura()).creaTabelle();
 		dao = new SQLDAOClasse(ds, new MockCifratura());	
 	}
 

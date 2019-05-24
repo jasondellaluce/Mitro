@@ -13,7 +13,7 @@ import mitro.persistenza.sql.SQLDAOUtente;
 
 public class DAOFactory {
 
-	private final static String nomeFileDatabase = "database.db";
+	public static String nomeFileDatabase = "database.db";
 	private static DAOFactory instance;
 	private DataSource dataSourceCondiviso;
 	

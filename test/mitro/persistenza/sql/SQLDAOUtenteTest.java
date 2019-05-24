@@ -31,8 +31,8 @@ class SQLDAOUtenteTest {
 	static void setUpBeforeClass() throws Exception {
 		SQLiteDataSource ds = new SQLiteDataSource();
 		ds.setUrl("jdbc:sqlite:" + dbName); 
-		new SQLGestoreTabelle(ds).eliminaTabelle();
-		new SQLGestoreTabelle(ds).creaTabelle();
+		new SQLGestoreTabelle(ds, new MockCifratura()).eliminaTabelle();
+		new SQLGestoreTabelle(ds, new MockCifratura()).creaTabelle();
 		
 		daoUtente = new SQLDAOUtente(ds, new MockCifratura());	
 		daoClasse = new SQLDAOClasse(ds, new MockCifratura());	

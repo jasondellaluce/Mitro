@@ -2,6 +2,7 @@ package mitro.demo;
 
 import org.sqlite.SQLiteDataSource;
 
+import mitro.persistenza.cifrature.MockCifratura;
 import mitro.persistenza.sql.SQLGestoreTabelle;
 
 public class InizializzaDatabase {
@@ -11,7 +12,7 @@ public class InizializzaDatabase {
 	public static void main(String[] args) throws Exception {
 		SQLiteDataSource ds = new SQLiteDataSource();
         ds.setUrl("jdbc:sqlite:" + nomeFileDatabase); 
-        SQLGestoreTabelle gestore = new SQLGestoreTabelle(ds);
+        SQLGestoreTabelle gestore = new SQLGestoreTabelle(ds, new MockCifratura());
         
 		System.out.println("Eliminazione DataBase SQLite pre-esistente...");
 		gestore.eliminaTabelle();
@@ -19,6 +20,7 @@ public class InizializzaDatabase {
 		System.out.println("Creazione nuovo DataBase SQLite...");
 		gestore.creaTabelle();
 		
+		gestore.creaInformazioniIniziali();
 		System.out.println("Database Inizializzato");
 	}
 	

@@ -1,4 +1,4 @@
-package mitro.view;
+package mitro.view.studente;
 
 import java.io.IOException;
 
@@ -8,31 +8,26 @@ import javax.servlet.http.HttpServletResponse;
 
 import mitro.model.Ruolo;
 import mitro.model.Utente;
+import mitro.view.ViewUtenteAstratta;
 
-public class HomeProfessore extends ViewUtenteAstratta {
+public class HomeStudente extends ViewUtenteAstratta {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -5919910173044717518L;
 
-	public HomeProfessore(Ruolo ruoloPrivilegio) {
-		super(ruoloPrivilegio);
-		// TODO Auto-generated constructor stub
+	public HomeStudente() {
+		super(Ruolo.STUDENTE);
 	}
 
 	@Override
 	protected void gestisciRichiestaGet(Utente utente, HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		
+		resp.getWriter().write("Ciao Studente " + utente);
 	}
 
 	@Override
 	protected void gestisciRichiestaPost(Utente utente, HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		
+		resp.getWriter().write("Ciao Studente " + utente);
 	}
 
 }

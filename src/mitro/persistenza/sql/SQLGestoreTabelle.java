@@ -6,12 +6,23 @@ import java.sql.Statement;
 
 import javax.sql.DataSource;
 
+import mitro.exceptions.PersistenzaException;
+import mitro.model.Amministratore;
+import mitro.model.Professore;
+import mitro.model.Ruolo;
+import mitro.model.Studente;
+import mitro.model.Utente;
+import mitro.persistenza.Cifratura;
+import mitro.persistenza.DAOUtente;
+
 public class SQLGestoreTabelle {
 
 	private DataSource dataSource;
+	private Cifratura cifratura;
 
-	public SQLGestoreTabelle(DataSource dataSource) {
+	public SQLGestoreTabelle(DataSource dataSource, Cifratura cifratura) {
 		this.dataSource = dataSource;
+		this.cifratura = cifratura;
 	}
 
 	public void creaTabelle() throws SQLException {
@@ -161,5 +172,28 @@ public class SQLGestoreTabelle {
 			if(!e.getMessage().contains("no such table"))
 				throw e;
 		}
+	}
+	
+	public void creaInformazioniIniziali() throws PersistenzaException {
+		DAOUtente daoUtente = new SQLDAOUtente(dataSource, cifratura);
+		Amministratore u1 = new Amministratore();
+		Studente u2 = new Studente();
+		u2.setNome("Jason");
+		u2.setCognome("Dellaluce");
+		Professore u3 = new Professore();
+		u3.setNome("Amir");
+		u3.setCognome("Al Sadi");
+		Utente u4 = new Utente();
+		u4.setRuolo(Ruolo.GESTORESICUREZZA);
+		
+		daoUtente.registraUtente(u1);
+		daoUtente.inserisciCredenziali(u1, "user1", "password");
+		daoUtente.registraUtente(u2);
+		daoUtente.inserisciCredenziali(u2, "user2", "password");
+		daoUtente.registraUtente(u3);
+		daoUtente.inserisciCredenziali(u3, "user3", "password");
+		daoUtente.registraUtente(u4);
+		daoUtente.inserisciCredenziali(u4, "user4", "password");
+		
 	}
 }

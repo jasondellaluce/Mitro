@@ -20,7 +20,7 @@ public abstract class ViewUtenteAstratta extends ViewAstratta {
 	}
 	
 	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) 
+	protected final void doGet(HttpServletRequest req, HttpServletResponse resp) 
 			throws ServletException, IOException {		
 		Utente utenteAutenticato;
 		try {
@@ -33,7 +33,7 @@ public abstract class ViewUtenteAstratta extends ViewAstratta {
 	}
 
 	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp) 
+	protected final void doPost(HttpServletRequest req, HttpServletResponse resp) 
 			throws ServletException, IOException {
 		
 		Utente utenteAutenticato;
@@ -47,30 +47,34 @@ public abstract class ViewUtenteAstratta extends ViewAstratta {
 	}
 	
 	private Utente ottieniUtenteAutenticato(HttpServletRequest req, HttpServletResponse resp) 
-			throws IOException, OperazioneException {
+			throws IOException, OperazioneException, ServletException {
 		HttpSession sessioneUtente = req.getSession();
 		
 		/* Controlla Login non eseguito */
 		if(sessioneUtente.getAttribute(nomeAttributoLogin) == null) {
 			apriLogin(req, resp);
+			return null;
 		}
 		
 		/* Controlla se l'attributo Login è compromesso */
 		if(!(sessioneUtente.getAttribute(nomeAttributoLogin) instanceof Login)) {
 			sessioneUtente.removeAttribute(nomeAttributoLogin);
 			apriLogin(req, resp);
+			return null;
 		}
 		
 		/* Controlla se il cliente è stato autenticato */
 		Login loginUtente = (Login) sessioneUtente.getAttribute(nomeAttributoLogin);
 		if(!loginUtente.getUtenteAutenticato().isPresent()) {
 			apriLogin(req, resp);
+			return null;
 		}
 		
 		/* Controlla se il cliente possiede i privilegi adeguati */
 		Utente utente = loginUtente.getUtenteAutenticato().get();
 		if(!utente.getRuolo().equals(ruoloPrivilegio)) {
 			apriErrorePrivilegio(req, resp);
+			return null;
 		}
 		
 		/* L'autenticazione è considerata corretta */
@@ -79,20 +83,23 @@ public abstract class ViewUtenteAstratta extends ViewAstratta {
 	
 	/* Ridirige alla pagina di login */
 	private void apriLogin(HttpServletRequest req, HttpServletResponse resp) 
-			throws IOException {
-		resp.sendRedirect("/");
+			throws IOException, ServletException {
+		req.setAttribute("error", "Non sei ancora stato autenticato");
+		req.getRequestDispatcher("/login.jsp").forward(req, resp);
 	}
 	
 	/* Ridirige alla pagina di errore per mancato privilegio */
 	private void apriErrorePrivilegio(HttpServletRequest req, HttpServletResponse resp) 
-			throws IOException {
-		resp.sendRedirect("/");
+			throws IOException, ServletException {
+		req.setAttribute("error", "Non possiedi i privilegi necessari");
+		req.getRequestDispatcher("/login.jsp").forward(req, resp);
 	}
 	
 	/* Ridirige alla pagina di errore per mancato privilegio */
 	private void apriErroreSconosciuto(HttpServletRequest req, HttpServletResponse resp) 
-			throws IOException {
-		resp.sendRedirect("/");
+			throws IOException, ServletException {
+		req.setAttribute("error", "Abbiamo riscontrato un errore sconosciuto");
+		req.getRequestDispatcher("/login.jsp").forward(req, resp);
 	}
 	
 	protected abstract void gestisciRichiestaGet(Utente utente, HttpServletRequest req,
