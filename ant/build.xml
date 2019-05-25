@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<project name="Mitro" basedir=".." default="05.build">
+<project name="ROOT" basedir=".." default="05.build">
 
 	<!-- ================ -->
 	<!-- Properties setup -->

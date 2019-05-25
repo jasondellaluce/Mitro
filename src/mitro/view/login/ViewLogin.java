@@ -72,16 +72,16 @@ public class ViewLogin extends ViewAstratta {
 				if(login.getUtenteAutenticato().isPresent()) {
 					switch(login.getUtenteAutenticato().get().getRuolo()) {
 						case AMMINISTRATORE:
-							resp.sendRedirect("/Mitro/amministratore");
+							resp.sendRedirect("/amministratore");
 							return true;
 						case GESTORESICUREZZA:
-							resp.sendRedirect("/Mitro/log");
+							resp.sendRedirect("/log");
 							return true;
 						case PROFESSORE:
-							resp.sendRedirect("/Mitro/professore");
+							resp.sendRedirect("/professore");
 							return true;
 						case STUDENTE:
-							resp.sendRedirect("/Mitro/studente");
+							resp.sendRedirect("/studente");
 							return true;
 						default:
 							throw new OperazioneException("Ruolo sconosciuto");

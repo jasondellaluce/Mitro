@@ -6,4 +6,4 @@ bin
 ant/environment.properties
 
 *.db
-*log
+*.log
