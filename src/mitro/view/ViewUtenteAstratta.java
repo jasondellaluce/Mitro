@@ -72,6 +72,7 @@ public abstract class ViewUtenteAstratta extends ViewAstratta {
 			apriErrorePrivilegio(req, resp);
 			return;
 		}
+		apriLogin(req, resp);
 	}
 	
 	private Utente ottieniUtenteAutenticato(HttpServletRequest req, HttpServletResponse resp) 
@@ -127,7 +128,7 @@ public abstract class ViewUtenteAstratta extends ViewAstratta {
 	private void apriErroreSconosciuto(HttpServletRequest req, HttpServletResponse resp) 
 			throws IOException, ServletException {
 		req.setAttribute("error", "Abbiamo riscontrato un errore sconosciuto");
-		req.getRequestDispatcher("/login.jsp").forward(req, resp);
+		req.getRequestDispatcher("/login").forward(req, resp);
 	}
 	
 	protected abstract void gestisciRichiestaGet(Utente utente, HttpServletRequest req,

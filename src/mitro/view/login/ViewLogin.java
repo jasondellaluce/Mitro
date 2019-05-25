@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServletResponse;
 import mitro.controller.ControllerFactory;
 import mitro.controller.login.Login;
 import mitro.exceptions.OperazioneException;
+import mitro.exceptions.UtenteGiaAutenticatoException;
+import mitro.exceptions.UtenteNonRegistratoException;
 import mitro.view.ViewAstratta;
 
 public class ViewLogin extends ViewAstratta {
@@ -28,10 +30,12 @@ public class ViewLogin extends ViewAstratta {
 		if(username == null || username.length() == 0) {
 			req.setAttribute("error", "Username non valido");
 			req.getRequestDispatcher("/login.jsp").forward(req, resp);
+			return;
 		}
 		if(password == null || password.length() == 0) {
 			req.setAttribute("error", "Password non valida");
 			req.getRequestDispatcher("/login.jsp").forward(req, resp);
+			return;
 		}
 		
 		if(apriHomeCorretta(req, resp))
@@ -40,17 +44,24 @@ public class ViewLogin extends ViewAstratta {
 		try {
 			boolean result = login.autentica(username.trim(), password.trim());
 			if(!result || !login.getUtenteAutenticato().isPresent()) {
-				req.setAttribute("error", "Autenticazione falita");
+				req.setAttribute("error", "Autenticazione fallita");
 				req.getRequestDispatcher("/login.jsp").forward(req, resp);
 				return;
 			}
 			req.getSession().setAttribute(nomeAttributoLogin, login);
 			apriHomeCorretta(req, resp);
+			return;
+		}
+		catch (UtenteGiaAutenticatoException e) {
+			req.setAttribute("error", "L'utente richiesto è già attualmente autenticato nel sistema");
+		}
+		catch (UtenteNonRegistratoException e) {
+			req.setAttribute("error", "L'utente richiesto non è presente nel sistema");
 		}
 		catch (OperazioneException e) {
 			req.setAttribute("error", String.valueOf(e));
-			req.getRequestDispatcher("/login.jsp").forward(req, resp);
 		}
+		req.getRequestDispatcher("/login.jsp").forward(req, resp);
 	}
 	
 	private boolean apriHomeCorretta(HttpServletRequest req, HttpServletResponse resp)
