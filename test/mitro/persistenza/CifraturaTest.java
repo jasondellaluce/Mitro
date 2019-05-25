@@ -15,10 +15,27 @@ class CifraturaTest {
 	
 	@Test
 	void test() {
+		String test = "Stringa esempio";
 		List<Cifratura> impl = Arrays.asList(new MockCifratura(), new TestoInChiaro());
+		
 		for(Cifratura c : impl) {
-			assertEquals("Test", c.decifra(c.cifra("Test")), c.getClass().getName());
+			/* Test consistenza */
+			assertEquals(test, c.decifra(c.cifra(test)), c.getClass().getName());
 			assertEquals(null, c.decifra(c.cifra(null)), c.getClass().getName());
+			assertEquals(null, c.decifra(c.cifraHash(null)), c.getClass().getName());
+			
+			/* Test univocità */
+			String ultimo = c.cifra(test);
+			String ultimoHash = c.cifraHash(test);
+			for(int i = 0; i < 10; i++) {
+				String nuovo = c.cifra(test);
+				assertEquals(nuovo, ultimo);
+				ultimo = nuovo;
+				
+				nuovo = c.cifraHash(test);
+				assertEquals(nuovo, ultimoHash);
+				ultimoHash = nuovo;
+			}
 		}
 	}
 
