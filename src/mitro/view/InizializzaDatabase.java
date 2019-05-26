@@ -36,7 +36,7 @@ public class InizializzaDatabase extends ViewAstratta {
 			resp.getWriter().write("Database Inizializzato\n");
         }
         catch(Exception e) {
-        	resp.getWriter().write(e.getMessage());
+        	throw new ServletException(e);
         }
 	}
 

@@ -56,7 +56,7 @@ public class ViewLogin extends ViewAstratta {
 			req.setAttribute("error", "L'utente richiesto è già attualmente autenticato nel sistema");
 		}
 		catch (UtenteNonRegistratoException e) {
-			req.setAttribute("error", "L'utente richiesto non è presente nel sistema");
+			req.setAttribute("error", "Il sistema non ha riconosciuto alcun utente corrispondente alle credenziali inserite");
 		}
 		catch (OperazioneException e) {
 			req.setAttribute("error", String.valueOf(e));

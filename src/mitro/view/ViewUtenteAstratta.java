@@ -25,7 +25,8 @@ public abstract class ViewUtenteAstratta extends ViewAstratta {
 		Utente utenteAutenticato;
 		try {
 			utenteAutenticato = ottieniUtenteAutenticato(req, resp);
-			gestisciRichiestaGet(utenteAutenticato, req, resp);
+			if(utenteAutenticato != null)
+				gestisciRichiestaGet(utenteAutenticato, req, resp);
 		}
 		catch (OperazioneException e) {
 			apriErroreSconosciuto(req, resp);
@@ -39,7 +40,8 @@ public abstract class ViewUtenteAstratta extends ViewAstratta {
 		Utente utenteAutenticato;
 		try {
 			utenteAutenticato = ottieniUtenteAutenticato(req, resp);
-			gestisciRichiestaPost(utenteAutenticato, req, resp);
+			if(utenteAutenticato != null)
+				gestisciRichiestaPost(utenteAutenticato, req, resp);
 		}
 		catch (OperazioneException e) {
 			apriErroreSconosciuto(req, resp);

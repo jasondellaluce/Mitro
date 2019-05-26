@@ -52,8 +52,8 @@ public class GestioneProfessoreController extends ControllerAstratto implements 
 	public List<Attivita> getListaAttivita(LocalDate from, LocalDate to) throws OperazioneException {
 		try {
 			return daoAttivita.ottieniAttivitaPerProfessore(professore).stream()
-					.filter(a -> a.getData().isAfter(from)
-							&& a.getData().isBefore(to))
+					.filter(a -> a.getData().isAfter(from.minusDays(1))
+							&& a.getData().isBefore(to.plusDays(1)))
 					.collect(Collectors.toList());
 		}
 		catch (PersistenzaException e) {
@@ -65,8 +65,8 @@ public class GestioneProfessoreController extends ControllerAstratto implements 
 	public List<Comunicazione> getListaComunicazioni(LocalDate from, LocalDate to) throws OperazioneException {
 		try {
 			return daoComunicazione.ottieniComunicazioniPerDestinatario(professore).stream()
-					.filter(c -> c.getDataOra().toLocalDate().isAfter(from)
-							&& c.getDataOra().toLocalDate().isBefore(to))
+					.filter(c -> c.getDataOra().toLocalDate().isAfter(from.minusDays(1))
+							&& c.getDataOra().toLocalDate().isBefore(to.plusDays(1)))
 					.collect(Collectors.toList());
 		}
 		catch (PersistenzaException e) {
