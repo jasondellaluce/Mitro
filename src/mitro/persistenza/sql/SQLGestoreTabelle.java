@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Random;
 
@@ -15,6 +16,7 @@ import mitro.exceptions.PersistenzaException;
 import mitro.model.Amministratore;
 import mitro.model.Attivita;
 import mitro.model.Classe;
+import mitro.model.Comunicazione;
 import mitro.model.Materia;
 import mitro.model.Professore;
 import mitro.model.Ruolo;
@@ -23,6 +25,7 @@ import mitro.model.Utente;
 import mitro.persistenza.Cifratura;
 import mitro.persistenza.DAOAttivita;
 import mitro.persistenza.DAOClasse;
+import mitro.persistenza.DAOComunicazione;
 import mitro.persistenza.DAOUtente;
 
 public class SQLGestoreTabelle {
@@ -189,6 +192,7 @@ public class SQLGestoreTabelle {
 		DAOUtente daoUtente = new SQLDAOUtente(dataSource, cifratura);
 		DAOClasse daoClasse = new SQLDAOClasse(dataSource, cifratura);
 		DAOAttivita daoAttivita = new SQLDAOAttivita(dataSource, cifratura);
+		DAOComunicazione daoComunicazione = new SQLDAOComunicazione(dataSource, cifratura);
 		
 		/* Classe */
 		Classe c1 = new Classe();
@@ -278,6 +282,44 @@ public class SQLGestoreTabelle {
 				}
 			}
 		}
+		
+		/* Comunicazioni */
+		Comunicazione c = new Comunicazione();
+		c.setDataOra(LocalDateTime.now());
+		c.setOggetto("Messaggio privato dalla segreteria");
+		c.setContenuto("Lorem ipsum dolor sit amet, consectetur adipiscing elit, "
+				+ "sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. "
+				+ "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris"
+				+ "nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in"
+				+ "reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur."
+				+ "Excepteur sint occaecat cupidatat non proident,"
+				+ "sunt in culpa qui officia deserunt mollit anim id est laborum.");
+		c.setDestinatario(prof1);
+		daoComunicazione.registraComunicazione(c);
+		
+		c.setDataOra(LocalDateTime.now().minusHours(3));
+		c.setOggetto("Avvisio sciopero docenti");
+		c.setContenuto("Lorem ipsum dolor sit amet, consectetur adipiscing elit, "
+				+ "sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. "
+				+ "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris"
+				+ "nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in"
+				+ "reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur."
+				+ "Excepteur sint occaecat cupidatat non proident,"
+				+ "sunt in culpa qui officia deserunt mollit anim id est laborum.");
+		c.setDestinatario(prof1);
+		daoComunicazione.registraComunicazione(c);
+		
+		c.setDataOra(LocalDateTime.now().minusDays(8));
+		c.setOggetto("Emissione pratiche gita 2019/20");
+		c.setContenuto("Lorem ipsum dolor sit amet, consectetur adipiscing elit, "
+				+ "sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. "
+				+ "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris"
+				+ "nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in"
+				+ "reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur."
+				+ "Excepteur sint occaecat cupidatat non proident,"
+				+ "sunt in culpa qui officia deserunt mollit anim id est laborum.");
+		c.setDestinatario(prof1);
+		daoComunicazione.registraComunicazione(c);	
 		
 	}
 }

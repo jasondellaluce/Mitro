@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+<%@ page import="java.util.*" %>
+<%@ page import="java.time.format.*" %>
+<%@ page import="mitro.model.Comunicazione" %>
 <!DOCTYPE html>
 <html class=" js flexbox canvas canvastext webgl touch geolocation postmessage no-websqldatabase indexeddb hashchange history draganddrop websockets rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients no-cssreflections csstransforms csstransforms3d csstransitions fontface generatedcontent video audio localstorage sessionstorage webworkers applicationcache svg inlinesvg smil svgclippaths js flexbox canvas canvastext webgl touch geolocation postmessage no-websqldatabase indexeddb hashchange history draganddrop websockets rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients no-cssreflections csstransforms csstransforms3d csstransitions fontface generatedcontent video audio localstorage sessionstorage webworkers applicationcache svg inlinesvg smil svgclippaths" style="" lang="en">
 	<head>
@@ -142,97 +145,53 @@
 				<div class="welcome-adminpro-area">
 					<div class="row">
 						<div class="col-lg-8" style="margin-left: 50px;">
-							<div class="alert-title">
-								<h2>Attività della settimana</h2>
-							</div> 
-							<div class="sparkline9-list shadow-reset mg-tb-30" style="margin-top: 0px;">
-								<div class="sparkline16-list shadow-reset mg-t-30" style="margin-top:0px;" >
+							<div class="sparkline9-list shadow-reset mg-tb-30">
+								<div class="sparkline16-list shadow-reset mg-t-30">
 									<div class="sparkline16-hd">
 										<div class="main-sparkline9-hd">
-											<h1>Calendario:</h1>
+											<h1>Comunicazini ricevute</h1>
 										</div>
 									</div>
 									<div class="sparkline16-graph" style="height:50px;" >
 										<form id="adminpro-form" class="adminpro-form" action="" method="post">
-											<a style="margin-right:50px;" href='/professore?inizioSett=<%= request.getAttribute("precedenteSett") %>'>
+											<a style="margin-right:50px;" href='/professore-comunicazioni?inizioSett=<%= request.getAttribute("precedenteSett") %>'>
 												<i class="fa big-icon fa-arrow-left"></i>
 												Settimana precedente
 											</a>
 											<span><%= request.getAttribute("inizioSett") %> - <%= request.getAttribute("fineSett") %></span>
-											<a style="margin-left:50px;" href='/professore?inizioSett=<%= request.getAttribute("prossimaSett") %>'>
+											<a style="margin-left:50px;" href='/professore-comunicazioni?inizioSett=<%= request.getAttribute("prossimaSett") %>'>
 												Settimana successiva
 												<i class="fa big-icon fa-arrow-right"></i>
 											</a>
 										</form>
 									</div>
 								</div>  
-									
-								<div class="sparkline8-graph">
-									<div class="static-table-list">
-										<table class="table">
-											<tbody>
-												<tr>
-													<td style=""></td>
-													<td style="">Lunedì</td>
-													<td style="">Martedì</td>
-													<td style="">Mercoledì</td>
-													<td style="">Giovedì</td>
-													<td style="">Venerdì</td>
-													<td style="">Sabato</td>
-												</tr>
-												
-												<% for(int i = 8; i <= 18; i++) { %>
-												<tr>
-													<td style=""><%= String.format("%02d", i) %></td>
-													<% for(int j = 1; j <= 6; j++) {
-															if(request.getAttribute("att" + j + "-" + i) != null) { %>
-													<td style='background-color:<%= request.getAttribute("colorAtt" + j + "-" + i) == null ? "#dfe6e9" : "#81ecec" %>'>
-														<a href='/professore?selAtt=<%= request.getAttribute("selAtt" + j + "-" + i)%>'><%= request.getAttribute("att" + j + "-" + i) %>
-														</a>
-													</td>
-													<% 		} else { %>
-													
-													<td style="background-color:white">-</td>
-												<% 			}
-														} %>
-												</tr>
-												<% } %>
-											<tbody>        
-										</table>
-									</div>
-									<div class="fixed-table-footer" style="display: none;">
-										<table>
-											<tbody>
-												<tr>
-												</tr>
-											</tbody>
-										</table>
-									</div>
-									<div class="clearfix">
-									</div>
-								</div>
 							</div>
 						</div>
-
-						<div class="col-lg-2" >
-							<div class="alert-title">
-								<h2>Annotazioni</h2>
-							</div>   	
-							<div class="note-editor note-frame panel panel-default" style=" width:450px; height: 450px;">
-								<form id="adminpro-form" class="adminpro-form" action='/professore?selAtt=<%= request.getParameter("selAtt") %>' method="post">
-									<div class="note-dropzone"> 
-										<div class="note-editable panel-body" style=" width:450px;height: 450px;" contenteditable="true">
-											<textarea name="annotazione" style=" width:100%; height:100%; border-color: white; border-width: 0px 0px 0px 0px; padding: 0px 0px 0px 0px;"><% if(request.getAttribute("annotazione") != null) { %><%= request.getAttribute("annotazione") %><% } %></textarea>
+						<div class="col-lg-8" style="margin-left: 50px;">
+						<%
+							if(request.getAttribute("listaComunicazioni") != null) {
+								List<Comunicazione> comunicazioni = (List<Comunicazione>) request.getAttribute("listaComunicazioni");
+								for(int i = 0; i < comunicazioni.size(); i++) {
+						%>
+							<div class="row">
+								<div class="col-lg-6" style="width:100%">
+									<div class="notification-list shadow-reset nt-mg-b-30" >
+										<div class="alert-title" >
+											<h1><%= comunicazioni.get(i).getOggetto() %></h1>
+											<h2><%= DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM).withLocale(Locale.ITALY).format(comunicazioni.get(i).getDataOra()) %></h2>
 										</div>
-										<div class="compose-email"> 
-											<br>   
-											<button type="submit" class="btn btn-custon-rounded-three btn-default" style="width:100%;" >Inserisci annotazione</button>
-										</div> 
-									</div>  
-								</form>
-							</div>
-						</div>                    
-						
+										<div class="notification-bt responsive-btn">
+											<p><%= comunicazioni.get(i).getContenuto() %></p>
+										</div>
+									</div>
+								</div>			
+							</div>  
+						<%
+								}
+							}
+						%>
+						</div>
 					</div>
 				</div>
 			</div>
