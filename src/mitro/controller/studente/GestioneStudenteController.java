@@ -41,7 +41,7 @@ public class GestioneStudenteController extends ControllerAstratto implements Ge
 	@Override
 	public List<Attivita> getListaAttivita(LocalDate startDate, LocalDate endDate) throws OperazioneException {
 		try {
-			return daoAttivita.ottieniAttivitaPerStudente(getStudente()).stream()
+			return daoAttivita.ottieniAttivitaPerStudente(studente).stream()
 					.filter(a -> a.getData().isAfter(startDate))
 					.filter(a -> a.getData().isBefore(endDate))
 					.collect(Collectors.toList());
