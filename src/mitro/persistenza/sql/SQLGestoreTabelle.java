@@ -224,8 +224,8 @@ public class SQLGestoreTabelle {
 		daoUtente.inserisciCredenziali(stud1, "stud1", "password");
 		
 		Studente stud2 = new Studente();
-		stud2.setNome("Amir");
-		stud2.setCognome("Al Sadi");
+		stud2.setNome("Federico");
+		stud2.setCognome("Baldini");
 		stud2.setClasse(c2);
 		daoUtente.registraUtente(stud2);
 		daoUtente.inserisciCredenziali(stud2, "stud2", "password");

@@ -39,6 +39,10 @@
 	    <servlet-class>mitro.view.professore.ViewComunicazioni</servlet-class> 
     </servlet>
     <servlet> 
+    	<servlet-name>ViewRegistrazionePresenze</servlet-name> 
+	    <servlet-class>mitro.view.professore.ViewRegistrazionePresenze</servlet-class> 
+    </servlet>
+    <servlet> 
     	<servlet-name>HomeLog</servlet-name> 
 	    <servlet-class>mitro.view.log.HomeLog</servlet-class> 
     </servlet> 
@@ -64,6 +68,10 @@
     <servlet-mapping> 
     	<servlet-name>ViewComunicazioniProfessore</servlet-name> 
         <url-pattern>/professore-comunicazioni</url-pattern> 
+    </servlet-mapping>
+    <servlet-mapping> 
+    	<servlet-name>ViewRegistrazionePresenze</servlet-name> 
+        <url-pattern>/professore-appello</url-pattern> 
     </servlet-mapping>
     <servlet-mapping> 
     	<servlet-name>HomeAmministratore</servlet-name> 

@@ -58,16 +58,17 @@ public class HomeProfessore extends ViewUtenteAstratta {
 				String testo = a.getClasse().getNome() + " - " + a.getMateria().getNome();
 				req.setAttribute("att" + (a.getData().getDayOfWeek().ordinal() + 1) + "-" + a.getOraInizio(), testo);
 				req.setAttribute("selAtt" + (a.getData().getDayOfWeek().ordinal() + 1) + "-" + a.getOraInizio(), 
-						URLEncoder.encode(a.getData() + " " + a.getOraInizio(), "UTF-8"));
+						URLEncoder.encode(a.getData() + ";" + a.getOraInizio() + ";" + a.getClasse().getId(), "UTF-8"));
 			}
 			
 			if(req.getParameter("selAtt") != null) {
-				StringTokenizer stk = new StringTokenizer(req.getParameter("selAtt"), " ");
+				StringTokenizer stk = new StringTokenizer(req.getParameter("selAtt"), ";");
 				LocalDate date = LocalDate.parse(stk.nextToken().trim());
 				int time = Integer.parseInt(stk.nextToken().trim());
+				String classeId = stk.nextToken().trim();
 				req.setAttribute("colorAtt" + (date.getDayOfWeek().ordinal() + 1) + "-" + time, "yes");
 				listaAttivita.stream()
-					.filter(a -> a.getData().equals(date) && a.getOraInizio() == time)
+					.filter(a -> a.getData().equals(date) && a.getOraInizio() == time && a.getClasse().getId().equals(classeId))
 					.findAny().ifPresent(a -> req.setAttribute("annotazione", a.getAnnotazione()));
 			}
 		}
@@ -85,11 +86,12 @@ public class HomeProfessore extends ViewUtenteAstratta {
 		try {
 			if(req.getParameter("annotazione") != null && req.getParameter("annotazione").trim().length() > 0) {
 				if(req.getParameter("selAtt") != null) {
-					StringTokenizer stk = new StringTokenizer(req.getParameter("selAtt"), " ");
+					StringTokenizer stk = new StringTokenizer(req.getParameter("selAtt"), ";");
 					LocalDate date = LocalDate.parse(stk.nextToken().trim());
 					int time = Integer.parseInt(stk.nextToken().trim());
+					String classeId = stk.nextToken().trim();
 					Optional<Attivita> attivita = gestioneProfessore.getListaAttivita(date, date.plusDays(1)).stream()
-						.filter(a -> a.getData().equals(date) && a.getOraInizio() == time)
+						.filter(a -> a.getData().equals(date) && a.getOraInizio() == time && a.getClasse().getId().equals(classeId))
 						.findAny();
 					if(attivita.isPresent()) {
 						GestioneClasse gestioneClasse = getGestioneClasse(attivita.get().getClasse(), req, resp);

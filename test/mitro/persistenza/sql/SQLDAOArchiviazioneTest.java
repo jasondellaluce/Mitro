@@ -129,7 +129,9 @@ class SQLDAOArchiviazioneTest {
 		assertThrows(PersistenzaException.class, () -> daoArch.eliminaArchiviazione(ar3));
 		
 		/* Eliminazione lecita */
+		assertTrue(daoArch.ottieniArchiviazioni().contains(ar2));
 		assertDoesNotThrow(() -> daoArch.eliminaArchiviazione(ar2));
+		assertFalse(daoArch.ottieniArchiviazioni().contains(ar2));
 		assertThrows(PersistenzaException.class, () -> daoArch.eliminaArchiviazione(ar2));
 		assertDoesNotThrow(() ->  daoArch.registraArchiviazione(ar2));
 		

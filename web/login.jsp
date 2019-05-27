@@ -243,7 +243,7 @@
                                     <div class="row">
                                         <div class="col-lg-12">
                                             <div class="logo">
-                                                <a href="#"><img src="img/logo/logo.png" width="40%" height="40%" />
+                                                <a href="#"><img src="img/logo/logo-transp.png" width="40%" height="40%" />
                                                 </a>
                                             </div>
                                         </div>

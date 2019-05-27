@@ -2,7 +2,7 @@
     pageEncoding="ISO-8859-1"%>
 <%@ page import="java.util.*" %>
 <%@ page import="java.time.format.*" %>
-<%@ page import="mitro.model.Comunicazione" %>
+<%@ page import="mitro.model.*" %>
 <!DOCTYPE html>
 <html class=" js flexbox canvas canvastext webgl touch geolocation postmessage no-websqldatabase indexeddb hashchange history draganddrop websockets rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients no-cssreflections csstransforms csstransforms3d csstransitions fontface generatedcontent video audio localstorage sessionstorage webworkers applicationcache svg inlinesvg smil svgclippaths js flexbox canvas canvastext webgl touch geolocation postmessage no-websqldatabase indexeddb hashchange history draganddrop websockets rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients no-cssreflections csstransforms csstransforms3d csstransitions fontface generatedcontent video audio localstorage sessionstorage webworkers applicationcache svg inlinesvg smil svgclippaths" style="" lang="en">
 	<head>
@@ -106,78 +106,66 @@
                     </div>
 				</div>
 				
-				<!-- Breadcome start-->
 				<div class="breadcome-area mg-b-30 small-dn">
-					<div class="container-fluid">
-						<div class="row">
-							<div class="col-lg-12">
-								<div class="breadcome-list map-mg-t-40-gl shadow-reset">
-									<div class="row">
-										<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-											<div class="breadcome-heading" style="font-size: 12pt;">
-												<ul>
-													<li>Bentornato, <%= request.getAttribute("nomeProfessore") %></li>
-												</ul>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
+
 				</div>
 				
 				<!-- Main container -->
 				<div class="welcome-adminpro-area">
-					<div class="row">
+					<div class="row" style="width:80%">
 						<div class="col-lg-8" style="margin-left: 50px;">
-							<div class="sparkline9-list shadow-reset mg-tb-30">
-								<div class="sparkline16-list shadow-reset mg-t-30">
-									<div class="sparkline16-hd">
-										<div class="main-sparkline9-hd">
-											<h1>Comunicazini ricevute</h1>
-										</div>
-									</div>
-									<div class="sparkline16-graph" style="height:50px;" >
-										<form id="adminpro-form" class="adminpro-form" action="" method="post">
-											<a style="margin-right:50px;" href='/professore-comunicazioni?inizioSett=<%= request.getAttribute("precedenteSett") %>'>
-												<i class="fa big-icon fa-arrow-left"></i>
-												Settimana precedente
-											</a>
-											<span><%= request.getAttribute("inizioSett") %> - <%= request.getAttribute("fineSett") %></span>
-											<a style="margin-left:50px;" href='/professore-comunicazioni?inizioSett=<%= request.getAttribute("prossimaSett") %>'>
-												Settimana successiva
-												<i class="fa big-icon fa-arrow-right"></i>
-											</a>
-										</form>
-									</div>
-								</div>  
+							<div class="sparkline9-hd">
+								<div class="main-sparkline9-hd">
+									<h1><%= request.getAttribute("testoTitolo") %></h1>
+								</div>
 							</div>
-						</div>
-						<div class="col-lg-8" style="margin-left: 50px;">
-						<%
-							if(request.getAttribute("listaComunicazioni") != null) {
-								List<Comunicazione> comunicazioni = (List<Comunicazione>) request.getAttribute("listaComunicazioni");
-								for(int i = 0; i < comunicazioni.size(); i++) {
-						%>
-							<div class="row">
-								<div class="col-lg-6" style="width:100%">
-									<div class="notification-list shadow-reset nt-mg-b-30" >
-										<div class="alert-title" >
-											<h1><%= comunicazioni.get(i).getOggetto() %></h1>
-											<h2><%= DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM).withLocale(Locale.ITALY).format(comunicazioni.get(i).getDataOra()) %></h2>
-										</div>
-										<div class="notification-bt responsive-btn">
-											<p><%= comunicazioni.get(i).getContenuto() %></p>
-										</div>
+							
+							<div class="sparkline9-list shadow-reset mg-tb-30" style="margin-top: 0px;">
+								<div class="sparkline9-graph dashone-comment">
+									<div class="datatable-dashv1-list custom-datatable-overright dashtwo-project-list-data">
+										<form id="adminpro-form" class="adminpro-form" action='/professore-appello?selAtt=<%= request.getParameter("selAtt") %>' method="post"> 
+											<div class="fixed-table-container" style="padding-bottom: 0px; height: 500px;">
+												<table class="table">
+													<tbody>
+														<tr>
+															<td>Nome Studente</td>
+															<td>Presenza</td>
+														</tr>
+														<%
+															if(request.getAttribute("listaStudenti") != null) {
+																List<Studente> listaStudenti = (List<Studente>) request.getAttribute("listaStudenti");
+																for(int i = 0; i < listaStudenti.size(); i++) {
+																%>
+																	<tr>
+																		<td><%= listaStudenti.get(i).getNome() + " " + listaStudenti.get(i).getCognome() %></td>
+																		<td><input name='checkPresenza' type="checkbox" value='<%= i %>' <%= request.getAttribute("presente" + i) == null ? "" : "checked" %>></td>
+																	</tr>
+																<%
+																}
+															}
+														%>
+													<tbody>        
+												</table>
+											</div>
+											<div class="compose-email"> 
+												<br>   
+												<button type='submit' class="btn btn-custon-rounded-three btn-default" style="width:100%;" >Conferma appello</button>
+											</div>
+										</form> 
 									</div>
-								</div>			
-							</div>  
-						<%
-								}
-							}
-						%>
-						</div>
+									<div class="fixed-table-footer" style="display: none;">
+										<table>
+											<tbody>
+												<tr>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+									<div class="clearfix">
+									</div>
+								</div>
+							</div>
+						</div>	
 					</div>
 				</div>
 			</div>

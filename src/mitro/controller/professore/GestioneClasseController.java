@@ -11,6 +11,7 @@ import mitro.controller.log.LoggerOperazioni;
 import mitro.exceptions.OperazioneException;
 import mitro.exceptions.PersistenzaException;
 import mitro.exceptions.PrecondizioneNonSoddisfattaException;
+import mitro.model.Archiviazione;
 import mitro.model.Attivita;
 import mitro.model.Classe;
 import mitro.model.Presenza;
@@ -61,11 +62,12 @@ public class GestioneClasseController extends ControllerAstratto implements Gest
 					"studente non partecipante all'attività");
 		
 		try {
-			if(daoArchiviazione.ottieniArchiviazioni().contains(presenza)) {
-				daoArchiviazione.eliminaArchiviazione(presenza);
-				daoArchiviazione.registraArchiviazione(presenza);
-			}
-			else daoArchiviazione.registraArchiviazione(presenza);
+			List<Archiviazione> archiviazioni = daoArchiviazione.ottieniArchiviazioni();
+			for(Archiviazione a: archiviazioni)
+				if(a.getAttivita().equals(presenza.getAttivita()) && a.getStudente().equals(presenza.getStudente()))
+					daoArchiviazione.eliminaArchiviazione(presenza);
+				
+			daoArchiviazione.registraArchiviazione(presenza);
 		}
 		catch (PersistenzaException e) {
 			throw new OperazioneException(e);

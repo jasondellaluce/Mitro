@@ -66,20 +66,6 @@
 								</a>
 							</li>
 							<li class="nav-item">
-								<a href="comunicazioneprofessore.html">
-									<i class="fa big-icon fa-table"></i>
-									<span class="mini-dn">Registra Appello</span>
-									<span class="indicator-right-menu mini-dn"></span>
-								</a>
-							</li>
-							<li class="nav-item">
-								<a href="comunicazioneprofessore.html">
-									<i class="fa big-icon fa-edit"></i>
-									<span class="mini-dn">Registra Voti</span>
-									<span class="indicator-right-menu mini-dn"></span>
-								</a>
-							</li>
-							<li class="nav-item">
 								<a href="/professore-comunicazioni">
 									<i class="fa big-icon fa-envelope"></i>
 									<span class="mini-dn">Comunicazioni</span>
@@ -213,7 +199,26 @@
 								</div>
 							</div>
 						</div>
-
+						
+						<div class="col-lg-2" >	
+							<div class="note-editor note-frame panel panel-default" style=" width:450px; height: 130px;">
+								<div class="note-dropzone"> 
+									<div class="compose-email"> 
+										<br>
+										<a href='/professore-appello?selAtt=<%= request.getParameter("selAtt") %>'> 
+											<button type='submit' class="btn btn-custon-rounded-three btn-default" style="width:100%;" <%= request.getParameter("selAtt") == null ? "disabled" : "" %>>Inserisci appello</button>
+										</a>
+									</div> 
+									<div class="compose-email"> 
+										<br>   
+										<a href='/professore-voti?selAtt=<%= request.getParameter("selAtt") %>'> 
+											<button type='submit' class="btn btn-custon-rounded-three btn-default" style="width:100%;" <%= request.getParameter("selAtt") == null ? "disabled" : "" %>>Registra voti</button>
+										</a>
+									</div> 
+								</div>  
+							</div>
+						</div> 
+						
 						<div class="col-lg-2" >
 							<div class="alert-title">
 								<h2>Annotazioni</h2>
@@ -226,12 +231,12 @@
 										</div>
 										<div class="compose-email"> 
 											<br>   
-											<button type="submit" class="btn btn-custon-rounded-three btn-default" style="width:100%;" >Inserisci annotazione</button>
+											<button type="submit" class="btn btn-custon-rounded-three btn-default" style="width:100%;" <%= request.getParameter("selAtt") == null ? "disabled" : "" %> >Inserisci annotazione</button>
 										</div> 
 									</div>  
 								</form>
 							</div>
-						</div>                    
+						</div>                   
 						
 					</div>
 				</div>
