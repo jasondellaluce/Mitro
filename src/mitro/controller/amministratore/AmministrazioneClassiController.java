@@ -83,6 +83,9 @@ public class AmministrazioneClassiController extends ControllerAstratto implemen
 
 	@Override
 	public void modificaVoto(Voto voto) throws OperazioneException {
+		if(voto.getValore() < 0 || voto.getValore() > 10)
+			throw new IllegalArgumentException("voto con valore invalido");
+		
 		try {
 			daoArchiviazione.modificaArchiviazione(voto);
 		}

@@ -78,6 +78,8 @@ public class GestioneClasseController extends ControllerAstratto implements Gest
 	public void registraVoto(Voto voto) throws OperazioneException {
 		if(!voto.getAttivita().getClasse().equals(voto.getStudente().getClasse()))
 			throw new IllegalArgumentException("Precondizione insoddisfatta");
+		if(voto.getValore() < 0 || voto.getValore() > 10)
+			throw new IllegalArgumentException("voto con valore invalido");
 		
 		try {
 			daoArchiviazione.registraArchiviazione(voto);
