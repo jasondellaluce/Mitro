@@ -25,11 +25,23 @@
     <servlet> 
     	<servlet-name>HomeAmministratore</servlet-name> 
 	    <servlet-class>mitro.view.amministratore.HomeAmministratore</servlet-class> 
+    </servlet>
+    <servlet> 
+    	<servlet-name>ViewRegistrazioneUtente</servlet-name> 
+	    <servlet-class>mitro.view.amministratore.ViewRegistrazioneUtente</servlet-class> 
+    </servlet>
+    <servlet> 
+    	<servlet-name>ViewRegistrazioneComunicazione</servlet-name> 
+	    <servlet-class>mitro.view.amministratore.ViewRegistrazioneComunicazione</servlet-class> 
     </servlet> 
     <servlet> 
     	<servlet-name>HomeStudente</servlet-name> 
 	    <servlet-class>mitro.view.studente.HomeStudente</servlet-class> 
-    </servlet> 
+    </servlet>
+    <servlet> 
+    	<servlet-name>ViewComunicazioniStudente</servlet-name> 
+	    <servlet-class>mitro.view.studente.ViewComunicazioni</servlet-class> 
+    </servlet>
 	<servlet> 
     	<servlet-name>HomeProfessore</servlet-name> 
 	    <servlet-class>mitro.view.professore.HomeProfessore</servlet-class> 
@@ -47,13 +59,17 @@
 	    <servlet-class>mitro.view.professore.ViewRegistrazioneVoti</servlet-class> 
     </servlet>
     <servlet> 
+    	<servlet-name>ViewStoricoProfessore</servlet-name> 
+	    <servlet-class>mitro.view.professore.ViewStoricoProfessore</servlet-class> 
+    </servlet>
+    <servlet> 
     	<servlet-name>HomeLog</servlet-name> 
 	    <servlet-class>mitro.view.log.HomeLog</servlet-class> 
     </servlet> 
     
     <!-- Map some URL's to the  servlet --> 
     
-     <servlet-mapping> 
+    <servlet-mapping> 
     	<servlet-name>Init</servlet-name> 
         <url-pattern>/init</url-pattern> 
     </servlet-mapping>
@@ -64,6 +80,10 @@
     <servlet-mapping> 
     	<servlet-name>HomeStudente</servlet-name> 
         <url-pattern>/studente</url-pattern> 
+    </servlet-mapping>
+    <servlet-mapping> 
+    	<servlet-name>ViewComunicazioniStudente</servlet-name> 
+        <url-pattern>/studente-comunicazioni</url-pattern> 
     </servlet-mapping>
     <servlet-mapping> 
     	<servlet-name>HomeProfessore</servlet-name> 
@@ -82,8 +102,20 @@
         <url-pattern>/professore-voti</url-pattern> 
     </servlet-mapping>
     <servlet-mapping> 
+    	<servlet-name>ViewStoricoProfessore</servlet-name> 
+        <url-pattern>/professore-storico</url-pattern> 
+    </servlet-mapping>
+    <servlet-mapping> 
     	<servlet-name>HomeAmministratore</servlet-name> 
         <url-pattern>/amministratore</url-pattern> 
+    </servlet-mapping>
+    <servlet-mapping> 
+    	<servlet-name>ViewRegistrazioneUtente</servlet-name> 
+        <url-pattern>/amministratore-nuovo-utente</url-pattern> 
+    </servlet-mapping>
+    <servlet-mapping> 
+    	<servlet-name>ViewRegistrazioneComunicazione</servlet-name> 
+        <url-pattern>/amministratore-nuova-comunicazione</url-pattern> 
     </servlet-mapping>
     <servlet-mapping> 
     	<servlet-name>HomeLog</servlet-name> 

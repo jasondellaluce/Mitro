@@ -10,11 +10,11 @@ import mitro.model.Ruolo;
 import mitro.model.Utente;
 import mitro.view.ViewUtenteAstratta;
 
-public class ViewComunicazioniStudente extends ViewUtenteAstratta {
+public class ViewComunicazioni extends ViewUtenteAstratta {
 
 	private static final long serialVersionUID = -7638928177270647305L;
 
-	public ViewComunicazioniStudente() {
+	public ViewComunicazioni() {
 		super(Ruolo.STUDENTE);
 	}
 
