@@ -50,7 +50,7 @@ public class ViewComunicazioni extends ViewUtenteAstratta {
 			req.setAttribute("prossimaSett", URLEncoder.encode(inizioSett.plusDays(7).toString(), "UTF-8"));
 			req.setAttribute("precedenteSett", URLEncoder.encode(inizioSett.minusDays(7).toString(), "UTF-8"));		
 			
-			List<Comunicazione> listaComunicazioni = gestioneProfessore.getListaComunicazioni(inizioSett, inizioSett.plusDays(7));
+			List<Comunicazione> listaComunicazioni = gestioneProfessore.getListaComunicazioni(inizioSett, inizioSett.plusDays(6));
 			listaComunicazioni.sort(Comparator.comparing(Comunicazione::getDataOra).reversed());
 			req.setAttribute("listaComunicazioni", listaComunicazioni);
 		}
