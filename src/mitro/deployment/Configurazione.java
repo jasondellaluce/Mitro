@@ -4,7 +4,7 @@ import java.time.ZoneId;
 
 public abstract class Configurazione {
 	
-	public static Configurazione instance;
+	private static Configurazione instance;
 	
 	public static Configurazione getInstance() {
 		if(instance == null)
