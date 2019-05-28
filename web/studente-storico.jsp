@@ -47,7 +47,7 @@
 					<div class="left-custom-menu-adp-wrap">
 						<ul class="nav navbar-nav left-sidebar-menu-pro">
 							<li class="nav-item">
-								<a href="/professore?azione=disconnetti">
+								<a href="/studente?azione=disconnetti">
 									<i class="fa big-icon fa-sign-out"></i>
 									<span class="mini-dn">Disconnettiti</span>
 									<span class="indicator-right-menu mini-dn"></span>
@@ -55,21 +55,21 @@
 							</li>
 							</br>
 							<li class="nav-item">
-								<a href="/professore">
+								<a href="/studente">
 									<i class="fa big-icon fa-home"></i>
 									<span class="mini-dn">Vai alla Home</span>
 									<span class="indicator-right-menu mini-dn"></span>
 								</a>
 							</li>
 							<li class="nav-item">
-								<a href="/professore-storico">
+								<a href="/studente-storico">
 									<i class="fa big-icon fa-pie-chart"></i>
 									<span class="mini-dn">Storico</span>
 									<span class="indicator-right-menu mini-dn"></span>
 								</a>
 							</li>
 							<li class="nav-item">
-								<a href="/professore-comunicazioni">
+								<a href="/studente-comunicazioni">
 									<i class="fa big-icon fa-envelope"></i>
 									<span class="mini-dn">Comunicazioni</span>
 									<span class="indicator-right-menu mini-dn"></span>
@@ -116,14 +116,14 @@
 						<div class="col-lg-11" style="margin-left: 15px; margin-bottom: 20px; ">
                             <div class="sparkline16-hd" >
                                     <div class="main-sparkline9-hd">
-                                        <h1>Seleziona una materia ed uno studente</h1>
+                                        <h1>Seleziona una materia</h1>
                                     </div>
                             </div>
                         </div>
                     </div>
                     
                     <div class="row">
-						<form action='/professore-storico' method="post">
+						<form action='/studente-storico' method="post">
 							<div class="col-lg-3" style="margin-left: 15px; margin-bottom: 20px; ">
 								<select class="form-control" name="selectionMaterie" >
 									<%	if(request.getAttribute("listaMaterie") != null) {
@@ -136,21 +136,8 @@
 									%>			
 								</select>
 							</div>
-
-							<div class="col-lg-3" style="margin-bottom: 20px;">
-								<select class="form-control" name="selectionStudenti" >
-									<%	if(request.getAttribute("listaStudenti") != null) {
-											List<Studente> listaStudenti = (List<Studente>) request.getAttribute("listaStudenti");
-											for(int i = 0; i < listaStudenti.size(); i++) {
-									%>
-											<option value='<%= i %>' <%= i == (int) request.getAttribute("selectStudente") ? "selected" : "" %>><%= listaStudenti.get(i).getNome() + " " + listaStudenti.get(i).getCognome() %></option>
-									<% 		}
-										}
-									%>			
-								</select>
-							</div>
 							
-							<div class="col-lg-2" style="margin-bottom: 20px;">
+							<div class="col-lg-3" style="margin-bottom: 20px;">
 								<input class="pull-left" type="radio" value="voto" name="tipoRicerca" <%= ((boolean) request.getAttribute("selectVoto")) ? "checked" : "" %> > Voti<br>
 								<input class="pull-left" type="radio" value="presenza" name="tipoRicerca" <%= !((boolean) request.getAttribute("selectVoto")) ? "checked" : "" %>> Presenze
 							</div>
@@ -161,18 +148,17 @@
 						</form>
                     </div>
 					
-					<%	if(request.getAttribute("selectMateria") != null && request.getAttribute("selectStudente") != null) {
+					<%	if(request.getAttribute("selectMateria") != null) {
 							int selectMateria = (int) request.getAttribute("selectMateria");
-							int selectStudente = (int) request.getAttribute("selectStudente");
 							boolean selectVoto = (boolean) request.getAttribute("selectVoto");
-							if(selectMateria >= 0 && selectStudente >= 0) {
+							if(selectMateria >= 0) {
 					%>
 						<div class="row">
 	                        <div class="col-lg-6" style="margin-left: 15px;">
 	                            <div class="sparkline9-list shadow-reset mg-tb-30" style="margin-top: 0px;">
 									<div class="sparkline9-graph dashone-comment">
 										<div class="datatable-dashv1-list custom-datatable-overright dashtwo-project-list-data">
-											<h4>Ultime <%= selectVoto ? "valutazioni" : "presenze" %> dello studente nella materia</h4>
+											<h4>Ultime <%= selectVoto ? "valutazioni" : "presenze" %> personali nella materia</h4>
 											<div class="fixed-table-container" style="padding-bottom: 0px; height: 500px;">
 												<table class="table">
 													<tbody>
@@ -223,7 +209,7 @@
 								<div class="col-lg-2" > 	
 									<div class="note-editor note-frame panel panel-default" style=" width:660px; height: 400px;"> 
 										<div id="basic-chart1" style="margin-left:30px;margin-top:20px;">
-											<h4>Andamento dello studente nella materia</h4>
+											<h4>Andamento personale nella materia</h4>
 											<canvas id="linechart" width="600" height="295"></canvas>
 										</div>
 									</div>
@@ -284,11 +270,10 @@
 						ctx.restore();
 					}
 				};
-				<%	if(request.getAttribute("selectMateria") != null && request.getAttribute("selectStudente") != null) {
+				<%	if(request.getAttribute("selectMateria") != null) {
 						int selectMateria = (int) request.getAttribute("selectMateria");
-						int selectStudente = (int) request.getAttribute("selectStudente");
 						boolean selectVoto = (boolean) request.getAttribute("selectVoto");
-						if(selectMateria >= 0 && selectStudente >= 0 && selectVoto) {
+						if(selectMateria >= 0 && selectVoto) {
 							List<? extends Archiviazione> listaArch = (List<? extends Archiviazione>) request.getAttribute("listaArchiviazioni");
 				%>
 							var ctx = document.getElementById("linechart");

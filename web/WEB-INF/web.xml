@@ -42,6 +42,10 @@
     	<servlet-name>ViewComunicazioniStudente</servlet-name> 
 	    <servlet-class>mitro.view.studente.ViewComunicazioni</servlet-class> 
     </servlet>
+    <servlet> 
+    	<servlet-name>ViewStoricoStudente</servlet-name> 
+	    <servlet-class>mitro.view.studente.ViewStoricoStudente</servlet-class> 
+    </servlet>
 	<servlet> 
     	<servlet-name>HomeProfessore</servlet-name> 
 	    <servlet-class>mitro.view.professore.HomeProfessore</servlet-class> 
@@ -84,6 +88,10 @@
     <servlet-mapping> 
     	<servlet-name>ViewComunicazioniStudente</servlet-name> 
         <url-pattern>/studente-comunicazioni</url-pattern> 
+    </servlet-mapping>
+    <servlet-mapping> 
+    	<servlet-name>ViewStoricoStudente</servlet-name> 
+        <url-pattern>/studente-storico</url-pattern> 
     </servlet-mapping>
     <servlet-mapping> 
     	<servlet-name>HomeProfessore</servlet-name> 
