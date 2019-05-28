@@ -12,8 +12,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import mitro.controller.ControllerFactory;
-import mitro.controller.deployment.Configurazione;
 import mitro.controller.professore.GestioneProfessore;
+import mitro.deployment.Configurazione;
 import mitro.exceptions.OperazioneException;
 import mitro.model.Comunicazione;
 import mitro.model.Professore;
@@ -42,7 +42,7 @@ public class ViewComunicazioni extends ViewUtenteAstratta {
 			req.setAttribute("nomeProfessore", "Prof. " + gestioneProfessore.getProfessore().getNome()
 					+ " " + gestioneProfessore.getProfessore().getCognome());
 			
-			LocalDate inizioSett = LocalDate.now(Configurazione.ZONE_ID).with(DayOfWeek.MONDAY);
+			LocalDate inizioSett = LocalDate.now(Configurazione.getInstance().getZoneId()).with(DayOfWeek.MONDAY);
 			if(req.getParameter("inizioSett") != null)
 				inizioSett = LocalDate.parse(req.getParameter("inizioSett"));
 			req.setAttribute("inizioSett", inizioSett);

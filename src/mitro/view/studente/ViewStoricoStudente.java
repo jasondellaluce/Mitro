@@ -15,8 +15,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import mitro.controller.ControllerFactory;
-import mitro.controller.deployment.Configurazione;
 import mitro.controller.studente.GestioneStudente;
+import mitro.deployment.Configurazione;
 import mitro.exceptions.OperazioneException;
 import mitro.model.Archiviazione;
 import mitro.model.Classe;
@@ -44,7 +44,7 @@ public class ViewStoricoStudente extends ViewUtenteAstratta {
 			if(req.getAttribute("selectVoto") != null)
 				selectVoto = (boolean) req.getAttribute("selectVoto");
 			
-			LocalDate yearBegin = LocalDate.now(Configurazione.ZONE_ID).withDayOfYear(1);
+			LocalDate yearBegin = LocalDate.now(Configurazione.getInstance().getZoneId()).withDayOfYear(1);
 			GestioneStudente gestioneStudente = ControllerFactory.getInstance().getGestioneStudente((Studente) utente);
 			List<String> listaMaterie = gestioneStudente.getListaAttivita(yearBegin, yearBegin.plusYears(1).minusDays(1)).stream()
 					.map(a -> a.getClasse().getNome() + " - " + a.getMateria().getNome())

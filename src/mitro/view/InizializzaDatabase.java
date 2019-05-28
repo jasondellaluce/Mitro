@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.sqlite.SQLiteDataSource;
 
-import mitro.controller.deployment.Configurazione;
+import mitro.deployment.Configurazione;
 import mitro.persistenza.cifrature.TestoInChiaro;
 import mitro.persistenza.sql.SQLGestoreTabelle;
 
@@ -20,7 +20,8 @@ public class InizializzaDatabase extends ViewAstratta {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		SQLiteDataSource ds = new SQLiteDataSource();
-        ds.setUrl("jdbc:sqlite:" + Configurazione.PATH_RELATIVO + "/" + nomeFileDatabase); 
+        ds.setUrl("jdbc:sqlite:" + Configurazione.getInstance().getPercorsoEsecuzione()
+        		+ "/" + nomeFileDatabase); 
         SQLGestoreTabelle gestore = new SQLGestoreTabelle(ds, new TestoInChiaro());
         
         try {

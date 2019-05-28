@@ -2,8 +2,8 @@ package mitro.controller;
 
 import java.time.LocalDateTime;
 
-import mitro.controller.deployment.Configurazione;
 import mitro.controller.log.LoggerOperazioni;
+import mitro.deployment.Configurazione;
 import mitro.model.Utente;
 
 public abstract class ControllerAstratto {
@@ -18,7 +18,7 @@ public abstract class ControllerAstratto {
 	 * Scrive un'operazione richiesta da un utente autenticato
 	 * */
 	protected void eseguiLogOperazione(Utente utente, String operazione) {
-		String voce = LocalDateTime.now(Configurazione.ZONE_ID) + ", "
+		String voce = LocalDateTime.now(Configurazione.getInstance().getZoneId()) + ", "
 				+ utente.getId() + ", "
 				+ this.getClass().getSimpleName() + " - "
 				+ operazione;
@@ -29,7 +29,7 @@ public abstract class ControllerAstratto {
 	 * Scrive un'operazione richiesta da un utente non autenticato
 	 * */
 	protected void eseguiLogOperazione(String operazione) {
-		String voce = LocalDateTime.now(Configurazione.ZONE_ID) + ", "
+		String voce = LocalDateTime.now(Configurazione.getInstance().getZoneId()) + ", "
 				+ "NOID, "
 				+ this.getClass().getSimpleName() + " - "
 				+ operazione;

@@ -10,7 +10,7 @@ import java.lang.reflect.Modifier;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-import mitro.controller.deployment.Configurazione;
+import mitro.deployment.Configurazione;
 
 public class JavaBeanTestHelper {
 	
@@ -127,10 +127,10 @@ public class JavaBeanTestHelper {
 			return "example";
 		
 		if(tipo.equals(LocalDateTime.class))
-			return LocalDateTime.now(Configurazione.ZONE_ID);
+			return LocalDateTime.now(Configurazione.getInstance().getZoneId());
 		
 		if(tipo.equals(LocalDate.class))
-			return LocalDate.now(Configurazione.ZONE_ID);
+			return LocalDate.now(Configurazione.getInstance().getZoneId());
 		
 		try {
 			return tipo.newInstance();

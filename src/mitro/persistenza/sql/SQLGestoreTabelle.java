@@ -7,25 +7,21 @@ import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
 import java.util.Random;
 
 import javax.sql.DataSource;
 
-import mitro.controller.deployment.Configurazione;
+import mitro.deployment.Configurazione;
 import mitro.exceptions.PersistenzaException;
 import mitro.model.Amministratore;
 import mitro.model.Attivita;
 import mitro.model.Classe;
 import mitro.model.Comunicazione;
 import mitro.model.Materia;
-import mitro.model.Presenza;
 import mitro.model.Professore;
 import mitro.model.Ruolo;
 import mitro.model.Studente;
 import mitro.model.Utente;
-import mitro.model.Voto;
 import mitro.persistenza.Cifratura;
 import mitro.persistenza.DAOArchiviazione;
 import mitro.persistenza.DAOAttivita;
@@ -267,7 +263,7 @@ public class SQLGestoreTabelle {
 		Materia m2 = new Materia();
 		m2.setNome("Matematica");
 		m2.setDescrizione("Matematica ed analisi per la quinta superiore");
-		LocalDate startDate = LocalDate.now(Configurazione.ZONE_ID)
+		LocalDate startDate = LocalDate.now(Configurazione.getInstance().getZoneId())
 				.withDayOfYear(1).plusWeeks(18)
 				.with(DayOfWeek.MONDAY);
 		for(int i = 0; i < 6; i++) {
@@ -288,7 +284,7 @@ public class SQLGestoreTabelle {
 				for(int k = 0; k < 6; k++) {
 					att.setData(startDate.plusDays(i).plusWeeks(k));
 					daoAttivita.registraAttivita(att);
-					/*if(att.getData().isBefore(LocalDate.now(Configurazione.ZONE_ID).minusDays(2))) {
+					/*if(att.getData().isBefore(LocalDate.now(Configurazione.getInstance().getZoneId()).minusDays(2))) {
 						for(Studente studente : Arrays.asList(stud1, stud2, stud3)) {
 							if(Objects.equals(studente.getClasse(), att.getClasse())) {
 								Presenza presenza = new Presenza();
@@ -310,7 +306,7 @@ public class SQLGestoreTabelle {
 		
 		/* Comunicazioni */
 		Comunicazione c = new Comunicazione();
-		c.setDataOra(LocalDateTime.now());
+		c.setDataOra(LocalDateTime.now(Configurazione.getInstance().getZoneId()));
 		c.setOggetto("Messaggio privato dalla segreteria");
 		c.setContenuto("Lorem ipsum dolor sit amet, consectetur adipiscing elit, "
 				+ "sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. "
@@ -324,7 +320,7 @@ public class SQLGestoreTabelle {
 		c.setDestinatario(stud1);
 		daoComunicazione.registraComunicazione(c);	
 		
-		c.setDataOra(LocalDateTime.now().minusHours(3));
+		c.setDataOra(LocalDateTime.now(Configurazione.getInstance().getZoneId()).minusHours(3));
 		c.setOggetto("Avvisio sciopero docenti");
 		c.setContenuto("Lorem ipsum dolor sit amet, consectetur adipiscing elit, "
 				+ "sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. "
@@ -338,7 +334,7 @@ public class SQLGestoreTabelle {
 		c.setDestinatario(stud1);
 		daoComunicazione.registraComunicazione(c);	
 		
-		c.setDataOra(LocalDateTime.now().minusDays(8));
+		c.setDataOra(LocalDateTime.now(Configurazione.getInstance().getZoneId()).minusDays(8));
 		c.setOggetto("Emissione pratiche gita 2019/20");
 		c.setContenuto("Lorem ipsum dolor sit amet, consectetur adipiscing elit, "
 				+ "sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. "

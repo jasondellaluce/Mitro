@@ -11,7 +11,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.sqlite.SQLiteDataSource;
 
-import mitro.controller.deployment.Configurazione;
+import mitro.deployment.Configurazione;
 import mitro.exceptions.PersistenzaException;
 import mitro.model.Archiviazione;
 import mitro.model.Attivita;
@@ -81,14 +81,14 @@ class SQLDAOArchiviazioneTest {
 		
 		Attivita a1 = new Attivita();
 		a1.setProfessore(p1);
-		a1.setData(LocalDate.now(Configurazione.ZONE_ID));
+		a1.setData(LocalDate.now(Configurazione.getInstance().getZoneId()));
 		a1.setMateria(m1);
 		a1.setClasse(c1);
 		a1.setOraInizio(10);
 		a1.setAnnotazione("Lezione");
 		Attivita a2 = new Attivita();
 		a2.setProfessore(p2);
-		a2.setData(LocalDate.now(Configurazione.ZONE_ID).plusDays(1));
+		a2.setData(LocalDate.now(Configurazione.getInstance().getZoneId()).plusDays(1));
 		a2.setMateria(m1);
 		a2.setClasse(c1);
 		a2.setOraInizio(11);

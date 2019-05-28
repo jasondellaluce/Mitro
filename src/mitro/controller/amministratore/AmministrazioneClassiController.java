@@ -5,8 +5,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import mitro.controller.ControllerAstratto;
-import mitro.controller.deployment.Configurazione;
 import mitro.controller.log.LoggerOperazioni;
+import mitro.deployment.Configurazione;
 import mitro.exceptions.OperazioneException;
 import mitro.exceptions.PersistenzaException;
 import mitro.exceptions.PrecondizioneNonSoddisfattaException;
@@ -56,7 +56,7 @@ public class AmministrazioneClassiController extends ControllerAstratto implemen
 	@Override
 	public void registraAttivita(Attivita attivita) throws OperazioneException {
 		if(attivita.getData().atTime(attivita.getOraInizio(), 0)
-				.isBefore(LocalDateTime.now(Configurazione.ZONE_ID)))
+				.isBefore(LocalDateTime.now(Configurazione.getInstance().getZoneId())))
 			throw new PrecondizioneNonSoddisfattaException("attivita passata");
 		try {
 			daoAttivita.registraAttivita(attivita);
@@ -70,7 +70,7 @@ public class AmministrazioneClassiController extends ControllerAstratto implemen
 	@Override
 	public void eliminaAttivita(Attivita attivita) throws OperazioneException {
 		if(attivita.getData().atTime(attivita.getOraInizio(), 0)
-				.isBefore(LocalDateTime.now(Configurazione.ZONE_ID)))
+				.isBefore(LocalDateTime.now(Configurazione.getInstance().getZoneId())))
 			throw new PrecondizioneNonSoddisfattaException("attivita passata");
 		try {
 			daoAttivita.eliminaAttivita(attivita);
