@@ -69,7 +69,9 @@ public class HomeProfessore extends ViewUtenteAstratta {
 				req.setAttribute("colorAtt" + (date.getDayOfWeek().ordinal() + 1) + "-" + time, "yes");
 				listaAttivita.stream()
 					.filter(a -> a.getData().equals(date) && a.getOraInizio() == time && a.getClasse().getId().equals(classeId))
-					.findAny().ifPresent(a -> req.setAttribute("annotazione", a.getAnnotazione()));
+					.findAny().ifPresent(a -> {
+						req.setAttribute("annotazione", a.getAnnotazione());
+					});
 			}
 		}
 		catch (OperazioneException e) {

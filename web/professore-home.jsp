@@ -206,13 +206,13 @@
 									<div class="compose-email"> 
 										<br>
 										<a href='/professore-appello?selAtt=<%= request.getParameter("selAtt") %>'> 
-											<button type='submit' class="btn btn-custon-rounded-three btn-default" style="width:100%;" <%= request.getParameter("selAtt") == null ? "disabled" : "" %>>Inserisci appello</button>
+											<button type='submit' class="btn btn-custon-rounded-three btn-default" style="width:100%;" <%= (request.getParameter("selAtt") != null) ? "" : "disabled" %>>Inserisci appello</button>
 										</a>
 									</div> 
 									<div class="compose-email"> 
 										<br>   
 										<a href='/professore-voti?selAtt=<%= request.getParameter("selAtt") %>'> 
-											<button type='submit' class="btn btn-custon-rounded-three btn-default" style="width:100%;" <%= request.getParameter("selAtt") == null ? "disabled" : "" %>>Registra voti</button>
+											<button type='submit' class="btn btn-custon-rounded-three btn-default" style="width:100%;" <%= (request.getParameter("selAtt") != null) ? "" : "disabled" %>>Registra voti</button>
 										</a>
 									</div> 
 								</div>  
