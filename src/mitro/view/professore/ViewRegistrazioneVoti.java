@@ -73,11 +73,13 @@ public class ViewRegistrazioneVoti extends ViewUtenteAstratta {
 			
 		}
 		catch (DateTimeParseException | NumberFormatException | NullPointerException e){
-			resp.sendRedirect("/professore");
-			return;
+			throw new ServletException(e);
+			/*resp.sendRedirect("/professore");
+			return;*/
 		}
 		catch (OperazioneException e) {
-			req.setAttribute("error", String.valueOf(e));
+			throw new ServletException(e);
+			//req.setAttribute("error", String.valueOf(e));
 		}
 		
 		req.getRequestDispatcher("/professore-voti.jsp").forward(req, resp);

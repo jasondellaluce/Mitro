@@ -59,7 +59,7 @@
 								</a>
 							</li>
 							<li class="nav-item">
-								<a href="comunicazioneprofessore.html">
+								<a href="/professore-storico">
 									<i class="fa big-icon fa-pie-chart"></i>
 									<span class="mini-dn">Storico</span>
 									<span class="indicator-right-menu mini-dn"></span>

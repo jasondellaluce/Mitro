@@ -73,11 +73,13 @@ public class ViewRegistrazionePresenze extends ViewUtenteAstratta {
 			
 		}
 		catch (DateTimeParseException | NumberFormatException | NullPointerException e){
-			resp.sendRedirect("/professore");
-			return;
+			throw new ServletException(e);
+			//resp.sendRedirect("/professore");
+			//return;
 		}
 		catch (OperazioneException e) {
-			req.setAttribute("error", String.valueOf(e));
+			throw new ServletException(e);
+			//req.setAttribute("error", String.valueOf(e));
 		}
 		
 		req.getRequestDispatcher("/professore-appello.jsp").forward(req, resp);
@@ -117,10 +119,12 @@ public class ViewRegistrazionePresenze extends ViewUtenteAstratta {
 					presenza.setStudente(studente);
 					presenza.setValore(true);
 					gestioneClasse.inserisciPresenza(presenza);
-					listaStudenti.remove(studente);
+					listaStudenti.set(Integer.parseInt(p), null);
 				}
 			}
 			for(Studente studente : listaStudenti) {
+				if(studente == null)
+					continue;
 				Presenza presenza = new Presenza();
 				presenza.setAttivita(attivita.get());
 				presenza.setStudente(studente);
@@ -135,10 +139,11 @@ public class ViewRegistrazionePresenze extends ViewUtenteAstratta {
 			throw new ServletException(e);
 		}
 		catch (Exception e) {
-			req.setAttribute("error", String.valueOf(e));
+			throw new ServletException(e);
+			//req.setAttribute("error", String.valueOf(e));
 		}
 		
-		resp.sendRedirect("/professore");
+		//resp.sendRedirect("/professore");
 	}
 
 }

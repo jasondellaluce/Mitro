@@ -62,7 +62,7 @@
 								</a>
 							</li>
 							<li class="nav-item">
-								<a href="comunicazioneprofessore.html">
+								<a href="/professore-storico">
 									<i class="fa big-icon fa-pie-chart"></i>
 									<span class="mini-dn">Storico</span>
 									<span class="indicator-right-menu mini-dn"></span>
@@ -118,31 +118,41 @@
                                     <div class="main-sparkline9-hd">
                                         <h1>Seleziona una classe o un singolo studente</h1>
                                     </div>
-                                </div>
                             </div>
+                        </div>
                     </div>
                     
                     <div class="row">
 						<form action='/professore-storico' method="post">
 							<div class="col-lg-3" style="margin-left: 15px; margin-bottom: 20px; ">
-								<select class="form-control">
-									<option value="selected">Materia - Classe...</option>
-									<option value="">Matematica-5A</option>
-									<option value="">Fisica-5A</option>					
+								<select class="form-control" name="selectionMaterie" >
+									<%	if(request.getAttribute("listaMaterie") != null) {
+											List<String> listaMaterie = (List<String>) request.getAttribute("listaMaterie");
+											for(int i = 0; i < listaMaterie.size(); i++) {
+									%>
+											<option value='<%= i %>' <%= i == (int) request.getAttribute("selectMateria") ? "selected" : "" %>><%= listaMaterie.get(i) %></option>
+									<% 		}
+										}
+									%>			
 								</select>
 							</div>
 
 							<div class="col-lg-3" style="margin-bottom: 20px;">
-								<select class="form-control">
-									<option value="selected">Studente...</option>
-									<option value="">Jason Dellaluce</option>
-									<option value="">Federico Baldini</option>
+								<select class="form-control" name="selectionStudenti" >
+									<%	if(request.getAttribute("listaStudenti") != null) {
+											List<Studente> listaStudenti = (List<Studente>) request.getAttribute("listaStudenti");
+											for(int i = 0; i < listaStudenti.size(); i++) {
+									%>
+											<option value='<%= i %>' <%= i == (int) request.getAttribute("selectStudente") ? "selected" : "" %>><%= listaStudenti.get(i).getNome() + " " + listaStudenti.get(i).getCognome() %></option>
+									<% 		}
+										}
+									%>			
 								</select>
 							</div>
 							
 							<div class="col-lg-2" style="margin-bottom: 20px;">
-								<input class="pull-left" type="radio" value="voto" name="tipoRicerca"> Voti<br>
-								<input class="pull-left" type="radio" value="presenza" name="tipoRicerca"> Presenze
+								<input class="pull-left" type="radio" value="voto" name="tipoRicerca" <%= ((boolean) request.getAttribute("selectVoto")) ? "checked" : "" %> > Voti<br>
+								<input class="pull-left" type="radio" value="presenza" name="tipoRicerca" <%= !((boolean) request.getAttribute("selectVoto")) ? "checked" : "" %>> Presenze
 							</div>
 							
 							<div class="col-lg-3" style="margin-bottom: 20px;">
@@ -151,55 +161,78 @@
 						</form>
                     </div>
 					
-					<div class="row">
-                        <div class="col-lg-6" style="margin-left: 15px;">
-                            <div class="sparkline9-list shadow-reset mg-tb-30" style="margin-top: 0px;">
-								<div class="sparkline9-graph dashone-comment">
-									<div class="datatable-dashv1-list custom-datatable-overright dashtwo-project-list-data">
-										<h4>Ultime valutazioni dello studente nella materia</h4>
-										<div class="fixed-table-container" style="padding-bottom: 0px; height: 500px;">
-											<table class="table">
+					<%	if(request.getAttribute("selectMateria") != null && request.getAttribute("selectStudente") != null) {
+							int selectMateria = (int) request.getAttribute("selectMateria");
+							int selectStudente = (int) request.getAttribute("selectStudente");
+							boolean selectVoto = (boolean) request.getAttribute("selectVoto");
+							if(selectMateria >= 0 && selectStudente >= 0) {
+					%>
+						<div class="row">
+	                        <div class="col-lg-6" style="margin-left: 15px;">
+	                            <div class="sparkline9-list shadow-reset mg-tb-30" style="margin-top: 0px;">
+									<div class="sparkline9-graph dashone-comment">
+										<div class="datatable-dashv1-list custom-datatable-overright dashtwo-project-list-data">
+											<h4>Ultime <%= selectVoto ? "valutazioni" : "presenze" %> dello studente nella materia</h4>
+											<div class="fixed-table-container" style="padding-bottom: 0px; height: 500px;">
+												<table class="table">
+													<tbody>
+														<tr>
+															<td>Nome Studente</td>
+															<td><%= selectVoto ? "Voto" : "Presenza" %></td>
+														</tr>
+														<%	List<? extends Archiviazione> listaArch = (List<? extends Archiviazione>) request.getAttribute("listaArchiviazioni");
+															if(selectVoto) {						
+																for(int i = 0; i < listaArch.size(); i++) {
+														%>
+															<tr>
+																<td><%= listaArch.get(i).getStudente().getNome() + " " + listaArch.get(i).getStudente().getCognome()%></td>
+																<td><input type="text" disabled value='<%= ((Voto) listaArch.get(i)).getValore() %>'></td>
+															</tr>
+														<%		}
+															}
+														%>
+														<%	if(!selectVoto) {
+																for(int i = 0; i < listaArch.size(); i++) {
+														%>
+															<tr>
+																<td><%= listaArch.get(i).getStudente().getNome() + " " + listaArch.get(i).getStudente().getCognome()%></td>
+																<td><input type="checkbox" disabled <%= ((Presenza) listaArch.get(i)).isValore() ? "checked" : "" %> ></td>
+															</tr>
+														<%		}
+															}
+														%>
+													<tbody>        
+												</table>
+											</div>
+										</div>
+										<div class="fixed-table-footer" style="display: none;">
+											<table>
 												<tbody>
 													<tr>
-														<td>Nome Studente</td>
-														<td>Presenza</td>
 													</tr>
-													<tr>
-														<td>Jason Dellaluce</td>
-														<td><input name="btSelectItem" type="checkbox" checked></td>
-													</tr>
-													<tr>
-														<td>Jason Dellaluce</td>
-														<td><input name="btSelectItem" type="checkbox" ></td>
-													</tr>
-												<tbody>        
+												</tbody>
 											</table>
 										</div>
-									</div>
-									<div class="fixed-table-footer" style="display: none;">
-										<table>
-											<tbody>
-												<tr>
-												</tr>
-											</tbody>
-										</table>
-									</div>
-									<div class="clearfix">
+										<div class="clearfix">
+										</div>
 									</div>
 								</div>
-							</div>
-                        </div>
-						
-						<div class="col-lg-2" > 	
-							<div class="note-editor note-frame panel panel-default" style=" width:660px; height: 400px;"> 
-								<div id="basic-chart1" style="margin-left:30px;margin-top:20px;">
-									<h4>Andamento dello studente nella materia</h4>
-									<canvas id="linechart" width="600" height="295"></canvas>
-								</div>
-							</div>
-						</div>   
-						
-                    </div>			
+	                        </div>
+							
+							<% if(selectVoto) { %>
+								<div class="col-lg-2" > 	
+									<div class="note-editor note-frame panel panel-default" style=" width:660px; height: 400px;"> 
+										<div id="basic-chart1" style="margin-left:30px;margin-top:20px;">
+											<h4>Andamento dello studente nella materia</h4>
+											<canvas id="linechart" width="600" height="295"></canvas>
+										</div>
+									</div>
+								</div>   
+							<% } %>
+	                    </div>		
+                    <%		}
+                    	}
+                    %>
 				</div>
 			</div>
 		</div>
@@ -251,49 +284,58 @@
 						ctx.restore();
 					}
 				};
-				var ctx = document.getElementById("linechart");
-				let myChart = new Chart(ctx, {
-					type: 'line',		
-					data: {
-						labels: ["January", "February", "March", "April", "May", "June", "July"],
-						datasets: [{
-							data: [65, 59, 75, 64, 70, 30, 40],
-							borderColor: '#07C',
-							pointBackgroundColor: "#FFF",
-							pointBorderColor: "#07C",
-							pointHoverBackgroundColor: "#07C",
-							pointHoverBorderColor: "#FFF",
-							pointRadius: 4,
-							pointHoverRadius: 4,
-							fill: false,
-							tension: 0.15
-						}]
-					},
-					options: {
-						responsive: false,
-						tooltips: {
-							displayColors: false,
-							callbacks: {
-								label: function(e, d) {
-									return;
+				<%	if(request.getAttribute("selectMateria") != null && request.getAttribute("selectStudente") != null) {
+						int selectMateria = (int) request.getAttribute("selectMateria");
+						int selectStudente = (int) request.getAttribute("selectStudente");
+						boolean selectVoto = (boolean) request.getAttribute("selectVoto");
+						if(selectMateria >= 0 && selectStudente >= 0 && selectVoto) {
+							List<? extends Archiviazione> listaArch = (List<? extends Archiviazione>) request.getAttribute("listaArchiviazioni");
+				%>
+							var ctx = document.getElementById("linechart");
+							let myChart = new Chart(ctx, {
+								type: 'line',		
+								data: {
+									labels: ['<%= listaArch.get(listaArch.size() - 1).getAttivita().getData() %>', <% for(int i = listaArch.size() - 2; i > 0; i--) {%> <%= "''," %> <% }%>, '<%= listaArch.get(0).getAttivita().getData() %>'],
+									datasets: [{
+										data: [<% for(int i = listaArch.size() - 1; i >= 0; i--) {%> <%= ((Voto) listaArch.get(i)).getValore() + "," %> <% } %>],
+										borderColor: '#07C',
+										pointBackgroundColor: "#FFF",
+										pointBorderColor: "#07C",
+										pointHoverBackgroundColor: "#07C",
+										pointHoverBorderColor: "#FFF",
+										pointRadius: 4,
+										pointHoverRadius: 4,
+										fill: false,
+										tension: 0.15
+									}]
 								},
-								title: function() {
-									return;
+								options: {
+									responsive: false,
+									tooltips: {
+										displayColors: false,
+										callbacks: {
+											label: function(e, d) {
+												return;
+											},
+											title: function() {
+												return;
+											}
+										}
+									},
+									legend: {
+										display: false
+									},
+									scales: {
+										yAxes: [{
+											ticks: {
+												max: 10
+											}
+										}]
+									}
 								}
-							}
-						},
-						legend: {
-							display: false
-						},
-						scales: {
-							yAxes: [{
-								ticks: {
-									max: 90
-								}
-							}]
-						}
-					}
-				});
+							});
+				<% 		}
+					}%>
 			})(jQuery); 
 		</script>
 		<script src="js/main.js"></script>

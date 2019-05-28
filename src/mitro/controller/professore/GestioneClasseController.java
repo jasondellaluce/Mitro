@@ -64,7 +64,7 @@ public class GestioneClasseController extends ControllerAstratto implements Gest
 		try {
 			List<Archiviazione> archiviazioni = daoArchiviazione.ottieniArchiviazioni();
 			for(Archiviazione a: archiviazioni)
-				if(a.getAttivita().equals(presenza.getAttivita()) && a.getStudente().equals(presenza.getStudente()))
+				if(a instanceof Presenza && a.getAttivita().equals(presenza.getAttivita()) && a.getStudente().equals(presenza.getStudente()))
 					daoArchiviazione.eliminaArchiviazione(presenza);
 				
 			daoArchiviazione.registraArchiviazione(presenza);

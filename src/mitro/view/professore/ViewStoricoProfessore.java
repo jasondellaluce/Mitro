@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
+import java.util.StringTokenizer;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -41,12 +42,12 @@ public class ViewStoricoProfessore extends ViewUtenteAstratta {
 			int selectMateria = -1;
 			int selectStudente = -1;
 			boolean selectVoto = true;
-			if(req.getParameter("selectMateria") != null)
-				selectMateria = Integer.parseInt(req.getParameter("selectMateria"));
-			if(req.getParameter("selectMateria") != null)
-				selectStudente = Integer.parseInt(req.getParameter("selectStudente"));
-			if(req.getParameter("selectVoto") != null)
-				selectVoto = req.getParameter("selectVoto").equals("voto");
+			if(req.getAttribute("selectMateria") != null)
+				selectMateria = (int) req.getAttribute("selectMateria");
+			if(req.getAttribute("selectMateria") != null)
+				selectStudente = (int) req.getAttribute("selectStudente");
+			if(req.getAttribute("selectVoto") != null)
+				selectVoto = (boolean) req.getAttribute("selectVoto");
 			
 			LocalDate yearBegin = LocalDate.now(Configurazione.ZONE_ID).withDayOfYear(1);
 			GestioneProfessore gestioneProfessore = ControllerFactory.getInstance().getGestioneProfessore((Professore) utente);
@@ -60,17 +61,19 @@ public class ViewStoricoProfessore extends ViewUtenteAstratta {
 			req.setAttribute("selectStudente", selectStudente);
 			req.setAttribute("selectVoto", selectVoto);
 			req.setAttribute("listaMaterie", listaMaterie);
-			req.setAttribute("listaStudenti", new ArrayList<>());
-			req.setAttribute("listaArchiviazioni", new ArrayList<>());
+			req.setAttribute("listaStudenti", new ArrayList<Studente>());
+			req.setAttribute("listaArchiviazioni", new ArrayList<Archiviazione>());
 			if(selectMateria >= 0) {
-				String nomeClasseMateria = listaMaterie.get(selectMateria);
-				Optional<Classe> classe = gestioneProfessore.getListaClassi().stream().filter(c -> c.getNome().equals(nomeClasseMateria)).findAny();
+				StringTokenizer stk = new StringTokenizer(listaMaterie.get(selectMateria), "-");
+				String nomeClasse = stk.nextToken().trim();
+				String nomeMateria = stk.nextToken().trim();
+				Optional<Classe> classe = gestioneProfessore.getListaClassi().stream().filter(c -> c.getNome().equals(nomeClasse)).findAny();
 				if(classe.isPresent()) {
 					GestioneClasse gestioneClasse = ControllerFactory.getInstance().getGestioneClasse(classe.get());
 					List<Studente> listaStudenti = gestioneClasse.getListaStudenti();
 					listaStudenti.sort(Comparator.comparing(Studente::getNome).thenComparing(Studente::getCognome));
 					req.setAttribute("listaStudenti", listaStudenti);
-					if(selectStudente >= 0) {
+					if(selectStudente >= 0 && selectStudente < listaStudenti.size()) {
 						Studente studente = listaStudenti.get(selectStudente);
 						req.setAttribute("listaStudenti", listaStudenti);
 						List<? extends Archiviazione> listaArchiviazioni = new ArrayList<>();
@@ -81,11 +84,13 @@ public class ViewStoricoProfessore extends ViewUtenteAstratta {
 						
 						listaArchiviazioni = listaArchiviazioni.stream()
 								.filter(a -> a.getStudente().equals(studente))
+								.filter(a -> a.getAttivita().getMateria().getNome().equals(nomeMateria))
+								.filter(a -> a.getAttivita().getProfessore().equals((Professore) utente))
 								.sorted(Comparator.comparing((Function<Archiviazione, LocalDate>) (a -> a.getAttivita().getData()))
 										.thenComparingInt(a -> a.getAttivita().getOraInizio())
 										.reversed())
 								.collect(Collectors.toList());
-						req.setAttribute("listaArchiviaizioni", listaArchiviazioni);
+						req.setAttribute("listaArchiviazioni", listaArchiviazioni);
 					}
 				}	
 			}		
@@ -99,8 +104,24 @@ public class ViewStoricoProfessore extends ViewUtenteAstratta {
 	@Override
 	protected void gestisciRichiestaPost(Utente utente, HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
-
+		int selectMateria = -1;
+		int selectStudente = -1;
+		boolean selectVoto = true;
+		String selectedMateria = req.getParameter("selectionMaterie");
+		String selectedStudente = req.getParameter("selectionStudenti");
+		String selectedRicerca = req.getParameter("tipoRicerca");
+		
+		try { selectMateria = Integer.parseInt(selectedMateria); 
+		} catch (NumberFormatException e) { }
+		try { selectStudente = Integer.parseInt(selectedStudente); 
+		} catch (NumberFormatException e) { }
+		selectVoto = selectedRicerca.equals("voto");
+		
+		req.setAttribute("selectMateria", selectMateria);
+		req.setAttribute("selectStudente", selectStudente);
+		req.setAttribute("selectVoto", selectVoto);
+		
+		gestisciRichiestaGet(utente, req, resp);
 	}
 
 }

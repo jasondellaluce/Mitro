@@ -226,14 +226,14 @@ public class SQLGestoreTabelle {
 		Studente stud2 = new Studente();
 		stud2.setNome("Federico");
 		stud2.setCognome("Baldini");
-		stud2.setClasse(c2);
+		stud2.setClasse(c1);
 		daoUtente.registraUtente(stud2);
 		daoUtente.inserisciCredenziali(stud2, "stud2", "password");
 		
 		Studente stud3 = new Studente();
 		stud3.setNome("Amir");
 		stud3.setCognome("Al Sadi");
-		stud3.setClasse(c3);
+		stud3.setClasse(c1);
 		daoUtente.registraUtente(stud3);
 		daoUtente.inserisciCredenziali(stud3, "stud3", "password");
 		
