@@ -296,6 +296,8 @@ public class SQLGestoreTabelle {
 				+ "sunt in culpa qui officia deserunt mollit anim id est laborum.");
 		c.setDestinatario(prof1);
 		daoComunicazione.registraComunicazione(c);
+		c.setDestinatario(stud1);
+		daoComunicazione.registraComunicazione(c);	
 		
 		c.setDataOra(LocalDateTime.now().minusHours(3));
 		c.setOggetto("Avvisio sciopero docenti");
@@ -308,6 +310,8 @@ public class SQLGestoreTabelle {
 				+ "sunt in culpa qui officia deserunt mollit anim id est laborum.");
 		c.setDestinatario(prof1);
 		daoComunicazione.registraComunicazione(c);
+		c.setDestinatario(stud1);
+		daoComunicazione.registraComunicazione(c);	
 		
 		c.setDataOra(LocalDateTime.now().minusDays(8));
 		c.setOggetto("Emissione pratiche gita 2019/20");
@@ -319,6 +323,8 @@ public class SQLGestoreTabelle {
 				+ "Excepteur sint occaecat cupidatat non proident,"
 				+ "sunt in culpa qui officia deserunt mollit anim id est laborum.");
 		c.setDestinatario(prof1);
+		daoComunicazione.registraComunicazione(c);	
+		c.setDestinatario(stud1);
 		daoComunicazione.registraComunicazione(c);	
 		
 	}

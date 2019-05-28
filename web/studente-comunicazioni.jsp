@@ -47,7 +47,7 @@
 					<div class="left-custom-menu-adp-wrap">
 						<ul class="nav navbar-nav left-sidebar-menu-pro">
 							<li class="nav-item">
-								<a href="/professore?azione=disconnetti">
+								<a href="/studente?azione=disconnetti">
 									<i class="fa big-icon fa-sign-out"></i>
 									<span class="mini-dn">Disconnettiti</span>
 									<span class="indicator-right-menu mini-dn"></span>
@@ -55,21 +55,21 @@
 							</li>
 							</br>
 							<li class="nav-item">
-								<a href="/professore">
+								<a href="/studente">
 									<i class="fa big-icon fa-home"></i>
 									<span class="mini-dn">Vai alla Home</span>
 									<span class="indicator-right-menu mini-dn"></span>
 								</a>
 							</li>
 							<li class="nav-item">
-								<a href="/professore-storico">
+								<a href="/studente-storico">
 									<i class="fa big-icon fa-pie-chart"></i>
 									<span class="mini-dn">Storico</span>
 									<span class="indicator-right-menu mini-dn"></span>
 								</a>
 							</li>
 							<li class="nav-item">
-								<a href="/professore-comunicazioni">
+								<a href="/studente-comunicazioni">
 									<i class="fa big-icon fa-envelope"></i>
 									<span class="mini-dn">Comunicazioni</span>
 									<span class="indicator-right-menu mini-dn"></span>
@@ -116,7 +116,7 @@
 										<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
 											<div class="breadcome-heading" style="font-size: 12pt;">
 												<ul>
-													<li>Bentornato, <%= request.getAttribute("nomeProfessore") %></li>
+													<li>Bentornato, <%= request.getAttribute("nomeStudente") %></li>
 												</ul>
 											</div>
 										</div>
@@ -140,12 +140,12 @@
 									</div>
 									<div class="sparkline16-graph" style="height:50px;" >
 										<form id="adminpro-form" class="adminpro-form" action="" method="post">
-											<a style="margin-right:50px;" href='/professore-comunicazioni?inizioSett=<%= request.getAttribute("precedenteSett") %>'>
+											<a style="margin-right:50px;" href='/studente-comunicazioni?inizioSett=<%= request.getAttribute("precedenteSett") %>'>
 												<i class="fa big-icon fa-arrow-left"></i>
 												Settimana precedente
 											</a>
 											<span><%= request.getAttribute("inizioSett") %> - <%= request.getAttribute("fineSett") %></span>
-											<a style="margin-left:50px;" href='/professore-comunicazioni?inizioSett=<%= request.getAttribute("prossimaSett") %>'>
+											<a style="margin-left:50px;" href='/studente-comunicazioni?inizioSett=<%= request.getAttribute("prossimaSett") %>'>
 												Settimana successiva
 												<i class="fa big-icon fa-arrow-right"></i>
 											</a>

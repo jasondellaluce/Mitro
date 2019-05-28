@@ -109,8 +109,8 @@ public class GestioneClasseController extends ControllerAstratto implements Gest
 			throws OperazioneException {
 		try {
 			return daoAttivita.ottieniAttivitaPerClasse(classe).stream()
-					.filter(a -> a.getData().isAfter(from)
-							&& a.getData().isBefore(to))
+					.filter(a -> a.getData().isAfter(from.minusDays(1))
+							&& a.getData().isBefore(to.plusDays(1)))
 					.collect(Collectors.toList());
 		}
 		catch (PersistenzaException e) {
@@ -125,8 +125,8 @@ public class GestioneClasseController extends ControllerAstratto implements Gest
 			return daoArchiviazione.ottieniArchiviazioniPerClasse(classe).stream()
 					.filter(a -> a instanceof Presenza)
 					.map(a -> (Presenza) a)
-					.filter(a -> a.getAttivita().getData().isAfter(from)
-							&& a.getAttivita().getData().isBefore(to))
+					.filter(a -> a.getAttivita().getData().isAfter(from.minusDays(1))
+							&& a.getAttivita().getData().isBefore(to.plusDays(1)))
 					.collect(Collectors.toList());
 		}
 		catch (PersistenzaException e) {
@@ -141,8 +141,8 @@ public class GestioneClasseController extends ControllerAstratto implements Gest
 			return daoArchiviazione.ottieniArchiviazioniPerClasse(classe).stream()
 					.filter(a -> a instanceof Voto)
 					.map(a -> (Voto) a)
-					.filter(a -> a.getAttivita().getData().isAfter(from)
-							&& a.getAttivita().getData().isBefore(to))
+					.filter(a -> a.getAttivita().getData().isAfter(from.minusDays(1))
+							&& a.getAttivita().getData().isBefore(to.plusDays(1)))
 					.collect(Collectors.toList());
 		}
 		catch (PersistenzaException e) {

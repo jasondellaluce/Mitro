@@ -42,8 +42,8 @@ public class GestioneStudenteController extends ControllerAstratto implements Ge
 	public List<Attivita> getListaAttivita(LocalDate startDate, LocalDate endDate) throws OperazioneException {
 		try {
 			return daoAttivita.ottieniAttivitaPerStudente(studente).stream()
-					.filter(a -> a.getData().isAfter(startDate))
-					.filter(a -> a.getData().isBefore(endDate))
+					.filter(a -> a.getData().isAfter(startDate.minusDays(1)))
+					.filter(a -> a.getData().isBefore(endDate.plusDays(1)))
 					.collect(Collectors.toList());
 		}
 		catch (PersistenzaException e) {
@@ -56,8 +56,8 @@ public class GestioneStudenteController extends ControllerAstratto implements Ge
 			throws OperazioneException {
 		try {
 			return daoComunicazione.ottieniComunicazioniPerDestinatario(studente).stream()
-					.filter(a -> a.getDataOra().toLocalDate().isAfter(startDate))
-					.filter(a -> a.getDataOra().toLocalDate().isBefore(endDate))
+					.filter(a -> a.getDataOra().toLocalDate().isAfter(startDate.minusDays(1)))
+					.filter(a -> a.getDataOra().toLocalDate().isBefore(endDate.plusDays(1)))
 					.collect(Collectors.toList());
 		}
 		catch (PersistenzaException e) {
@@ -71,8 +71,8 @@ public class GestioneStudenteController extends ControllerAstratto implements Ge
 			return daoArchiviazione.ottieniArchiviazioniPerStudente(studente).stream()
 					.filter(a -> a instanceof Voto)
 					.map(a -> (Voto) a)
-					.filter(a -> a.getAttivita().getData().isAfter(startDate))
-					.filter(a -> a.getAttivita().getData().isBefore(endDate))
+					.filter(a -> a.getAttivita().getData().isAfter(startDate.minusDays(1)))
+					.filter(a -> a.getAttivita().getData().isBefore(endDate.plusDays(1)))
 					.collect(Collectors.toList());
 		}
 		catch (PersistenzaException e) {
@@ -86,8 +86,8 @@ public class GestioneStudenteController extends ControllerAstratto implements Ge
 			return daoArchiviazione.ottieniArchiviazioniPerStudente(studente).stream()
 					.filter(a -> a instanceof Presenza)
 					.map(a -> (Presenza) a)
-					.filter(a -> a.getAttivita().getData().isAfter(startDate))
-					.filter(a -> a.getAttivita().getData().isBefore(endDate))
+					.filter(a -> a.getAttivita().getData().isAfter(startDate.minusDays(1)))
+					.filter(a -> a.getAttivita().getData().isBefore(endDate.plusDays(1)))
 					.collect(Collectors.toList());
 		}
 		catch (PersistenzaException e) {
