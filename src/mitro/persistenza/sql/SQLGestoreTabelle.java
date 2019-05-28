@@ -7,6 +7,8 @@ import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Arrays;
+import java.util.List;
+import java.util.Objects;
 import java.util.Random;
 
 import javax.sql.DataSource;
@@ -18,11 +20,14 @@ import mitro.model.Attivita;
 import mitro.model.Classe;
 import mitro.model.Comunicazione;
 import mitro.model.Materia;
+import mitro.model.Presenza;
 import mitro.model.Professore;
 import mitro.model.Ruolo;
 import mitro.model.Studente;
 import mitro.model.Utente;
+import mitro.model.Voto;
 import mitro.persistenza.Cifratura;
+import mitro.persistenza.DAOArchiviazione;
 import mitro.persistenza.DAOAttivita;
 import mitro.persistenza.DAOClasse;
 import mitro.persistenza.DAOComunicazione;
@@ -193,6 +198,7 @@ public class SQLGestoreTabelle {
 		DAOClasse daoClasse = new SQLDAOClasse(dataSource, cifratura);
 		DAOAttivita daoAttivita = new SQLDAOAttivita(dataSource, cifratura);
 		DAOComunicazione daoComunicazione = new SQLDAOComunicazione(dataSource, cifratura);
+		DAOArchiviazione daoArchiviazione = new SQLDAOArchiviazione(dataSource, cifratura);
 		
 		/* Classe */
 		Classe c1 = new Classe();
@@ -261,24 +267,43 @@ public class SQLGestoreTabelle {
 		Materia m2 = new Materia();
 		m2.setNome("Matematica");
 		m2.setDescrizione("Matematica ed analisi per la quinta superiore");
-		LocalDate startDate = LocalDate.now(Configurazione.ZONE_ID).with(DayOfWeek.MONDAY);
+		LocalDate startDate = LocalDate.now(Configurazione.ZONE_ID)
+				.withDayOfYear(1).plusWeeks(18)
+				.with(DayOfWeek.MONDAY);
 		for(int i = 0; i < 6; i++) {
 			for(int j = 8; j <= 12; j++) {
 				Attivita att = new Attivita();
 				att.setProfessore(Arrays.asList(prof1, prof2).get(random.nextInt(2)));
-				att.setData(startDate.plusDays(i));
 				att.setClasse(Arrays.asList(c1, c2, c3).get(random.nextInt(3)));
 				att.setOraInizio(j);
 				switch(random.nextInt(2)) {
 					default:
 					case 0:
 						att.setMateria(m1);
-						daoAttivita.registraAttivita(att);
 						break;
 					case 1:
 						att.setMateria(m2);
-						daoAttivita.registraAttivita(att);
 						break;
+				}
+				for(int k = 0; k < 6; k++) {
+					att.setData(startDate.plusDays(i).plusWeeks(k));
+					daoAttivita.registraAttivita(att);
+					/*if(att.getData().isBefore(LocalDate.now(Configurazione.ZONE_ID).minusDays(2))) {
+						for(Studente studente : Arrays.asList(stud1, stud2, stud3)) {
+							if(Objects.equals(studente.getClasse(), att.getClasse())) {
+								Presenza presenza = new Presenza();
+								Voto voto = new Voto();
+								presenza.setAttivita(att);
+								voto.setAttivita(att);
+								presenza.setStudente(studente);
+								voto.setStudente(studente);
+								presenza.setValore(random.nextBoolean());
+								voto.setValore(Math.floor(random.nextDouble() * 9 + 1.0));
+								daoArchiviazione.registraArchiviazione(voto);
+								daoArchiviazione.registraArchiviazione(presenza);
+							}
+						}
+					}*/
 				}
 			}
 		}
@@ -325,7 +350,6 @@ public class SQLGestoreTabelle {
 		c.setDestinatario(prof1);
 		daoComunicazione.registraComunicazione(c);	
 		c.setDestinatario(stud1);
-		daoComunicazione.registraComunicazione(c);	
-		
+		daoComunicazione.registraComunicazione(c);			
 	}
 }
