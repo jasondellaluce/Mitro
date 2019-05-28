@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html class=" js flexbox canvas canvastext webgl touch geolocation postmessage no-websqldatabase indexeddb hashchange history draganddrop websockets rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients no-cssreflections csstransforms csstransforms3d csstransitions fontface generatedcontent video audio localstorage sessionstorage webworkers applicationcache svg inlinesvg smil svgclippaths js flexbox canvas canvastext webgl touch geolocation postmessage no-websqldatabase indexeddb hashchange history draganddrop websockets rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients no-cssreflections csstransforms csstransforms3d csstransitions fontface generatedcontent video audio localstorage sessionstorage webworkers applicationcache svg inlinesvg smil svgclippaths" style="" lang="en">
 	<head>
-		<title>Home Professore</title>
+		<title>Home Studente</title>
 		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
 		<meta charset="utf-8">
 		<meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -44,7 +44,7 @@
 					<div class="left-custom-menu-adp-wrap">
 						<ul class="nav navbar-nav left-sidebar-menu-pro">
 							<li class="nav-item">
-								<a href="/professore?azione=disconnetti">
+								<a href="/studente?azione=disconnetti">
 									<i class="fa big-icon fa-sign-out"></i>
 									<span class="mini-dn">Disconnettiti</span>
 									<span class="indicator-right-menu mini-dn"></span>
@@ -52,21 +52,21 @@
 							</li>
 							</br>
 							<li class="nav-item">
-								<a href="/professore">
+								<a href="/studente">
 									<i class="fa big-icon fa-home"></i>
 									<span class="mini-dn">Vai alla Home</span>
 									<span class="indicator-right-menu mini-dn"></span>
 								</a>
 							</li>
 							<li class="nav-item">
-								<a href="/professore-storico">
+								<a href="/studente-storico">
 									<i class="fa big-icon fa-pie-chart"></i>
 									<span class="mini-dn">Storico</span>
 									<span class="indicator-right-menu mini-dn"></span>
 								</a>
 							</li>
 							<li class="nav-item">
-								<a href="/professore-comunicazioni">
+								<a href="/studente-comunicazioni">
 									<i class="fa big-icon fa-envelope"></i>
 									<span class="mini-dn">Comunicazioni</span>
 									<span class="indicator-right-menu mini-dn"></span>
@@ -113,7 +113,7 @@
 										<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
 											<div class="breadcome-heading" style="font-size: 12pt;">
 												<ul>
-													<li>Bentornato, <%= request.getAttribute("nomeProfessore") %></li>
+													<li>Bentornato, <%= request.getAttribute("nomeStudente") %></li>
 												</ul>
 											</div>
 										</div>
@@ -140,12 +140,12 @@
 									</div>
 									<div class="sparkline16-graph" style="height:50px;" >
 										<form id="adminpro-form" class="adminpro-form" action="" method="post">
-											<a style="margin-right:50px;" href='/professore?inizioSett=<%= request.getAttribute("precedenteSett") %>'>
+											<a style="margin-right:50px;" href='/studente?inizioSett=<%= request.getAttribute("precedenteSett") %>'>
 												<i class="fa big-icon fa-arrow-left"></i>
 												Settimana precedente
 											</a>
 											<span><%= request.getAttribute("inizioSett") %> - <%= request.getAttribute("fineSett") %></span>
-											<a style="margin-left:50px;" href='/professore?inizioSett=<%= request.getAttribute("prossimaSett") %>'>
+											<a style="margin-left:50px;" href='/studente?inizioSett=<%= request.getAttribute("prossimaSett") %>'>
 												Settimana successiva
 												<i class="fa big-icon fa-arrow-right"></i>
 											</a>
@@ -173,7 +173,7 @@
 													<% for(int j = 1; j <= 6; j++) {
 															if(request.getAttribute("att" + j + "-" + i) != null) { %>
 													<td style='background-color:<%= request.getAttribute("colorAtt" + j + "-" + i) == null ? "#dfe6e9" : "#81ecec" %>'>
-														<a href='/professore?selAtt=<%= request.getAttribute("selAtt" + j + "-" + i)%>'><%= request.getAttribute("att" + j + "-" + i) %>
+														<a href='/studente?selAtt=<%= request.getAttribute("selAtt" + j + "-" + i)%>'><%= request.getAttribute("att" + j + "-" + i) %>
 														</a>
 													</td>
 													<% 		} else { %>
@@ -205,29 +205,11 @@
 								<h2>Annotazioni</h2>
 							</div>   	
 							<div class="note-editor note-frame panel panel-default" style=" width:450px; height: 450px;">
-								<form id="adminpro-form" class="adminpro-form" action='/professore?selAtt=<%= request.getParameter("selAtt") %>' method="post">
-									<div class="note-dropzone"> 
-										<div class="note-editable panel-body" style=" width:450px;height: 450px;" contenteditable="true">
-											<textarea name="annotazione" style=" width:100%; height:100%; border-color: white; border-width: 0px 0px 0px 0px; padding: 0px 0px 0px 0px;"><% if(request.getAttribute("annotazione") != null) { %><%= request.getAttribute("annotazione") %><% } %></textarea>
-										</div>
-										<div class="compose-email"> 
-											<br>   
-											<button type="submit" class="btn btn-custon-rounded-three btn-default" style="width:100%;" <%= request.getParameter("selAtt") == null ? "disabled" : "" %> >Inserisci annotazione</button>
-										</div> 
-									</div>  
-								</form>
-								<div class="compose-email"> 
-									<br>
-									<a href='/professore-appello?selAtt=<%= request.getParameter("selAtt") %>'> 
-										<button type='submit' class="btn btn-custon-rounded-three btn-default" style="width:100%;" <%= (request.getParameter("selAtt") != null) ? "" : "disabled" %>>Inserisci appello</button>
-									</a>
-								</div> 
-								<div class="compose-email"> 
-									<br>   
-									<a href='/professore-voti?selAtt=<%= request.getParameter("selAtt") %>'> 
-										<button type='submit' class="btn btn-custon-rounded-three btn-default" style="width:100%;" <%= (request.getParameter("selAtt") != null) ? "" : "disabled" %>>Registra voti</button>
-									</a>
-								</div>
+								<div class="note-dropzone"> 
+									<div class="note-editable panel-body" style=" width:450px;height: 450px;" contenteditable="true">
+										<textarea disabled name="annotazione" style=" width:100%; height:100%; border-color: white; border-width: 0px 0px 0px 0px; padding: 0px 0px 0px 0px;"><% if(request.getAttribute("annotazione") != null) { %><%= request.getAttribute("annotazione") %><% } %></textarea>
+									</div>
+								</div>  
 							</div>
 						</div>                   
 						
