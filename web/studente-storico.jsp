@@ -159,7 +159,7 @@
 									<div class="sparkline9-graph dashone-comment">
 										<div class="datatable-dashv1-list custom-datatable-overright dashtwo-project-list-data">
 											<h4>Ultime <%= selectVoto ? "valutazioni" : "presenze" %> personali nella materia</h4>
-											<div class="fixed-table-container" style="padding-bottom: 0px; height: 500px;">
+											<div class="fixed-table-container" style="padding-bottom: 0px; height: 500px; overflow:scroll;">
 												<table class="table">
 													<tbody>
 														<tr>
