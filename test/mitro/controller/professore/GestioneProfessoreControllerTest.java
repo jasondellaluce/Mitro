@@ -18,8 +18,8 @@ import mitro.model.Comunicazione;
 import mitro.model.Professore;
 import mitro.persistenza.DAOAttivita;
 import mitro.persistenza.DAOComunicazione;
-import mitro.persistenza.mock.CollectionDAOAttivita;
-import mitro.persistenza.mock.CollectionDAOComunicazione;
+import mitro.persistenza.DAOFactory;
+import mitro.persistenza.mock.MockDAOFactory;
 
 class GestioneProfessoreControllerTest {
 
@@ -65,8 +65,9 @@ class GestioneProfessoreControllerTest {
 		comunicazione.setDestinatario(professore);
 		comunicazione.setDataOra(LocalDateTime.of(2019, 5, 21, 12, 31, 0, 0));
 		
-		daoComunicazione = new CollectionDAOComunicazione();
-		daoAttivita = new CollectionDAOAttivita();
+		DAOFactory factory = new MockDAOFactory();
+		daoComunicazione = factory.getDAOComunicazione();
+		daoAttivita = factory.getDAOAttivita();
 		logger = new MockLoggerOperazioni();
 		test = new GestioneProfessoreController(logger, daoComunicazione,
 				daoAttivita, professore);

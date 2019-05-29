@@ -18,10 +18,9 @@ import mitro.model.Studente;
 import mitro.model.Voto;
 import mitro.persistenza.DAOArchiviazione;
 import mitro.persistenza.DAOAttivita;
+import mitro.persistenza.DAOFactory;
 import mitro.persistenza.DAOUtente;
-import mitro.persistenza.mock.CollectionDAOArchiviazione;
-import mitro.persistenza.mock.CollectionDAOAttivita;
-import mitro.persistenza.mock.CollectionDAOUtente;
+import mitro.persistenza.mock.MockDAOFactory;
 
 class GestioneClasseControllerTest {
 
@@ -81,9 +80,10 @@ class GestioneClasseControllerTest {
 		voto2.setStudente(studente);
 		voto2.setValore(7);		
 		
-		daoArchiviazione = new CollectionDAOArchiviazione();
-		daoAttivita = new CollectionDAOAttivita();
-		daoUtente = new CollectionDAOUtente();
+		DAOFactory factory = new MockDAOFactory();
+		daoArchiviazione = factory.getDAOArchiviazione();
+		daoAttivita = factory.getDAOAttivita();
+		daoUtente = factory.getDAOUtente();
 		logger = new MockLoggerOperazioni();
 		test = new GestioneClasseController(logger, daoArchiviazione,
 				daoAttivita, daoUtente,classe);

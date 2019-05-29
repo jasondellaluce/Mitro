@@ -1,6 +1,6 @@
 package mitro.persistenza.mock;
 
-import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,22 +17,28 @@ import mitro.persistenza.DAOUtente;
 public class CollectionDAOUtente implements DAOUtente {
 
 	private int lastId = 0;
-	private List<Utente> lista = new ArrayList<>(100);
+	private Collection<Utente> utenti;
 	private Map<String, Utente> credenziali = new HashMap<>();
+	
+	public CollectionDAOUtente(Collection<Utente> utenti) {
+		this.utenti = utenti;
+	}
 	
 	@Override
 	public void registraUtente(Utente utente) throws PersistenzaException {
 		utente.setId(Integer.toString(lastId++));
-		lista.add(utente);
+		utenti.add(utente);
 	}
 
 	@Override
 	public void modificaUtente(Utente utente) throws PersistenzaException {
-		Optional<Utente> vecchio = lista.stream()
+		Optional<Utente> vecchio = utenti.stream()
 				.filter(o -> Objects.equals(o.getId(), utente.getId()))
 				.findAny();
-		if(vecchio.isPresent())
-			lista.set(lista.indexOf(vecchio.get()), utente);
+		if(vecchio.isPresent()) {
+			utenti.remove(vecchio.get());
+			utenti.add(utente);
+		}
 		else
 			throw new PersistenzaException("Non registrato");
 	}
@@ -55,17 +61,17 @@ public class CollectionDAOUtente implements DAOUtente {
 
 	@Override
 	public void eliminaUtente(Utente utente) throws PersistenzaException {
-		Optional<Utente> vecchio = lista.stream()
+		Optional<Utente> vecchio = utenti.stream()
 				.filter(o -> Objects.equals(o.getId(), utente.getId()))
 				.findAny();
 		if(!vecchio.isPresent())
 			throw new PersistenzaException("Non registrato");
-		lista.remove(vecchio.get());
+		utenti.remove(vecchio.get());
 	}
 
 	@Override
 	public Utente ottieniUtentePerId(String id) throws PersistenzaException {
-		return lista.stream()
+		return utenti.stream()
 				.filter(o -> Objects.equals(o.getId(), id))
 				.findAny()
 				.orElse(null);
@@ -78,12 +84,12 @@ public class CollectionDAOUtente implements DAOUtente {
 
 	@Override
 	public List<Utente> ottieniUtenti() throws PersistenzaException {
-		return lista.stream().collect(Collectors.toList());
+		return utenti.stream().collect(Collectors.toList());
 	}
 
 	@Override
 	public List<Iscritto> ottieniIscrittiPerNomeOCognome(String filtro) throws PersistenzaException {
-		return lista.stream()
+		return utenti.stream()
 				.filter(o -> o instanceof Iscritto)
 				.map(o -> (Iscritto) o)
 				.filter(o -> o.getNome().contains(filtro) || o.getCognome().contains(filtro))
@@ -92,7 +98,7 @@ public class CollectionDAOUtente implements DAOUtente {
 
 	@Override
 	public List<Utente> ottieniUtentiPerRuolo(Ruolo ruolo) throws PersistenzaException {
-		return lista.stream()
+		return utenti.stream()
 				.filter(u -> Objects.equals(u.getRuolo(), ruolo))
 				.collect(Collectors.toList());
 	}

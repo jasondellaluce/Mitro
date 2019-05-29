@@ -11,13 +11,14 @@ import mitro.exceptions.UtenteGiaAutenticatoException;
 import mitro.exceptions.UtenteNonRegistratoException;
 import mitro.model.Amministratore;
 import mitro.model.Utente;
-import mitro.persistenza.mock.CollectionDAOUtente;
+import mitro.persistenza.DAOUtente;
+import mitro.persistenza.mock.MockDAOFactory;
 
 class LoginControllerTest {
 	
 	private static LoginController loginController;
 	private static MockPermessoLogin permessoLogin;
-	private static CollectionDAOUtente daoUtente;
+	private static DAOUtente daoUtente;
 	private static String testUsername = "username";
 	private static String testPassword = "password";
 	private static Utente testUtente;
@@ -25,7 +26,7 @@ class LoginControllerTest {
 	@BeforeAll
 	static void beforeClass() throws Exception {
 		/* Crea finta persistenza */
-		daoUtente = new CollectionDAOUtente();
+		daoUtente = new MockDAOFactory().getDAOUtente();
 		testUtente = new Amministratore();
 		testUtente.setId("testId");
 		daoUtente.registraUtente(testUtente);

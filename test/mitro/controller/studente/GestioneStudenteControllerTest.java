@@ -22,9 +22,8 @@ import mitro.model.Voto;
 import mitro.persistenza.DAOArchiviazione;
 import mitro.persistenza.DAOAttivita;
 import mitro.persistenza.DAOComunicazione;
-import mitro.persistenza.mock.CollectionDAOArchiviazione;
-import mitro.persistenza.mock.CollectionDAOAttivita;
-import mitro.persistenza.mock.CollectionDAOComunicazione;
+import mitro.persistenza.DAOFactory;
+import mitro.persistenza.mock.MockDAOFactory;
 
 class GestioneStudenteControllerTest {
 
@@ -95,9 +94,10 @@ class GestioneStudenteControllerTest {
 		voto2.setStudente(studente);
 		voto2.setValore(7);	
 		
-		daoComunicazione = new CollectionDAOComunicazione();
-		daoArchiviazione = new CollectionDAOArchiviazione();
-		daoAttivita = new CollectionDAOAttivita();
+		DAOFactory factory = new MockDAOFactory();
+		daoComunicazione = factory.getDAOComunicazione();
+		daoArchiviazione = factory.getDAOArchiviazione();
+		daoAttivita = factory.getDAOAttivita();
 		logger = new MockLoggerOperazioni();
 		test = new GestioneStudenteController(logger, daoComunicazione, daoArchiviazione,
 				daoAttivita, studente);
