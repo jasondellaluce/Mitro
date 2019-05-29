@@ -21,13 +21,13 @@ public class HomeLog extends ViewUtenteAstratta {
 	@Override
 	protected void gestisciRichiestaGet(Utente utente, HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-		resp.getWriter().write(String.valueOf(utente));
+		req.getRequestDispatcher("/log-home.jsp").forward(req, resp);
 	}
 
 	@Override
 	protected void gestisciRichiestaPost(Utente utente, HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-		resp.getWriter().write(String.valueOf(utente));
+		req.getRequestDispatcher("/log-home.jsp").forward(req, resp);
 	}
 
 }
