@@ -32,11 +32,13 @@ public class GestioneProfessoreController extends ControllerAstratto implements 
 
 	@Override
 	public Professore getProfessore() throws OperazioneException {
+		this.eseguiLogOperazione("getProfessore");
 		return this.professore;
 	}
 
 	@Override
 	public List<Classe> getListaClassi() throws OperazioneException {
+		this.eseguiLogOperazione("getListaClassi");
 		try {
 			return daoAttivita.ottieniAttivitaPerProfessore(professore).stream()
 					.map(a -> a.getClasse())
@@ -50,6 +52,7 @@ public class GestioneProfessoreController extends ControllerAstratto implements 
 
 	@Override
 	public List<Attivita> getListaAttivita(LocalDate from, LocalDate to) throws OperazioneException {
+		this.eseguiLogOperazione("getListaAttivita, " + from + ", " + to);
 		try {
 			return daoAttivita.ottieniAttivitaPerProfessore(professore).stream()
 					.filter(a -> a.getData().isAfter(from.minusDays(1))
@@ -63,6 +66,7 @@ public class GestioneProfessoreController extends ControllerAstratto implements 
 
 	@Override
 	public List<Comunicazione> getListaComunicazioni(LocalDate from, LocalDate to) throws OperazioneException {
+		this.eseguiLogOperazione("getListaComunicazioni, " + from + ", " + to);
 		try {
 			return daoComunicazione.ottieniComunicazioniPerDestinatario(professore).stream()
 					.filter(c -> c.getDataOra().toLocalDate().isAfter(from.minusDays(1))

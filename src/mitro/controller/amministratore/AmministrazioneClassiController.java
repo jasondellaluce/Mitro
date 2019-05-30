@@ -33,6 +33,7 @@ public class AmministrazioneClassiController extends ControllerAstratto implemen
 	
 	@Override
 	public void registraClasse(Classe classe) throws OperazioneException {
+		this.eseguiLogOperazione("registraClasse, " + classe);
 		try {
 			daoClasse.registraClasse(classe);
 		}
@@ -44,6 +45,7 @@ public class AmministrazioneClassiController extends ControllerAstratto implemen
 
 	@Override
 	public void modificaClasse(Classe classe) throws OperazioneException {
+		this.eseguiLogOperazione("modificaClasse, " + classe);
 		try {
 			daoClasse.modificaClasse(classe);
 		}
@@ -55,6 +57,7 @@ public class AmministrazioneClassiController extends ControllerAstratto implemen
 
 	@Override
 	public void registraAttivita(Attivita attivita) throws OperazioneException {
+		this.eseguiLogOperazione("registraAttivita, " + attivita);
 		if(attivita.getData().atTime(attivita.getOraInizio(), 0)
 				.isBefore(LocalDateTime.now(Configurazione.getInstance().getZoneId())))
 			throw new PrecondizioneNonSoddisfattaException("attivita passata");
@@ -64,11 +67,11 @@ public class AmministrazioneClassiController extends ControllerAstratto implemen
 		catch (PersistenzaException e) {
 			throw new OperazioneException(e);
 		}
-
 	}
 
 	@Override
 	public void eliminaAttivita(Attivita attivita) throws OperazioneException {
+		this.eseguiLogOperazione("eliminaAttivita, " + attivita);
 		if(attivita.getData().atTime(attivita.getOraInizio(), 0)
 				.isBefore(LocalDateTime.now(Configurazione.getInstance().getZoneId())))
 			throw new PrecondizioneNonSoddisfattaException("attivita passata");
@@ -78,11 +81,11 @@ public class AmministrazioneClassiController extends ControllerAstratto implemen
 		catch (PersistenzaException e) {
 			throw new OperazioneException(e);
 		}
-
 	}
 
 	@Override
 	public void modificaVoto(Voto voto) throws OperazioneException {
+		this.eseguiLogOperazione("modificaVoto, " + voto);
 		if(voto.getValore() < 0 || voto.getValore() > 10)
 			throw new IllegalArgumentException("voto con valore invalido");
 		
@@ -96,6 +99,7 @@ public class AmministrazioneClassiController extends ControllerAstratto implemen
 
 	@Override
 	public List<Attivita> getListaAttivita(Classe classe) throws OperazioneException {
+		this.eseguiLogOperazione("getListaAttivita, " + classe);
 		try {
 			return daoAttivita.ottieniAttivitaPerClasse(classe);
 		}
@@ -106,6 +110,7 @@ public class AmministrazioneClassiController extends ControllerAstratto implemen
 
 	@Override
 	public List<Voto> getListaVoti(Studente studente) throws OperazioneException {
+		this.eseguiLogOperazione("getListaVoti, " + studente);
 		try {
 			return daoArchiviazione.ottieniArchiviazioniPerStudente(studente).stream()
 				   .filter(o -> o instanceof Voto)
@@ -119,6 +124,7 @@ public class AmministrazioneClassiController extends ControllerAstratto implemen
 
 	@Override
 	public List<Classe> cercaClassi(String filtro) throws OperazioneException {
+		this.eseguiLogOperazione("cercaClassi, " + filtro);
 		try {
 			return daoClasse.ottieniClassiPerNome(filtro.substring(6));
 		}

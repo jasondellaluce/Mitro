@@ -35,6 +35,7 @@ public class GestioneLogController extends ControllerAstratto implements Gestion
 
 	@Override
 	public Log getLog(LocalDateTime from, LocalDateTime to) throws OperazioneException {
+		this.eseguiLogOperazione("getLog, " + from + ", " + to);
 		List<VoceLog> listaVoci = new ArrayList<>(1000);
 		String line;
 		
@@ -69,6 +70,7 @@ public class GestioneLogController extends ControllerAstratto implements Gestion
 
 	@Override
 	public List<String> getAnomalieMessaggi(LocalDateTime from, LocalDateTime to) throws OperazioneException {
+		this.eseguiLogOperazione("getAnomalieMessaggi, " + from + ", " + to);
 		List<VoceMessaggioLog> elencoVoci = getLog(from, to).getListaVoci(from, to).stream()
 				.filter(v -> v instanceof VoceMessaggioLog)
 				.map(v -> (VoceMessaggioLog) v)
@@ -78,6 +80,7 @@ public class GestioneLogController extends ControllerAstratto implements Gestion
 
 	@Override
 	public List<String> getAnomalieOperazioni(LocalDateTime from, LocalDateTime to) throws OperazioneException {
+		this.eseguiLogOperazione("getAnomalieOperazioni, " + from + ", " + to);
 		List<VoceOperazioneLog> elencoVoci = getLog(from, to).getListaVoci(from, to).stream()
 				.filter(v -> v instanceof VoceOperazioneLog)
 				.map(v -> (VoceOperazioneLog) v)

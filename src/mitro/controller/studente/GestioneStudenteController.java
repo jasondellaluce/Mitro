@@ -34,12 +34,14 @@ public class GestioneStudenteController extends ControllerAstratto implements Ge
 	}
 
 	@Override
-	public Studente getStudente() throws OperazioneException {		
+	public Studente getStudente() throws OperazioneException {
+		this.eseguiLogOperazione("getStudente");
 		return studente;		
 	}
 
 	@Override
 	public List<Attivita> getListaAttivita(LocalDate startDate, LocalDate endDate) throws OperazioneException {
+		this.eseguiLogOperazione("getListaAttivita, " + startDate + ", " + endDate);
 		try {
 			return daoAttivita.ottieniAttivitaPerStudente(studente).stream()
 					.filter(a -> a.getData().isAfter(startDate.minusDays(1)))
@@ -54,6 +56,7 @@ public class GestioneStudenteController extends ControllerAstratto implements Ge
 	@Override
 	public List<Comunicazione> getListaComunicazioni(LocalDate startDate, LocalDate endDate)
 			throws OperazioneException {
+		this.eseguiLogOperazione("getListaComunicazioni, " + startDate + ", " + endDate);
 		try {
 			return daoComunicazione.ottieniComunicazioniPerDestinatario(studente).stream()
 					.filter(a -> a.getDataOra().toLocalDate().isAfter(startDate.minusDays(1)))
@@ -67,6 +70,7 @@ public class GestioneStudenteController extends ControllerAstratto implements Ge
 
 	@Override
 	public List<Voto> getListaVoti(LocalDate startDate, LocalDate endDate) throws OperazioneException {
+		this.eseguiLogOperazione("getListaVoti, " + startDate + ", " + endDate);
 		try {
 			return daoArchiviazione.ottieniArchiviazioniPerStudente(studente).stream()
 					.filter(a -> a instanceof Voto)
@@ -82,6 +86,7 @@ public class GestioneStudenteController extends ControllerAstratto implements Ge
 
 	@Override
 	public List<Presenza> getListaPresenze(LocalDate startDate, LocalDate endDate) throws OperazioneException {
+		this.eseguiLogOperazione("getListaPresenze, " + startDate + ", " + endDate);
 		try {
 			return daoArchiviazione.ottieniArchiviazioniPerStudente(studente).stream()
 					.filter(a -> a instanceof Presenza)

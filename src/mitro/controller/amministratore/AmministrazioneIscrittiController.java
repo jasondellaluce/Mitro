@@ -26,6 +26,7 @@ public class AmministrazioneIscrittiController extends ControllerAstratto
 
 	@Override
 	public void registraIscritto(Iscritto iscritto) throws OperazioneException {
+		this.eseguiLogOperazione("registraIscritto, " + iscritto);
 		try {
 			daoUtente.registraUtente(iscritto);
 		}
@@ -36,6 +37,7 @@ public class AmministrazioneIscrittiController extends ControllerAstratto
 
 	@Override
 	public void modificaIscritto(Iscritto iscritto) throws OperazioneException {
+		this.eseguiLogOperazione("modificaIscritto, " + iscritto);
 		try {
 			daoUtente.modificaUtente(iscritto);
 		}
@@ -47,6 +49,8 @@ public class AmministrazioneIscrittiController extends ControllerAstratto
 	@Override
 	public void inserisciCredenzialiIscritto(Iscritto iscritto, String username, String password)
 			throws OperazioneException {
+		this.eseguiLogOperazione("inserisciCredenzialiIscritto, " + iscritto + ", " + username
+				+ ", " + password);
 		try {
 			daoUtente.inserisciCredenziali(iscritto, username, password);
 		}
@@ -57,6 +61,7 @@ public class AmministrazioneIscrittiController extends ControllerAstratto
 
 	@Override
 	public void registraComunicazione(Comunicazione comunicazione) throws OperazioneException {
+		this.eseguiLogOperazione("registraComunicazione, " + comunicazione);
 		try {
 			daoComunicazione.registraComunicazione(comunicazione);
 		}
@@ -67,6 +72,7 @@ public class AmministrazioneIscrittiController extends ControllerAstratto
 
 	@Override
 	public List<Iscritto> cercaIscritti(String filtro) throws OperazioneException {
+		this.eseguiLogOperazione("cercaIscritti, " + filtro);
 		try {
 			return daoUtente.ottieniIscrittiPerNomeOCognome(filtro);
 		}

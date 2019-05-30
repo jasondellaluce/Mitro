@@ -40,12 +40,14 @@ public class GestioneClasseController extends ControllerAstratto implements Gest
 
 	@Override
 	public Classe getClasse() throws OperazioneException {
+		this.eseguiLogOperazione("getClasse");
 		return classe;
 	}
 
 	@Override
 	public void inserisciAnnotazione(Attivita attivita, String annotazione)
 			throws OperazioneException {
+		this.eseguiLogOperazione("inserisciAnnotazione, " + attivita);
 		try {
 			attivita.setAnnotazione(annotazione);
 			daoAttivita.modificaAttivita(attivita);
@@ -57,6 +59,7 @@ public class GestioneClasseController extends ControllerAstratto implements Gest
 
 	@Override
 	public void inserisciPresenza(Presenza presenza) throws OperazioneException {
+		this.eseguiLogOperazione("inserisciPresenza, " + presenza);
 		if(!presenza.getAttivita().getClasse().equals(presenza.getStudente().getClasse()))
 			throw new PrecondizioneNonSoddisfattaException(
 					"studente non partecipante all'attività");
@@ -76,6 +79,7 @@ public class GestioneClasseController extends ControllerAstratto implements Gest
 
 	@Override
 	public void registraVoto(Voto voto) throws OperazioneException {
+		this.eseguiLogOperazione("registraVoto, " + voto);
 		if(!voto.getAttivita().getClasse().equals(voto.getStudente().getClasse()))
 			throw new IllegalArgumentException("Precondizione insoddisfatta");
 		if(voto.getValore() < 0 || voto.getValore() > 10)
@@ -91,6 +95,7 @@ public class GestioneClasseController extends ControllerAstratto implements Gest
 
 	@Override
 	public List<Studente> getListaStudenti() throws OperazioneException {
+		this.eseguiLogOperazione("getListaStudenti");
 		try {
 			return daoUtente.ottieniUtentiPerRuolo(Ruolo.STUDENTE).stream()
 					.filter(u -> u instanceof Studente)
@@ -107,6 +112,7 @@ public class GestioneClasseController extends ControllerAstratto implements Gest
 	@Override
 	public List<Attivita> getListaAttivita(LocalDate from, LocalDate to)
 			throws OperazioneException {
+		this.eseguiLogOperazione("getListaAttivita, " + from + ", " + to);
 		try {
 			return daoAttivita.ottieniAttivitaPerClasse(classe).stream()
 					.filter(a -> a.getData().isAfter(from.minusDays(1))
@@ -121,6 +127,7 @@ public class GestioneClasseController extends ControllerAstratto implements Gest
 	@Override
 	public List<Presenza> getListaPresenze(LocalDate from, LocalDate to)
 			throws OperazioneException {
+		this.eseguiLogOperazione("getListaPresenza, " + from + ", " + to);
 		try {
 			return daoArchiviazione.ottieniArchiviazioniPerClasse(classe).stream()
 					.filter(a -> a instanceof Presenza)
@@ -137,6 +144,7 @@ public class GestioneClasseController extends ControllerAstratto implements Gest
 	@Override
 	public List<Voto> getListaVoti(LocalDate from, LocalDate to)
 			throws OperazioneException {
+		this.eseguiLogOperazione("getListaVoti, " + from + ", " + to);
 		try {
 			return daoArchiviazione.ottieniArchiviazioniPerClasse(classe).stream()
 					.filter(a -> a instanceof Voto)
