@@ -9,8 +9,6 @@ import java.util.List;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.sqlite.SQLiteDataSource;
-
 import mitro.deployment.Configurazione;
 import mitro.exceptions.PersistenzaException;
 import mitro.model.Attivita;
@@ -18,24 +16,26 @@ import mitro.model.Classe;
 import mitro.model.Materia;
 import mitro.model.Professore;
 import mitro.model.Studente;
-import mitro.persistenza.cifrature.MockCifratura;
+import mitro.persistenza.DAOAttivita;
+import mitro.persistenza.DAOClasse;
+import mitro.persistenza.DAOFactory;
+import mitro.persistenza.DAOUtente;
 
 class SQLDAOAttivitaTest {
 
 	private static final String dbName = "testDaoAttivita.db";
-	private static SQLDAOClasse daoClasse;
-	private static SQLDAOUtente daoUtente;
-	private static SQLDAOAttivita daoAttivita;
+	private static DAOClasse daoClasse;
+	private static DAOUtente daoUtente;
+	private static DAOAttivita daoAttivita;
 	
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
-		SQLiteDataSource ds = new SQLiteDataSource();
-		ds.setUrl("jdbc:sqlite:" + dbName); 
-		new SQLGestoreTabelle(ds, new MockCifratura()).eliminaTabelle();
-		new SQLGestoreTabelle(ds, new MockCifratura()).creaTabelle();
-		daoClasse = new SQLDAOClasse(ds, new MockCifratura());
-		daoUtente = new SQLDAOUtente(ds, new MockCifratura());
-		daoAttivita = new SQLDAOAttivita(ds, new MockCifratura());
+		DAOFactory factory = new SQLDAOFactory(dbName);
+		factory.cancellaDati();
+		factory.inizializzaDati();
+		daoClasse = factory.getDAOClasse();
+		daoUtente = factory.getDAOUtente();
+		daoAttivita = factory.getDAOAttivita();
 	}
 
 	@Test

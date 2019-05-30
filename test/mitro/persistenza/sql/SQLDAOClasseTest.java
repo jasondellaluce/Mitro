@@ -8,24 +8,22 @@ import java.util.List;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.sqlite.SQLiteDataSource;
-
 import mitro.exceptions.PersistenzaException;
 import mitro.model.Classe;
-import mitro.persistenza.cifrature.MockCifratura;
+import mitro.persistenza.DAOClasse;
+import mitro.persistenza.DAOFactory;
 
 class SQLDAOClasseTest {
 
 	private static final String dbName = "testDaoClasse.db";
-	private static SQLDAOClasse dao;
+	private static DAOClasse dao;
 	
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
-		SQLiteDataSource ds = new SQLiteDataSource();
-		ds.setUrl("jdbc:sqlite:" + dbName); 
-		new SQLGestoreTabelle(ds, new MockCifratura()).eliminaTabelle();
-		new SQLGestoreTabelle(ds, new MockCifratura()).creaTabelle();
-		dao = new SQLDAOClasse(ds, new MockCifratura());	
+		DAOFactory factory = new SQLDAOFactory(dbName);
+		factory.cancellaDati();
+		factory.inizializzaDati();
+		dao = factory.getDAOClasse();
 	}
 
 	@Test

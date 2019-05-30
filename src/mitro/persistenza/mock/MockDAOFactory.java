@@ -42,5 +42,19 @@ public class MockDAOFactory extends DAOFactory {
 	public DAOAttivita getDAOAttivita() {
 		return new CollectionDAOAttivita(attivita);
 	}
+
+	@Override
+	public void inizializzaDati() {
+		utenti.clear();
+		classi.clear();
+		attivita.clear();
+		comunicazioni.clear();
+		archiviazioni.clear();
+	}
+
+	@Override
+	public void cancellaDati() {
+		inizializzaDati();
+	}
 	
 }

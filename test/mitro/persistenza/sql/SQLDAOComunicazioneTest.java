@@ -10,28 +10,27 @@ import java.util.List;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.sqlite.SQLiteDataSource;
-
 import mitro.deployment.Configurazione;
 import mitro.exceptions.PersistenzaException;
 import mitro.model.Comunicazione;
 import mitro.model.Studente;
-import mitro.persistenza.cifrature.MockCifratura;
+import mitro.persistenza.DAOComunicazione;
+import mitro.persistenza.DAOFactory;
+import mitro.persistenza.DAOUtente;
 
 class SQLDAOComunicazioneTest {
 
 	private static final String dbName = "testDaoComunicazione.db";
-	private static SQLDAOComunicazione daoComunicazione;
-	private static SQLDAOUtente daoUtente;
+	private static DAOComunicazione daoComunicazione;
+	private static DAOUtente daoUtente;
 	
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
-		SQLiteDataSource ds = new SQLiteDataSource();
-		ds.setUrl("jdbc:sqlite:" + dbName); 
-		new SQLGestoreTabelle(ds, new MockCifratura()).eliminaTabelle();
-		new SQLGestoreTabelle(ds, new MockCifratura()).creaTabelle();
-		daoComunicazione = new SQLDAOComunicazione(ds, new MockCifratura());
-		daoUtente = new SQLDAOUtente(ds, new MockCifratura());
+		DAOFactory factory = new SQLDAOFactory(dbName);
+		factory.cancellaDati();
+		factory.inizializzaDati();
+		daoComunicazione = factory.getDAOComunicazione();
+		daoUtente = factory.getDAOUtente();
 	}
 
 	@Test
