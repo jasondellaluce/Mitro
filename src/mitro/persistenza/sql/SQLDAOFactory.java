@@ -17,7 +17,7 @@ import mitro.persistenza.DAOClasse;
 import mitro.persistenza.DAOComunicazione;
 import mitro.persistenza.DAOFactory;
 import mitro.persistenza.DAOUtente;
-import mitro.persistenza.cifrature.CifraturaInChiaro;
+import mitro.persistenza.cifrature.CifraturaXor;
 
 public class SQLDAOFactory extends DAOFactory {
 
@@ -28,7 +28,7 @@ public class SQLDAOFactory extends DAOFactory {
 	public SQLDAOFactory(String nomeFileDatabase) {
 		this.nomeFileDatabase = nomeFileDatabase;
 		this.dataSourceCondiviso = creaDataSource();
-		this.cifratura = new CifraturaInChiaro();
+		this.cifratura = new CifraturaXor();
 	}
 	
 	@Override

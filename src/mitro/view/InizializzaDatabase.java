@@ -38,6 +38,8 @@ public class InizializzaDatabase extends ViewAstratta {
 		DAOFactory factory = DAOFactory.getInstance();
         
         try {
+        	long time = System.currentTimeMillis();
+        	
 			resp.getWriter().write("Eliminazione DataBase SQLite pre-esistente...\n");
 			factory.cancellaDati();
 			
@@ -47,7 +49,9 @@ public class InizializzaDatabase extends ViewAstratta {
 			resp.getWriter().write("Inizializzazione informazioni...\n");
 			creaInformazioniIniziali(factory);
 			
+			time = System.currentTimeMillis() - time;
 			resp.getWriter().write("Database Inizializzato\n");
+			resp.getWriter().write("Tempo: " + (time / 1000) + " secondi");
         }
         catch(Exception e) {
         	throw new ServletException(e);
