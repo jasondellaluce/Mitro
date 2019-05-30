@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+<%@ page import="java.util.*" %>
+<%@ page import="java.time.format.*" %>
+<%@ page import="mitro.model.*" %>
+<%@ page import="mitro.deployment.Configurazione" %>
 <!DOCTYPE html>
 <html class=" js flexbox canvas canvastext webgl touch geolocation postmessage no-websqldatabase indexeddb hashchange history draganddrop websockets rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients no-cssreflections csstransforms csstransforms3d csstransitions fontface generatedcontent video audio localstorage sessionstorage webworkers applicationcache svg inlinesvg smil svgclippaths js flexbox canvas canvastext webgl touch geolocation postmessage no-websqldatabase indexeddb hashchange history draganddrop websockets rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients no-cssreflections csstransforms csstransforms3d csstransitions fontface generatedcontent video audio localstorage sessionstorage webworkers applicationcache svg inlinesvg smil svgclippaths" style="" lang="en">
 	<head>
@@ -28,9 +32,9 @@
 		<script src="js/vendor/modernizr-2.8.3.min.js"></script>
 		
 		<!-- Styles -->
-		<style type="text/css">  .JColResizer{/*table-layout:fixed;*/} .JColResizer td, .JColResizer th{overflow:hidden;padding-left:0!important; padding-right:0!important;}  .JCLRgrips{ height:0px; position:relative;} .JCLRgrip{margin-left:-5px; position:absolute; z-index:5; } .JCLRgrip .JColResizer{position:absolute;background-color:red;filter:alpha(opacity=1);opacity:0;width:10px;height:100%;cursor: e-resize;top:0px} .JCLRLastGrip{position:absolute; width:1px; } .JCLRgripDrag{ border-left:1px dotted black;	} .JCLRFlex{width:auto!important;}</style>
+		<style type="text/css">.JColResizer{/*table-layout:fixed;*/} .JColResizer td, .JColResizer th{overflow:hidden;padding-left:0!important; padding-right:0!important;}  .JCLRgrips{ height:0px; position:relative;} .JCLRgrip{margin-left:-5px; position:absolute; z-index:5; } .JCLRgrip .JColResizer{position:absolute;background-color:red;filter:alpha(opacity=1);opacity:0;width:10px;height:100%;cursor: e-resize;top:0px} .JCLRLastGrip{position:absolute; width:1px; } .JCLRgripDrag{ border-left:1px dotted black;	} .JCLRFlex{width:auto!important;}</style>
 		<style type="text/css">.jqstooltip { position: absolute;left: 0px;top: 0px;visibility: hidden;background: rgb(0, 0, 0) transparent;background-color: rgba(0,0,0,0.6);filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000, endColorstr=#99000000);-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000, endColorstr=#99000000)";color: white;font: 10px arial, san serif;text-align: left;white-space: nowrap;padding: 5px;border: 1px solid white;z-index: 10000;}.jqsfield { color: white;font: 10px arial, san serif;text-align: left;}</style>
-		<style type="text/css">  .JColResizer{/*table-layout:fixed;*/} .JColResizer td, .JColResizer th{overflow:hidden;padding-left:0!important; padding-right:0!important;}  .JCLRgrips{ height:0px; position:relative;} .JCLRgrip{margin-left:-5px; position:absolute; z-index:5; } .JCLRgrip .JColResizer{position:absolute;background-color:red;filter:alpha(opacity=1);opacity:0;width:10px;height:100%;cursor: e-resize;top:0px} .JCLRLastGrip{position:absolute; width:1px; } .JCLRgripDrag{ border-left:1px dotted black;	} .JCLRFlex{width:auto!important;}</style>
+		<style type="text/css">.JColResizer{/*table-layout:fixed;*/} .JColResizer td, .JColResizer th{overflow:hidden;padding-left:0!important; padding-right:0!important;}  .JCLRgrips{ height:0px; position:relative;} .JCLRgrip{margin-left:-5px; position:absolute; z-index:5; } .JCLRgrip .JColResizer{position:absolute;background-color:red;filter:alpha(opacity=1);opacity:0;width:10px;height:100%;cursor: e-resize;top:0px} .JCLRLastGrip{position:absolute; width:1px; } .JCLRgripDrag{ border-left:1px dotted black;	} .JCLRFlex{width:auto!important;}</style>
 		<style type="text/css">.jqstooltip { position: absolute;left: 0px;top: 0px;visibility: hidden;background: rgb(0, 0, 0) transparent;background-color: rgba(0,0,0,0.6);filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000, endColorstr=#99000000);-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000, endColorstr=#99000000)";color: white;font: 10px arial, san serif;text-align: left;white-space: nowrap;padding: 5px;border: 1px solid white;z-index: 10000;}.jqsfield { color: white;font: 10px arial, san serif;text-align: left;}</style>
 	</head>
 
@@ -93,19 +97,37 @@
 				
 				<!-- Main container -->
 				<div class="welcome-adminpro-area">
-				
-					<div class="row" style="margin-top:30px; margin-bottom:-50px;">
-						<div class="col-lg-5" style="margin-left: 50px;">		
-							<div class="alert alert-danger alert-mg-b" role="alert">
-		                    	Errore Log
-	                    	</div>
+					<%
+						if(request.getAttribute("erroreLog") != null
+							|| request.getAttribute("erroreAnalisi") != null) {
+					%>
+						<div class="row" style="margin-top:30px; margin-bottom:-50px;">
+							<div class="col-lg-5" style="margin-left: 50px;">
+								<%
+									if(request.getAttribute("erroreLog") != null) {
+								%>	
+									<div class="alert alert-danger alert-mg-b" role="alert">
+				                    	<%= request.getAttribute("erroreLog") %>
+			                    	</div>
+			                    <%
+									}
+			                    %>
+		                    </div>
+		                    <div class="col-lg-5" style="margin-left: 50px;">		
+								<%
+									if(request.getAttribute("erroreAnalisi") != null) {
+								%>	
+									<div class="alert alert-danger alert-mg-b" role="alert">
+				                    	<%= request.getAttribute("erroreAnalisi") %>
+			                    	</div>
+			                    <%
+									}
+			                    %>
+		                    </div>
 	                    </div>
-	                    <div class="col-lg-5" style="margin-left: 50px;">		
-							<div class="alert alert-danger alert-mg-b" role="alert">
-		                    	Errore analisi
-	                    	</div>
-	                    </div>
-                    </div>
+                    <%
+						}
+                    %>
                     
 					<div class="row" style="margin-top:50px;">		
 						<div class="col-lg-5" style="margin-left: 50px;">
@@ -136,17 +158,25 @@
 										<table class="table">
 											<tbody>
 												<tr>
-													<td style="width:15%;">Data</td>
+													<td style="width:20%;">Data</td>
 													<td style="">Voce</td>
 												</tr>
-												<tr>
-													<td style="width:15%;">Data</td>
-													<td style="">Voce</td>
-												</tr>
-												<tr>
-													<td style="width:15%;">Data</td>
-													<td style="">Voce</td>
-												</tr>
+												<%
+													if(request.getAttribute("listaVoci") != null) {
+														DateTimeFormatter formatter = DateTimeFormatter
+																.ofLocalizedDateTime(FormatStyle.SHORT)
+																.withZone(Configurazione.getInstance().getZoneId());
+														List<VoceLog> lista = (List<VoceLog>) request.getAttribute("listaVoci");
+														for(int i = 0; i < lista.size(); i++) {
+												%>
+													<tr>
+														<td style="width:20%;"><%= lista.get(i).getDataOra().format(formatter) %></td>
+														<td style=""><%= lista.get(i).getContenuto() %></td>
+													</tr>
+												<%
+														}										
+													}
+												%>
 											<tbody>        
 										</table>
 									</div>
@@ -194,12 +224,18 @@
 												<tr>
 													<td style="">Anomalia</td>
 												</tr>
-												<tr>
-													<td style="">Anomalia</td>
-												</tr>
-												<tr>
-													<td style="">Anomalia</td>
-												</tr>
+												<%
+													if(request.getAttribute("listaAnomalie") != null) {
+														List<String> lista = (List<String>) request.getAttribute("listaAnomalie");
+														for(int i = 0; i < lista.size(); i++) {
+												%>
+													<tr>
+														<td style=""><%= lista.get(i) %></td>
+													</tr>
+												<%
+														}										
+													}
+												%>
 											<tbody>        
 										</table>
 									</div>

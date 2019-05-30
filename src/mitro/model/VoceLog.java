@@ -13,5 +13,7 @@ public abstract class VoceLog {
 	public LocalDateTime getDataOra() {
 		return dataOra;
 	}
+	
+	public abstract String getContenuto();
 		
 }

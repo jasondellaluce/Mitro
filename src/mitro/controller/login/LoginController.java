@@ -26,6 +26,11 @@ public class LoginController extends ControllerAstratto implements Login{
 
 	@Override
 	public boolean autentica(String username, String password) throws OperazioneException {
+		if(utenteAutenticato != null)
+			this.eseguiLogOperazione(utenteAutenticato, "autentica, " + username + ", " + password);
+		else
+			this.eseguiLogOperazione("autentica, " + username + ", " + password);
+		
 		if(username == null || username.length() == 0)
 			throw new IllegalArgumentException("username");
 		if(password == null || password.length() == 0)
@@ -59,6 +64,11 @@ public class LoginController extends ControllerAstratto implements Login{
 
 	@Override
 	public boolean disconnetti() throws OperazioneException {
+		if(utenteAutenticato != null)
+			this.eseguiLogOperazione(utenteAutenticato, "disconnetti");
+		else
+			this.eseguiLogOperazione("disconnetti");
+		
 		/* Controlla autenticazione mancata */
 		if(!getUtenteAutenticato().isPresent())
 			return false;
@@ -74,6 +84,10 @@ public class LoginController extends ControllerAstratto implements Login{
 
 	@Override
 	public Optional<Utente> getUtenteAutenticato() throws OperazioneException {
+		if(utenteAutenticato != null)
+			this.eseguiLogOperazione(utenteAutenticato, "getUtenteAutenticato");
+		else
+			this.eseguiLogOperazione("getUtenteAutenticato");
 		return Optional.ofNullable(utenteAutenticato);
 	}
 

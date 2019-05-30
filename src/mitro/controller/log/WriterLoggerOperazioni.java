@@ -15,6 +15,7 @@ public class WriterLoggerOperazioni implements LoggerOperazioni {
 	public void scrivi(String operazione) {
 		try {
 			writer.write(operazione + "\n");
+			writer.flush();
 		}
 		catch (IOException e) {
 			e.printStackTrace();

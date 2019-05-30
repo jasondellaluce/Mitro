@@ -1,7 +1,6 @@
 package mitro.controller;
 
-import java.io.OutputStreamWriter;
-
+import java.io.FileWriter;
 import mitro.controller.amministratore.AmministrazioneClassi;
 import mitro.controller.amministratore.AmministrazioneClassiController;
 import mitro.controller.amministratore.AmministrazioneIscritti;
@@ -31,17 +30,22 @@ import mitro.persistenza.DAOFactory;
 
 public class ControllerFactory {
 
-	private static final String nomeFileLogOperazioni = "LogOperazioni.log";
-	private static final String nomeFileLogMessaggi = "LogMessaggi.log";
+	private static String nomeFileLogOperazioni = "LogOperazioni.log";
+	private static String nomeFileLogMessaggi ="LogMessaggi.log";
 	private static ControllerFactory instance;
 	private LoggerOperazioni loggerOperazioniCondiviso;
 	private LoggerMessaggi loggerMessaggiCondiviso;
 	private PermessoLogin permessoLoginCondiviso;
 	
 	private ControllerFactory() {
-		this.loggerOperazioniCondiviso = new WriterLoggerOperazioni(new OutputStreamWriter(System.out));
-		this.loggerMessaggiCondiviso = new WriterLoggerMessaggi(new OutputStreamWriter(System.out));
-		this.permessoLoginCondiviso = new MapPermessoLogin();
+		try {
+			this.loggerOperazioniCondiviso = new WriterLoggerOperazioni(new FileWriter(nomeFileLogOperazioni, true));
+			this.loggerMessaggiCondiviso = new WriterLoggerMessaggi(new FileWriter(nomeFileLogMessaggi, true));
+			this.permessoLoginCondiviso = new MapPermessoLogin();
+		}
+		catch(Exception e) {
+			throw new RuntimeException(e);
+		}
 	}
 	
 	public static ControllerFactory getInstance() {

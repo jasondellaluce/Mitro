@@ -15,4 +15,9 @@ public class VoceMessaggioLog extends VoceLog {
 		return messaggio;
 	}
 
+	@Override
+	public String getContenuto() {
+		return getMessaggio();
+	}
+
 }

@@ -14,5 +14,10 @@ public class VoceOperazioneLog extends VoceLog {
 	public String getOperazione() {
 		return operazione;
 	}
+
+	@Override
+	public String getContenuto() {
+		return getOperazione();
+	}
 	
 }

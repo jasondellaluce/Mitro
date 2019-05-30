@@ -15,6 +15,7 @@ public class WriterLoggerMessaggi implements LoggerMessaggi {
 	public void scrivi(String messaggio) {
 		try {
 			writer.write(messaggio + "\n");
+			writer.flush();
 		}
 		catch (IOException e) {
 			e.printStackTrace();
