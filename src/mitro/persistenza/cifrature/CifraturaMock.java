@@ -2,7 +2,7 @@ package mitro.persistenza.cifrature;
 
 import mitro.persistenza.Cifratura;
 
-public class MockCifratura implements Cifratura {
+public class CifraturaMock implements Cifratura {
 
 	@Override
 	public String cifra(String valore) {

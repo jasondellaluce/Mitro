@@ -8,15 +8,19 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 
 import mitro.persistenza.Cifratura;
-import mitro.persistenza.cifrature.MockCifratura;
-import mitro.persistenza.cifrature.TestoInChiaro;
+import mitro.persistenza.cifrature.CifraturaSimmetrica;
+import mitro.persistenza.cifrature.CifraturaMock;
+import mitro.persistenza.cifrature.CifraturaInChiaro;
 
 class CifraturaTest {
 	
 	@Test
 	void test() {
 		String test = "Stringa esempio";
-		List<Cifratura> impl = Arrays.asList(new MockCifratura(), new TestoInChiaro());
+		List<Cifratura> impl = Arrays.asList(
+				new CifraturaMock(),
+				new CifraturaInChiaro(),
+				new CifraturaSimmetrica());
 		
 		for(Cifratura c : impl) {
 			/* Test consistenza */
