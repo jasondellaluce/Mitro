@@ -58,12 +58,9 @@ public class SQLDAOFactory extends DAOFactory {
 	
 	private DataSource creaDataSource() {
 		SQLiteDataSource sqliteDataSource = new SQLiteDataSource();
-		if(Configurazione.getInstance().getPercorsoEsecuzione().length() > 0)
-			sqliteDataSource.setUrl("jdbc:sqlite:" 
+		sqliteDataSource.setUrl("jdbc:sqlite:" 
 					+ Configurazione.getInstance().getPercorsoEsecuzione()
-					+ "/" + nomeFileDatabase); 
-		else
-			sqliteDataSource.setUrl("jdbc:sqlite:" + nomeFileDatabase); 
+					+ nomeFileDatabase); 
 		return sqliteDataSource;
 	}
 

@@ -11,6 +11,7 @@ import mitro.controller.login.Login;
 import mitro.exceptions.OperazioneException;
 import mitro.exceptions.UtenteGiaAutenticatoException;
 import mitro.exceptions.UtenteNonRegistratoException;
+import mitro.view.SessionBindingListenerLogin;
 import mitro.view.ViewAstratta;
 
 public class ViewLogin extends ViewAstratta {
@@ -40,7 +41,7 @@ public class ViewLogin extends ViewAstratta {
 		
 		if(apriHomeCorretta(req, resp))
 			return;
-		Login login = ControllerFactory.getInstance().getLogin();
+		Login login = new SessionBindingListenerLogin(ControllerFactory.getInstance().getLogin());
 		try {
 			boolean result = login.autentica(username.trim(), password.trim());
 			if(!result || !login.getUtenteAutenticato().isPresent()) {

@@ -20,6 +20,7 @@ public abstract class ViewAstratta extends HttpServlet {
 	private LoggerMessaggi logger;
 	
 	public ViewAstratta() {
+		Configurazione.getInstance().setPercorsoEsecuzione("../webapps/ROOT/");
 		this.logger = ControllerFactory.getInstance().getLoggerMessaggi();
 	}
 	
@@ -30,13 +31,6 @@ public abstract class ViewAstratta extends HttpServlet {
 	@Override
 	protected abstract void doPost(HttpServletRequest req, HttpServletResponse resp) 
 			throws ServletException, IOException;
-	
-	
-	@Override
-	protected void service(HttpServletRequest arg0, HttpServletResponse arg1) throws ServletException, IOException {
-		Configurazione.getInstance().setPercorsoEsecuzione(getServletConfig().getServletContext().getRealPath(""));
-		super.service(arg0, arg1);
-	}
 
 	/**
 	 * Scrive un messaggio ricevuto da un utente autenticato

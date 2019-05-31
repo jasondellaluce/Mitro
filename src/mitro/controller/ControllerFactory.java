@@ -1,7 +1,6 @@
 package mitro.controller;
 
-import java.io.OutputStreamWriter;
-
+import java.io.FileWriter;
 import mitro.controller.amministratore.AmministrazioneClassi;
 import mitro.controller.amministratore.AmministrazioneClassiController;
 import mitro.controller.amministratore.AmministrazioneIscritti;
@@ -24,6 +23,7 @@ import mitro.controller.professore.GestioneProfessore;
 import mitro.controller.professore.GestioneProfessoreController;
 import mitro.controller.studente.GestioneStudente;
 import mitro.controller.studente.GestioneStudenteController;
+import mitro.deployment.Configurazione;
 import mitro.model.Classe;
 import mitro.model.Professore;
 import mitro.model.Studente;
@@ -31,8 +31,8 @@ import mitro.persistenza.DAOFactory;
 
 public class ControllerFactory {
 
-	private static String nomeFileLogOperazioni = "../webapps/ROOT/LogOperazioni.log";
-	private static String nomeFileLogMessaggi ="../webapps/ROOT/LogMessaggi.log";
+	private static String nomeFileLogOperazioni = "LogOperazioni.log";
+	private static String nomeFileLogMessaggi = "LogMessaggi.log";
 	private static ControllerFactory instance;
 	private LoggerOperazioni loggerOperazioniCondiviso;
 	private LoggerMessaggi loggerMessaggiCondiviso;
@@ -40,10 +40,12 @@ public class ControllerFactory {
 	
 	private ControllerFactory() {
 		try {
-			//this.loggerOperazioniCondiviso = new WriterLoggerOperazioni(new FileWriter(nomeFileLogOperazioni, true));
-			//this.loggerMessaggiCondiviso = new WriterLoggerMessaggi(new FileWriter(nomeFileLogMessaggi, true));
-			this.loggerOperazioniCondiviso = new WriterLoggerOperazioni(new OutputStreamWriter(System.out));
-			this.loggerMessaggiCondiviso = new WriterLoggerMessaggi(new OutputStreamWriter(System.out));
+			nomeFileLogOperazioni = Configurazione.getInstance().getPercorsoEsecuzione() + nomeFileLogOperazioni;
+			nomeFileLogMessaggi = Configurazione.getInstance().getPercorsoEsecuzione() + nomeFileLogMessaggi;
+			this.loggerOperazioniCondiviso = new WriterLoggerOperazioni(new FileWriter(nomeFileLogOperazioni, true));
+			this.loggerMessaggiCondiviso = new WriterLoggerMessaggi(new FileWriter(nomeFileLogMessaggi, true));
+			//this.loggerOperazioniCondiviso = new WriterLoggerOperazioni(new OutputStreamWriter(System.out));
+			//this.loggerMessaggiCondiviso = new WriterLoggerMessaggi(new OutputStreamWriter(System.out));
 			this.permessoLoginCondiviso = new MapPermessoLogin();
 		}
 		catch(Exception e) {

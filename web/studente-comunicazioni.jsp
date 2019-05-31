@@ -3,6 +3,7 @@
 <%@ page import="java.util.*" %>
 <%@ page import="java.time.format.*" %>
 <%@ page import="mitro.model.Comunicazione" %>
+<%@ page import="mitro.deployment.Configurazione" %>
 <!DOCTYPE html>
 <html class=" js flexbox canvas canvastext webgl touch geolocation postmessage no-websqldatabase indexeddb hashchange history draganddrop websockets rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients no-cssreflections csstransforms csstransforms3d csstransitions fontface generatedcontent video audio localstorage sessionstorage webworkers applicationcache svg inlinesvg smil svgclippaths js flexbox canvas canvastext webgl touch geolocation postmessage no-websqldatabase indexeddb hashchange history draganddrop websockets rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients no-cssreflections csstransforms csstransforms3d csstransitions fontface generatedcontent video audio localstorage sessionstorage webworkers applicationcache svg inlinesvg smil svgclippaths" style="" lang="en">
 	<head>
@@ -42,7 +43,10 @@
 			<div class="left-sidebar-pro">
 				<nav id="sidebar">
 					<div class="sidebar-header">
-						<img src="img/logo/logo-small.png"> 
+						<img src="img/logo/logo-small.png">
+						<br>
+						<br>
+						<span style="color:black"><%= Configurazione.getInstance().getDescrizioneApplicazione() %></span> 
 					</div>
 					<div class="left-custom-menu-adp-wrap">
 						<ul class="nav navbar-nav left-sidebar-menu-pro">

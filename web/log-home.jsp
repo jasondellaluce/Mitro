@@ -43,7 +43,10 @@
 			<div class="left-sidebar-pro">
 				<nav id="sidebar">
 					<div class="sidebar-header">
-						<img src="img/logo/logo-small.png"> 
+						<img src="img/logo/logo-small.png">
+						<br>
+						<br>
+						<span style="color:black"><%= Configurazione.getInstance().getDescrizioneApplicazione() %></span>
 					</div>
 					<div class="left-custom-menu-adp-wrap">
 						<ul class="nav navbar-nav left-sidebar-menu-pro">
