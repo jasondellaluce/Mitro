@@ -1,6 +1,8 @@
 package mitro.view.amministratore;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -52,18 +54,28 @@ public class ViewRegistrazioneUtente extends ViewUtenteAstratta {
 	@Override
 	protected void gestisciRichiestaPost(Utente utente, HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-		AmministrazioneIscritti amministrazioneIscritti = getAmministrazioneIscritti();
+		
 		try {
+			AmministrazioneIscritti amministrazioneIscritti = getAmministrazioneIscritti();
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 			String ruolo= req.getParameter("ruolo");
 			String nome= req.getParameter("nome");
 			String cognome= req.getParameter("cognome");
+			String email=req.getParameter("email");
+			String telefono=req.getParameter("telefono");
+			String residenza=req.getParameter("residenza");
+			String nascita=req.getParameter("nascita");
 			String classe= req.getParameter("classe");
 			
-			if(ruolo!=null && nome!= null && cognome!= null) {
+			if(!ruolo.isEmpty() && !nome.isEmpty() && !cognome.isEmpty() && ruolo!=null && nome!= null && cognome!= null && email!=null && telefono!=null && residenza!=null && nascita!=null) {
 				if(ruolo.equals(""+Ruolo.STUDENTE) && classe!=null) {
 					Studente s= new Studente();
 					s.setNome(nome);
 					s.setCognome(cognome);
+					s.setEmail(email);
+					s.setTelefono(telefono);
+					s.setIndirizzoResidenza(residenza);
+					s.setDataNascita(LocalDate.parse(nascita,formatter));
 					AmministrazioneClassi amministrazioneClassi = getAmministrazioneClassi();
 					for(Classe c: amministrazioneClassi.cercaClassi(null)) if(c.getId().equals(classe))
 					s.setClasse(c);
@@ -79,6 +91,10 @@ public class ViewRegistrazioneUtente extends ViewUtenteAstratta {
 						Professore p= new Professore();
 						p.setNome(nome);
 						p.setCognome(cognome);
+						p.setEmail(email);
+						p.setTelefono(telefono);
+						p.setIndirizzoResidenza(residenza);
+						p.setDataNascita(LocalDate.parse(nascita,formatter));
 						amministrazioneIscritti.registraIscritto(p);
 						String user="prof-"+p.getId();
 						String password="password";

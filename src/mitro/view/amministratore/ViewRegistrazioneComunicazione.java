@@ -85,46 +85,53 @@ public class ViewRegistrazioneComunicazione extends ViewUtenteAstratta {
 				
 				List<Professore> professoriSelezionati=new ArrayList<Professore>();
 				List<Studente> studentiSelezionati = new ArrayList<Studente>();
+				if(professori!=null) {
+					for(String idProf: professori) 
+						for(Professore prof: tuttiIProfessori)
+							if(prof.getId().equals(idProf)){
+								professoriSelezionati.add(prof);
+								comunicazione= new Comunicazione();
+								comunicazione.setOggetto(oggetto);
+								comunicazione.setContenuto(annotazione);
+								comunicazione.setDestinatario(prof);
+								comunicazione.setDataOra(LocalDateTime.now());
+								amministrazioneIscritti.registraComunicazione(comunicazione);
+							}					
+				}
+				if(studenti!=null) {
+					for(String idStud: studenti) 
+						for(Studente stud: tuttiGliStudenti)
+							if(stud.getId().equals(idStud)){
+								studentiSelezionati.add(stud);
+								comunicazione= new Comunicazione();
+								comunicazione.setOggetto(oggetto);
+								comunicazione.setContenuto(annotazione);
+								comunicazione.setDestinatario(stud);
+								comunicazione.setDataOra(LocalDateTime.now());
+								amministrazioneIscritti.registraComunicazione(comunicazione);
+							}	
+				}
+
 				
-				for(String idProf: professori) 
-					for(Professore prof: tuttiIProfessori)
-						if(prof.getId().equals(idProf)){
-							professoriSelezionati.add(prof);
-							comunicazione= new Comunicazione();
-							comunicazione.setOggetto(oggetto);
-							comunicazione.setContenuto(annotazione);
-							comunicazione.setDestinatario(prof);
-							comunicazione.setDataOra(LocalDateTime.now());
-							amministrazioneIscritti.registraComunicazione(comunicazione);
-						}
-				for(String idStud: studenti) 
-					for(Studente stud: tuttiGliStudenti)
-						if(stud.getId().equals(idStud)){
-							studentiSelezionati.add(stud);
-							comunicazione= new Comunicazione();
-							comunicazione.setOggetto(oggetto);
-							comunicazione.setContenuto(annotazione);
-							comunicazione.setDestinatario(stud);
-							comunicazione.setDataOra(LocalDateTime.now());
-							amministrazioneIscritti.registraComunicazione(comunicazione);
-						}
-				
-				
-				for(String idClasse: classi)
-					for(Classe classe: tutteLeClassi)
-						if(classe.getId().equals(idClasse))
-							for(Studente stud:tuttiGliStudenti.stream()
-									       .filter(o -> o.getClasse().equals(classe))
-									       .collect(Collectors.toList())) {
-								if(!studentiSelezionati.contains(stud)) {
-									comunicazione= new Comunicazione();
-									comunicazione.setOggetto(oggetto);
-									comunicazione.setContenuto(annotazione);
-									comunicazione.setDestinatario(stud);
-									comunicazione.setDataOra(LocalDateTime.now());
-									amministrazioneIscritti.registraComunicazione(comunicazione);
+				if(classi!=null) {
+					for(String idClasse: classi)
+						for(Classe classe: tutteLeClassi)
+							if(classe.getId().equals(idClasse))
+								for(Studente stud:tuttiGliStudenti.stream()
+										       .filter(o -> o.getClasse().equals(classe))
+										       .collect(Collectors.toList())) {
+									if(!studentiSelezionati.contains(stud)) {
+										comunicazione= new Comunicazione();
+										comunicazione.setOggetto(oggetto);
+										comunicazione.setContenuto(annotazione);
+										comunicazione.setDestinatario(stud);
+										comunicazione.setDataOra(LocalDateTime.now());
+										amministrazioneIscritti.registraComunicazione(comunicazione);
+									}
 								}
-							}
+					
+				}
+
 				
 			}
 			

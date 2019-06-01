@@ -179,7 +179,11 @@
 												</select>
 												
 												Nome:<input type="text" name="nome" style=" width:100%; height:100%; border-color: white; border-width: 0px 0px 0px 0px; padding: 0px 0px 0px 0px;">
-												Cognome:<input type="text" name="cognome" style=" width:100%; height:100%; border-color: white; border-width: 0px 0px 0px 0px; padding: 0px 0px 0px 0px;">												
+												Cognome:<input type="text" name="cognome" style=" width:100%; height:100%; border-color: white; border-width: 0px 0px 0px 0px; padding: 0px 0px 0px 0px;">	
+												Email:<input type="text" name="email" style=" width:100%; height:100%; border-color: white; border-width: 0px 0px 0px 0px; padding: 0px 0px 0px 0px;">
+												Telefono:<input type="text" name="telefono" style=" width:100%; height:100%; border-color: white; border-width: 0px 0px 0px 0px; padding: 0px 0px 0px 0px;">
+												Indirizzo di Residenza:<input type="text" name="residenza" style=" width:100%; height:100%; border-color: white; border-width: 0px 0px 0px 0px; padding: 0px 0px 0px 0px;">	
+												Data di nascita(Formato: gg-mm-aaaa):<input type="text" name="nascita" style=" width:100%; height:100%; border-color: white; border-width: 0px 0px 0px 0px; padding: 0px 0px 0px 0px;">													
 												<div>
 													Classe(*):
 													<select class="form-control" name="classe" >
