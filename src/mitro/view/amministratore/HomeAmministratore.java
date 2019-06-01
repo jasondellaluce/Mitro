@@ -38,61 +38,25 @@ public class HomeAmministratore extends ViewUtenteAstratta {
 
 	@Override
 	protected void gestisciRichiestaGet(Utente utente, HttpServletRequest req, HttpServletResponse resp)
-			throws ServletException, IOException {
-			AmministrazioneClassi amministrazioneClassi = getAmministrazioneClassi();
-		try {	
+			throws ServletException, IOException{
+		//AmministrazioneClassi amministrazioneClassi = getAmministrazioneClassi();
+		try {
 			if("disconnetti".equals(req.getParameter("azione"))) {
 				this.eseguiDisconnessione(req, resp);
 				return;
 			}
-			ArrayList<Enum> ruoli= new ArrayList<Enum>();
-			ruoli.add(Ruolo.STUDENTE);
-			ruoli.add(Ruolo.PROFESSORE);
-			List<Classe> classi= amministrazioneClassi.cercaClassi(null);
-			req.setAttribute("ruoli", ruoli);
-			req.setAttribute("classi", classi);
-			req.setAttribute("nomeAmministratore", "Amministratore scolastico ");
-			
+			req.setAttribute("nomeAmministratore", "Amministratore scolastico");
+		
 		}
 		catch (OperazioneException e) {
 			req.setAttribute("error", String.valueOf(e));
 		}
-		
 		req.getRequestDispatcher("/amministratore-home.jsp").forward(req, resp);
 	}
 
 	@Override
 	protected void gestisciRichiestaPost(Utente utente, HttpServletRequest req, HttpServletResponse resp)
-			throws ServletException, IOException {
-		AmministrazioneIscritti amministrazioneIscritti = getAmministrazioneIscritti();
-		try {
-			Enum ruolo= (Enum) req.getAttribute("ruolo");
-			String nome= (String) req.getParameter("nome");
-			String cognome= (String) req.getParameter("cognome");
-			Classe classe= (Classe) req.getAttribute("classe");
-			
-			if(ruolo!=null && nome!= null && cognome!= null) {
-				if(ruolo.equals(Ruolo.STUDENTE) && classe!=null) {
-					Studente s= new Studente();
-					s.setNome(nome);
-					s.setCognome(cognome);
-					s.setClasse(classe);
-					amministrazioneIscritti.registraIscritto(s);
-				}
-				else {
-					if(ruolo.equals(Ruolo.PROFESSORE) ) {
-						Professore p= new Professore();
-						p.setNome(nome);
-						p.setCognome(cognome);
-						amministrazioneIscritti.registraIscritto(p);
-					} 
-				}
-			}
-					
-		}
-		catch (OperazioneException e) {
-			req.setAttribute("error", String.valueOf(e));
-		}
+			throws ServletException, IOException{
 		gestisciRichiestaGet(utente, req, resp);
 	}
 

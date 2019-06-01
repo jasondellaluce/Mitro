@@ -8,7 +8,7 @@
 <!DOCTYPE html>
 <html class=" js flexbox canvas canvastext webgl touch geolocation postmessage no-websqldatabase indexeddb hashchange history draganddrop websockets rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients no-cssreflections csstransforms csstransforms3d csstransitions fontface generatedcontent video audio localstorage sessionstorage webworkers applicationcache svg inlinesvg smil svgclippaths js flexbox canvas canvastext webgl touch geolocation postmessage no-websqldatabase indexeddb hashchange history draganddrop websockets rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients no-cssreflections csstransforms csstransforms3d csstransitions fontface generatedcontent video audio localstorage sessionstorage webworkers applicationcache svg inlinesvg smil svgclippaths" style="" lang="en">
 	<head>
-		<title>Home</title>
+		<title>Registra utente</title>
 		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
 		<meta charset="utf-8">
 		<meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -72,7 +72,7 @@
 									<span class="mini-dn">Registra Utente</span>
 									<span class="indicator-right-menu mini-dn"></span>
 								</a>
-							</li>
+							</li>							
 							<li class="nav-item">
 								<a href="/amministratore-comunicazioni">
 									<i class="fa big-icon fa-envelope"></i>
@@ -113,28 +113,76 @@
 				
 				<!-- Breadcome start-->
 				<div class="breadcome-area mg-b-30 small-dn">
-					<div class="container-fluid">
-						<div class="row">
-							<div class="col-lg-12">
-								<div class="breadcome-list map-mg-t-40-gl shadow-reset">
-									<div class="row">
-										<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-											<div class="breadcome-heading" style="font-size: 12pt;">
-												<ul>
-													<li>Bentornato, <%= request.getAttribute("nomeAmministratore") %></li>
-												</ul>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
+
 				</div>
 				
 				<!-- Main container -->
 				<div class="welcome-adminpro-area">
+					<div class="row">			
+						<div class="col-lg-8" style="margin-left: 50px;">
+							<div class="alert-title">
+								<h2>Registra utente</h2>
+							</div> 	
+							<div>
+							<div class="row">
+								<div style="margin-left: 20px;">
+									<form id="adminpro-form" class="adminpro-form" action='/amministratore-nuovo-utente' method="post">
+									
+										
+										<div class="col-lg-8">
+											<div class="note-dropzone"> 												
+												Ruolo:
+												<select class="form-control" name="ruolo" >
+													<%
+														ArrayList<String> ruoli = (ArrayList<String>) request.getAttribute("ruoli");
+														for(int i=0;i<ruoli.size();i++) {
+													%>
+															<option value='<%= ruoli.get(i)%>'><%= ruoli.get(i)%></option>
+													<% 	
+														}
+													%>			
+												</select>
+												
+												Nome:<input type="text" name="nome" style=" width:100%; height:100%; border-color: white; border-width: 0px 0px 0px 0px; padding: 0px 0px 0px 0px;">
+												Cognome:<input type="text" name="cognome" style=" width:100%; height:100%; border-color: white; border-width: 0px 0px 0px 0px; padding: 0px 0px 0px 0px;">												
+												<div>
+													Classe(*):
+													<select class="form-control" name="classe" >
+													<%	if(request.getAttribute("classi") != null) {
+														List<Classe> classi = (List<Classe>) request.getAttribute("classi");
+														for(int i = 0; i < classi.size(); i++) {
+														%>
+															<option value='<%= classi.get(i).getNome()%>'><%= classi.get(i).getNome() %></option>
+														<% 		}
+														}
+														%>			
+													</select>	
+												</div>
+												<span>(*): solo se si deve registrare uno studente(Non verrà considerato in fase di registrazione di un professore)</span>																																
+											<div class="compose-email"> 
+												<br>   
+												<button type="submit" class="btn btn-custon-rounded-three btn-default" style="width:100%;">Crea utente</button>
+											</div> 
+												</div>
+										</div>  
+									</form>
+									<%if(request.getAttribute("user")!=null && request.getAttribute("password")!=null) {%>
+										<div class="col-lg-4">
+											<div class="note-dropzone"> 												
+											<p>++ATTENZIONE: MEMORIZZARE CREDENZIALI PRIMA DI RICARICARE LA PAGINA++</p>
+											<p>User: <%=(String)request.getAttribute("user") %></p>		
+											<p>Password: <%=(String)request.getAttribute("password") %></p>					
+											</div>
+										</div> 									
+										<%} %>
+									</div>
+								</div>							
+							</div>
 
+
+						</div>                   
+						
+					</div>
 				</div>
 			</div>
 		</div>
