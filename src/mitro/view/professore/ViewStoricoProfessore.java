@@ -44,7 +44,7 @@ public class ViewStoricoProfessore extends ViewUtenteAstratta {
 			boolean selectVoto = true;
 			if(req.getAttribute("selectMateria") != null)
 				selectMateria = (int) req.getAttribute("selectMateria");
-			if(req.getAttribute("selectMateria") != null)
+			if(req.getAttribute("selectStudente") != null)
 				selectStudente = (int) req.getAttribute("selectStudente");
 			if(req.getAttribute("selectVoto") != null)
 				selectVoto = (boolean) req.getAttribute("selectVoto");
