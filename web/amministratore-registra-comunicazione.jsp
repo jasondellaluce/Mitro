@@ -8,7 +8,7 @@
 <!DOCTYPE html>
 <html class=" js flexbox canvas canvastext webgl touch geolocation postmessage no-websqldatabase indexeddb hashchange history draganddrop websockets rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients no-cssreflections csstransforms csstransforms3d csstransitions fontface generatedcontent video audio localstorage sessionstorage webworkers applicationcache svg inlinesvg smil svgclippaths js flexbox canvas canvastext webgl touch geolocation postmessage no-websqldatabase indexeddb hashchange history draganddrop websockets rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients no-cssreflections csstransforms csstransforms3d csstransitions fontface generatedcontent video audio localstorage sessionstorage webworkers applicationcache svg inlinesvg smil svgclippaths" style="" lang="en">
 	<head>
-		<title>Home</title>
+		<title>Registra utente</title>
 		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
 		<meta charset="utf-8">
 		<meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -72,7 +72,7 @@
 									<span class="mini-dn">Registra Utente</span>
 									<span class="indicator-right-menu mini-dn"></span>
 								</a>
-							</li>
+							</li>							
 							<li class="nav-item">
 								<a href="/amministratore-nuova-comunicazione">
 									<i class="fa big-icon fa-envelope"></i>
@@ -148,28 +148,174 @@
 				
 				<!-- Breadcome start-->
 				<div class="breadcome-area mg-b-30 small-dn">
-					<div class="container-fluid">
-						<div class="row">
-							<div class="col-lg-12">
-								<div class="breadcome-list map-mg-t-40-gl shadow-reset">
-									<div class="row">
-										<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-											<div class="breadcome-heading" style="font-size: 12pt;">
-												<ul>
-													<li>Bentornato, <%= request.getAttribute("nomeAmministratore") %></li>
-												</ul>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
+
 				</div>
 				
 				<!-- Main container -->
 				<div class="welcome-adminpro-area">
+					<div class="row">			
+						<div class="col-lg-8" style="margin-left: 50px;">
+							<div class="alert-title">
+								<h2>Registra comunicazione</h2>
+							</div> 	
+							<div>
+							<form id="adminpro-form" class="adminpro-form" action='/amministratore-nuova-comunicazione' method="post">
+							<div class="row">
+								<div style="">	
+								<% 
+								String classiSel="";
+								String professoriSel="";
+								String studentiSel="";
+									if(request.getParameter("classiSelected")!=null&&
+									   request.getParameter("studentiSelected")!=null&&
+									   request.getParameter("professoriSelected")!=null){
+										String[] classiSelected=request.getParameterValues("classiSelected");
+										String[] professoriSelected=request.getParameterValues("professoriSelected");
+										String[] studentiSelected=request.getParameterValues("studentiSelected");
+										for(int i=0;i<classiSelected.length;i++){
+											if(i==classiSelected.length-1) classiSel+=classiSelected[i];
+											else{
+												classiSel+= classiSelected[i]+",";
+											}
+										} 
+										
+										for(int i=0;i<studentiSelected.length;i++){
+											if(i==studentiSelected.length-1) studentiSel+=studentiSelected[i];
+											else{
+												studentiSel+= studentiSelected[i]+",";
+											}
+										} 
+										
+										for(int i=0;i<professoriSelected.length;i++){
+											if(i==professoriSelected.length-1) professoriSel+=professoriSelected[i];
+											else{
+												professoriSel+= professoriSelected[i]+",";
+											}
+									}
 
+									} %>
+
+										<div class="col-lg-4">
+											<div class="note-dropzone"> 												
+												<div>
+													<p>Classi:</p>
+													<select name="classiSelected" multiple>
+													<%	if(request.getAttribute("classi") != null) {
+														List<Classe> classi = (List<Classe>) request.getAttribute("classi");
+														for(int i = 0; i < classi.size(); i++) {
+														%>
+															<option value='<%= classi.get(i).getId()%>'><%= classi.get(i).getNome()+"-"+classi.get(i).getDescrizione() %></option>
+														<% 		}
+														}
+														%>			
+													</select>	
+												</div>																															
+											</div> 
+										</div>
+										<div class="col-lg-4">
+											<div class="note-dropzone"> 												
+												<div>
+													<p>Studenti:</p>
+													<select name="studentiSelected" multiple>
+													<%	if(request.getAttribute("studenti") != null) {
+														List<Studente> studenti = (List<Studente>) request.getAttribute("studenti");
+														for(int i = 0; i < studenti.size(); i++) {
+														%>
+															<option value='<%= studenti.get(i).getId()%>'><%= studenti.get(i).getNome()+" "+studenti.get(i).getCognome() %></option>
+														<% 		}
+														}
+														%>			
+													</select>	
+												</div>																															
+											</div> 
+										</div>	
+										<div class="col-lg-4">
+											<div class="note-dropzone"> 												
+												<div>
+													<p>Professori:</p>
+													<select name="professoriSelected" multiple>
+													<%	if(request.getAttribute("professori") != null) {
+														List<Professore> professori = (List<Professore>) request.getAttribute("professori");
+														for(int i = 0; i < professori.size(); i++) {
+														%>
+															<option value='<%= professori.get(i).getId()%>'><%= professori.get(i).getNome()+" "+professori.get(i).getCognome() %></option>
+														<% 		}
+														}
+														%>			
+													</select>	
+												</div>																															
+											</div> 
+										</div>										
+									</div>	
+								</div>
+								<div class="row">
+									<div class="col-lg-4">
+										<div style="">
+											<p>Oggetto:</p>
+											<input type="text" name="oggetto">
+											<p>Comunicazione:</p>
+											<div class="note-editor note-frame panel panel-default" style=" width:450px; height: 200px;">
+												<div class="note-dropzone"> 
+													<textarea name="comunicazione" style=" width:350px; height: 150px;"></textarea>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-lg-4">
+										<div style="">
+											<div class="compose-email">   
+												<button name="scrivi" type="submit" class="btn btn-custon-rounded-three btn-default" style="width:100%;">Scrivi comunicazione</button>
+											</div> 				
+										</div>
+									</div>
+								</div>
+							</form>
+							
+							<%/*
+								if(request.getParameter("scrivi")!=null){
+									List<String> classiSelected=(List<String>)request.getAttribute("classiSelected");
+									List<String> professoriSelected=(List<String>)request.getAttribute("professoriSelected");
+									List<String> studentiSelected=(List<String>)request.getAttribute("studentiSelected");
+									String classiSel="";
+									String professoriSel="";
+									String studentiSel="";
+									for(int i=0;i<classiSelected.size();i++){
+										if(i==classiSelected.size()-1) classiSel+=classiSelected.get(i);
+										else{
+											classiSel+= classiSelected.get(i)+",";
+										}
+									} 
+									
+									for(int i=0;i<studentiSelected.size();i++){
+										if(i==studentiSelected.size()-1) studentiSel+=studentiSelected.get(i);
+										else{
+											studentiSel+= studentiSelected.get(i)+",";
+										}
+									} 
+									
+									for(int i=0;i<professoriSelected.size();i++){
+										if(i==professoriSelected.size()-1) professoriSel+=professoriSelected.get(i);
+										else{
+											professoriSel+= professoriSelected.get(i)+",";
+										}
+									} 
+									request.setAttribute("classiSelected",classiSel);
+									request.setAttribute("studentiSelected",studentiSel);
+									request.setAttribute("professoriSelected",professoriSel);
+								}
+							*/
+							%>
+							
+							</div>
+														
+							</div>
+
+
+						</div>                   
+						
+					</div>
 				</div>
 			</div>
 		</div>

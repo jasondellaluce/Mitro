@@ -1,6 +1,7 @@
 package mitro.controller.amministratore;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import mitro.controller.ControllerAstratto;
 import mitro.controller.log.LoggerOperazioni;
@@ -74,7 +75,15 @@ public class AmministrazioneIscrittiController extends ControllerAstratto
 	public List<Iscritto> cercaIscritti(String filtro) throws OperazioneException {
 		this.eseguiLogOperazione("cercaIscritti, " + filtro);
 		try {
-			return daoUtente.ottieniIscrittiPerNomeOCognome(filtro);
+			if(filtro!=null) {
+				return daoUtente.ottieniIscrittiPerNomeOCognome(filtro);
+			}
+			else {
+				List<Iscritto> iscritti= daoUtente.ottieniUtenti().stream().filter(o -> o instanceof Iscritto)
+						.map(o -> (Iscritto)o)
+						.collect(Collectors.toList());
+				return iscritti;
+			}
 		}
 		catch (PersistenzaException e) {
 			throw new OperazioneException();

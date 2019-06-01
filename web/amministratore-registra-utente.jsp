@@ -68,15 +68,50 @@
 							</li>
 							<li class="nav-item">
 								<a href="/amministratore-nuovo-utente">
-									<i class="fa big-icon fa-envelope"></i>
+									<i class="fa big-icon fa-pie-chart"></i>
 									<span class="mini-dn">Registra Utente</span>
 									<span class="indicator-right-menu mini-dn"></span>
 								</a>
 							</li>							
 							<li class="nav-item">
-								<a href="/amministratore-comunicazioni">
+								<a href="/amministratore-nuova-comunicazione">
 									<i class="fa big-icon fa-envelope"></i>
 									<span class="mini-dn">Registra Comunicazione</span>
+									<span class="indicator-right-menu mini-dn"></span>
+								</a>
+							</li>
+							<li class="nav-item">
+								<a>
+									<i>*</i>
+									<span class="mini-dn">Registra Classe(WIP..)</span>
+									<span class="indicator-right-menu mini-dn"></span>
+								</a>
+							</li>
+							<li class="nav-item">
+								<a>
+									<i>*</i>
+									<span class="mini-dn">Modifica Classe(WIP..)</span>
+									<span class="indicator-right-menu mini-dn"></span>
+								</a>
+							</li>
+							<li class="nav-item">
+								<a>
+									<i>*</i>
+									<span class="mini-dn">Calendario(WIP..)</span>
+									<span class="indicator-right-menu mini-dn"></span>
+								</a>
+							</li>
+							<li class="nav-item">
+								<a>
+									<i>*</i>
+									<span class="mini-dn">Modifica Voto(WIP..)</span>
+									<span class="indicator-right-menu mini-dn"></span>
+								</a>
+							</li>
+							<li class="nav-item">
+								<a>
+									<i>*</i>
+									<span class="mini-dn">Modifica Utente(WIP..)</span>
 									<span class="indicator-right-menu mini-dn"></span>
 								</a>
 							</li>
@@ -152,7 +187,7 @@
 														List<Classe> classi = (List<Classe>) request.getAttribute("classi");
 														for(int i = 0; i < classi.size(); i++) {
 														%>
-															<option value='<%= classi.get(i).getNome()%>'><%= classi.get(i).getNome() %></option>
+															<option value='<%= classi.get(i).getId()%>'><%= classi.get(i).getNome()+"-"+classi.get(i).getDescrizione()%></option>
 														<% 		}
 														}
 														%>			

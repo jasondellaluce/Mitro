@@ -32,24 +32,7 @@ public class ViewRegistrazioneUtente extends ViewUtenteAstratta {
 			throws ServletException, IOException {
 		try {	
 			AmministrazioneClassi amministrazioneClassi = getAmministrazioneClassi();
-			
-			if(req.getAttribute("user")!=null)
-				req.setAttribute("user",(String)req.getAttribute("user"));
-			
-			if(req.getAttribute("password")!=null)
-				req.setAttribute("password",(String)req.getAttribute("password"));
-			
-			String ruolo= (String)req.getAttribute("ruolo");
-			String nome= (String) req.getAttribute("nome");
-			String cognome= (String) req.getAttribute("cognome");
-			String classe= (String) req.getAttribute("classe");
-			
-			req.setAttribute("ruolo", ruolo);
-			req.setAttribute("nome", nome);
-			req.setAttribute("cognome", cognome);
-			req.setAttribute("classe", classe);
-			
-			
+					
 			ArrayList<String> ruoli= new ArrayList<String>();
 			ruoli.add(""+Ruolo.STUDENTE);
 			ruoli.add(""+Ruolo.PROFESSORE);
@@ -76,18 +59,13 @@ public class ViewRegistrazioneUtente extends ViewUtenteAstratta {
 			String cognome= req.getParameter("cognome");
 			String classe= req.getParameter("classe");
 			
-			req.setAttribute("ruolo", ruolo);
-			req.setAttribute("nome", nome);
-			req.setAttribute("cognome", cognome);
-			req.setAttribute("classe", classe);
-			
 			if(ruolo!=null && nome!= null && cognome!= null) {
 				if(ruolo.equals(""+Ruolo.STUDENTE) && classe!=null) {
 					Studente s= new Studente();
 					s.setNome(nome);
 					s.setCognome(cognome);
 					AmministrazioneClassi amministrazioneClassi = getAmministrazioneClassi();
-					for(Classe c: amministrazioneClassi.cercaClassi(null)) if(c.getNome().equals(classe))
+					for(Classe c: amministrazioneClassi.cercaClassi(null)) if(c.getId().equals(classe))
 					s.setClasse(c);
 					amministrazioneIscritti.registraIscritto(s);
 					String user="stud-"+s.getId();
