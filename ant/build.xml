@@ -105,7 +105,7 @@
     >
         <mkdir dir="${build.classes.dir}"/>
         <javac destdir="${build.classes.dir}" debug="true"
-		deprecation="false" optimize="false" failonerror="true">
+		deprecation="false" optimize="false" failonerror="true" encoding="iso-8859-1">
             <src path="${src.dir}"/>
             <classpath refid="ant-classpath"/>
         </javac>
