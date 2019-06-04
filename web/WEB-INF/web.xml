@@ -19,6 +19,10 @@
 	    <servlet-class>mitro.view.InizializzaDatabase</servlet-class> 
     </servlet> 
     <servlet> 
+    	<servlet-name>InitCompleto</servlet-name> 
+	    <servlet-class>mitro.view.InizializzaDatabaseCompleto</servlet-class> 
+    </servlet> 
+    <servlet> 
     	<servlet-name>ViewLogin</servlet-name> 
 	    <servlet-class>mitro.view.login.ViewLogin</servlet-class> 
     </servlet> 
@@ -76,6 +80,10 @@
     <servlet-mapping> 
     	<servlet-name>Init</servlet-name> 
         <url-pattern>/init</url-pattern> 
+    </servlet-mapping>
+    <servlet-mapping> 
+    	<servlet-name>InitCompleto</servlet-name> 
+        <url-pattern>/initCompleto</url-pattern> 
     </servlet-mapping>
     <servlet-mapping> 
     	<servlet-name>ViewLogin</servlet-name> 
