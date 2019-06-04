@@ -92,7 +92,7 @@ public class InizializzaDatabaseCompleto extends ViewAstratta {
 		c2.setAnnoScolastico("18/19");
 		c2.setDescrizione("Seconda A Tradizionale");
 		daoClasse.registraClasse(c2);
-		classi.add(c2);
+		//classi.add(c2);
 		
 		Classe c3 = new Classe();
 		c3.setNome("3A");
@@ -106,7 +106,7 @@ public class InizializzaDatabaseCompleto extends ViewAstratta {
 		c4.setAnnoScolastico("18/19");
 		c4.setDescrizione("Quarta A Tradizionale");
 		daoClasse.registraClasse(c4);
-		classi.add(c4);
+		//classi.add(c4);
 		
 		Classe c5 = new Classe();
 		c5.setNome("5A");
@@ -160,10 +160,10 @@ public class InizializzaDatabaseCompleto extends ViewAstratta {
 		ArrayList<Studente> studenti= new ArrayList<Studente>();
 		
 		/*Popolamento classe c1*/
-		Random r= new Random();
+		
 		for(int i=0;i<10;i++) {
-			String nome=nomi.get(r.nextInt()/10);
-			String cognome=cognomi.get(r.nextInt()/10);
+			String nome=nomi.get(random.nextInt(10));
+			String cognome=cognomi.get(random.nextInt(10));
 			Studente studente= new Studente();
 			studente.setNome(nome);
 			studente.setCognome(cognome);
@@ -174,8 +174,8 @@ public class InizializzaDatabaseCompleto extends ViewAstratta {
 		}
 		/*Popolamento classe c3*/		
 		for(int i=0;i<10;i++) {
-			String nome=nomi.get(r.nextInt()/10);
-			String cognome=cognomi.get(r.nextInt()/10);
+			String nome=nomi.get(random.nextInt(10));
+			String cognome=cognomi.get(random.nextInt(10));
 			Studente studente= new Studente();
 			studente.setNome(nome);
 			studente.setCognome(cognome);
@@ -186,8 +186,8 @@ public class InizializzaDatabaseCompleto extends ViewAstratta {
 		}
 		/*Popolamento classe c5*/
 		for(int i=0;i<10;i++) {
-			String nome=nomi.get(r.nextInt()/10);
-			String cognome=cognomi.get(r.nextInt()/10);
+			String nome=nomi.get(random.nextInt(10));
+			String cognome=cognomi.get(random.nextInt(10));
 			Studente studente= new Studente();
 			studente.setNome(nome);
 			studente.setCognome(cognome);
@@ -204,6 +204,7 @@ public class InizializzaDatabaseCompleto extends ViewAstratta {
 		stud1.setClasse(c1);
 		daoUtente.registraUtente(stud1);
 		daoUtente.inserisciCredenziali(stud1, "stud1", "password");
+		studenti.add(stud1);
 		
 		Studente stud2 = new Studente();
 		stud2.setNome("Federico");
@@ -211,6 +212,7 @@ public class InizializzaDatabaseCompleto extends ViewAstratta {
 		stud2.setClasse(c3);
 		daoUtente.registraUtente(stud2);
 		daoUtente.inserisciCredenziali(stud2, "stud2", "password");
+		studenti.add(stud2);
 		
 		Studente stud3 = new Studente();
 		stud3.setNome("Amir");
@@ -218,13 +220,14 @@ public class InizializzaDatabaseCompleto extends ViewAstratta {
 		stud3.setClasse(c5);
 		daoUtente.registraUtente(stud3);
 		daoUtente.inserisciCredenziali(stud3, "stud3", "password");
+		studenti.add(stud3);
 		
 		/*Professori*/
 		ArrayList<Professore> professori = new ArrayList<Professore>();
 		
 		for(int i=0;i<6;i++) {
-			String nome=nomi.get(r.nextInt()/10);
-			String cognome=cognomi.get(r.nextInt()/10);			
+			String nome=nomi.get(random.nextInt(10));
+			String cognome=cognomi.get(random.nextInt(10));			
 			Professore professore= new Professore();
 			professore.setNome(nome);
 			professore.setCognome(cognome);
@@ -295,51 +298,86 @@ public class InizializzaDatabaseCompleto extends ViewAstratta {
 		materie.add(materia);
 		
 		int sizeMaterie= materie.size();
-		int sizeProfessori= professori.size();
+		int sizeClassi= classi.size();
+		int sizeProfessori=professori.size();
 		
 		/* Attivita */
 		LocalDate startDate = LocalDate.now(Configurazione.getInstance().getZoneId())
 				.withDayOfYear(1).plusWeeks(21)
 				.with(DayOfWeek.MONDAY);
-		for(int count=0;count<classi.size();count++){
+		
+		/*for(int count=0;count<sizeClassi;count++){
 			Classe classe=classi.get(count);
-			for(int i = 0; i < 6; i++) { //#settimane
-				for(int k = 0; k < 6; k++) { //#giorni
-					for(int j = 8; j <= 14; j++) { //#ora
+			for(int i = 0; i < 6; i++) { //#settimane		
+					for(int j = 8; j <= 14; j++) { //#ore
+						for(int k = 0; k < 6; k++) { //#giorni
 						Attivita att = new Attivita();
-						att.setProfessore(professori.get(random.nextInt()/sizeProfessori));
+						att.setProfessore(professori.get(random.nextInt(sizeProfessori)));
 						att.setClasse(classe);
-						att.setMateria(materie.get(random.nextInt()/sizeMaterie));
-						att.setData(startDate.plusWeeks(i).plusDays(k));
+						att.setMateria(materie.get(sizeMaterie));
+						att.setData(startDate.plusDays(k).plusWeeks(i));
 						att.setOraInizio(j);
 						daoAttivita.registraAttivita(att);
-						if(r.nextInt()%2==0 && att.getData().isBefore(LocalDate.now(Configurazione.getInstance().getZoneId()))) {
-							for(Studente stud: studenti.stream().filter(o -> o.getClasse().equals(classe)).collect(Collectors.toList())) {
+						for(Studente stud: studenti.stream().filter(o -> o.getClasse().equals(classe)).collect(Collectors.toList())) {
+							if(att.getData().isBefore(LocalDate.now(Configurazione.getInstance().getZoneId()))) {
 								Presenza presenza= new Presenza();
-								Voto voto= new Voto();
-								voto.setValore((double)r.nextInt());
-								presenza.setValore(true);
+								presenza.setValore(random.nextBoolean());
 								presenza.setStudente(stud);
-								voto.setStudente(stud);
 								presenza.setAttivita(att);
-								voto.setAttivita(att);
 								daoArchiviazione.registraArchiviazione(presenza);
-								daoArchiviazione.registraArchiviazione(voto);
+								if(random.nextBoolean()) {	
+										Voto voto= new Voto();
+										voto.setValore((double)random.nextInt(10) + 1.0);
+										voto.setStudente(stud);									
+										voto.setAttivita(att);							
+										daoArchiviazione.registraArchiviazione(voto);
+								}	
+							}							
+						}
+						}
+					}
+					
+			}
+		}*/
+		for(Classe classe: classi) {
+			for(int i = 0; i < 6; i++) {
+				for(int j = 8; j <= 12; j++) {
+					Attivita att = new Attivita();
+					att.setProfessore(professori.get(random.nextInt(sizeProfessori)));
+					att.setClasse(classe);
+					att.setOraInizio(j);
+					att.setMateria(materie.get(random.nextInt(sizeMaterie)));
+					for(int k = 0; k < 6; k++) {
+						att.setData(startDate.plusDays(i).plusWeeks(k));
+						daoAttivita.registraAttivita(att);
+						for(Studente stud: studenti.stream().filter(o -> o.getClasse().equals(classe)).collect(Collectors.toList())) {
+							if(att.getData().isBefore(LocalDate.now(Configurazione.getInstance().getZoneId()))) {
+								Presenza presenza= new Presenza();
+								presenza.setValore(random.nextBoolean());
+								presenza.setStudente(stud);
+								presenza.setAttivita(att);
+								daoArchiviazione.registraArchiviazione(presenza);
+								if(random.nextBoolean()) {	
+										Voto voto= new Voto();
+										voto.setValore((double)random.nextInt(10) + 1.0);
+										voto.setStudente(stud);									
+										voto.setAttivita(att);							
+										daoArchiviazione.registraArchiviazione(voto);
+								}	
 							}							
 						}
 					}
-				}	
+				}
 			}
 		}
-		
 
 		
 		/* Comunicazioni */
 		HashMap<String,String> comunicazioni= new HashMap<String,String>();
-		comunicazioni.put("Circolare","Corso di recupero di Matematica domani alle 16 presso aula 2.6 .");
+		comunicazioni.put("Circolare","Corso di recupero di Matematica domani alle 16 presso aula 2.6.");
 		comunicazioni.put("Premio","Premio per gli studenti che hanno vinto le olimpiadi di matematica.");
 		comunicazioni.put("Comunicazione dalla presidenza",
-				"Si terrà domani la simulazione di prima prova, tutti i docenti sono tenuti a far rispettare ordine e silenzio.");
+		"Si terrà domani la simulazione di prima prova, tutti i docenti sono tenuti a far rispettare ordine e silenzio.");
 
 		Comunicazione comunicazione = new Comunicazione();
 		comunicazione.setDataOra(LocalDateTime.now(Configurazione.getInstance().getZoneId()));

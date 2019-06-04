@@ -9,7 +9,7 @@ public abstract class DAOFactory {
 
 	public static DAOFactory getInstance() {
 		if(instance == null)
-			instance = new SQLDAOFactory("databaseCompleto.db");
+			instance = new SQLDAOFactory("database.db");
 		return instance;
 	}
 	
