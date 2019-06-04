@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -20,10 +21,12 @@ import mitro.model.Attivita;
 import mitro.model.Classe;
 import mitro.model.Comunicazione;
 import mitro.model.Materia;
+import mitro.model.Presenza;
 import mitro.model.Professore;
 import mitro.model.Ruolo;
 import mitro.model.Studente;
 import mitro.model.Utente;
+import mitro.model.Voto;
 import mitro.persistenza.DAOArchiviazione;
 import mitro.persistenza.DAOAttivita;
 import mitro.persistenza.DAOClasse;
@@ -154,6 +157,8 @@ public class InizializzaDatabaseCompleto extends ViewAstratta {
 		cognomi.add("Marino");
 		cognomi.add("Greco");		
 		
+		ArrayList<Studente> studenti= new ArrayList<Studente>();
+		
 		/*Popolamento classe c1*/
 		Random r= new Random();
 		for(int i=0;i<10;i++) {
@@ -165,6 +170,7 @@ public class InizializzaDatabaseCompleto extends ViewAstratta {
 			studente.setClasse(c1);
 			daoUtente.registraUtente(studente);
 			daoUtente.inserisciCredenziali(studente, "stud-"+studente.getId(), "password");
+			studenti.add(studente);
 		}
 		/*Popolamento classe c3*/		
 		for(int i=0;i<10;i++) {
@@ -176,6 +182,7 @@ public class InizializzaDatabaseCompleto extends ViewAstratta {
 			studente.setClasse(c3);
 			daoUtente.registraUtente(studente);
 			daoUtente.inserisciCredenziali(studente, "stud-"+studente.getId(), "password");
+			studenti.add(studente);
 		}
 		/*Popolamento classe c5*/
 		for(int i=0;i<10;i++) {
@@ -187,6 +194,7 @@ public class InizializzaDatabaseCompleto extends ViewAstratta {
 			studente.setClasse(c5);
 			daoUtente.registraUtente(studente);
 			daoUtente.inserisciCredenziali(studente, "stud-"+studente.getId(), "password");
+			studenti.add(studente);
 		}
 		
 		/*Studenti noti per accesso in demo*/
@@ -237,7 +245,10 @@ public class InizializzaDatabaseCompleto extends ViewAstratta {
 		prof2.setNome("Bruno");
 		prof2.setCognome("Rossi");
 		daoUtente.registraUtente(prof2);
-		daoUtente.inserisciCredenziali(prof2, "prof2", "password");		
+		daoUtente.inserisciCredenziali(prof2, "prof2", "password");	
+		
+		professori.add(prof1);
+		professori.add(prof2);
 		
 		/*Gestori*/
 		Utente gestore1 = new Utente();
@@ -283,41 +294,44 @@ public class InizializzaDatabaseCompleto extends ViewAstratta {
 		materia.setDescrizione("Storia e Filosofia liceo tradizionale");
 		materie.add(materia);
 		
-		int size= materie.size();
+		int sizeMaterie= materie.size();
 		
 		/* Attivita */
 		LocalDate startDate = LocalDate.now(Configurazione.getInstance().getZoneId())
-				.withDayOfYear(1).plusWeeks(18)
+				.withDayOfYear(1).plusWeeks(24)
 				.with(DayOfWeek.MONDAY);
-		for(int i = 0; i < 6; i++) {
-			for(int j = 8; j <= 14; j++) {
-				Attivita att = new Attivita();
-				att.setProfessore(professori.get(random.nextInt()/6));
-				att.setClasse(classi.get(random.nextInt()));
-				att.setOraInizio(j);
-				att.setMateria(materie.get(random.nextInt()/size));
-				for(int k = 0; k < 6; k++) {
-					att.setData(startDate.plusDays(i).plusWeeks(k));
-					daoAttivita.registraAttivita(att);
-					/*if(att.getData().isBefore(LocalDate.now(Configurazione.getInstance().getZoneId()).minusDays(2))) {
-						for(Studente studente : Arrays.asList(stud1, stud2, stud3)) {
-							if(Objects.equals(studente.getClasse(), att.getClasse())) {
-								Presenza presenza = new Presenza();
-								Voto voto = new Voto();
+		int c;
+		for(c=0;c<classi.size();c++){
+			for(int i = 0; i < 6; i++) {
+				for(int j = 8; j <= 14; j++) {
+					Attivita att = new Attivita();
+					att.setProfessore(professori.get(random.nextInt()/6));
+					att.setClasse(classi.get(c));
+					att.setOraInizio(j);
+					att.setMateria(materie.get(random.nextInt()/sizeMaterie));
+					for(int k = 0; k < 6; k++) {
+						att.setData(startDate.plusDays(i).plusWeeks(k));
+						daoAttivita.registraAttivita(att);
+						if(r.nextInt()%2==0 && att.getData().isBefore(LocalDate.now(Configurazione.getInstance().getZoneId()))) {
+							for(Studente stud: studenti.stream().filter(o -> o.getClasse().equals(classi.get(c))).collect(Collectors.toList())) {
+								Presenza presenza= new Presenza();
+								Voto voto= new Voto();
+								voto.setValore((double)r.nextInt());
+								presenza.setValore(true);
+								presenza.setStudente(stud);
+								voto.setStudente(stud);
 								presenza.setAttivita(att);
 								voto.setAttivita(att);
-								presenza.setStudente(studente);
-								voto.setStudente(studente);
-								presenza.setValore(random.nextBoolean());
-								voto.setValore(Math.floor(random.nextDouble() * 9 + 1.0));
-								daoArchiviazione.registraArchiviazione(voto);
 								daoArchiviazione.registraArchiviazione(presenza);
-							}
+								daoArchiviazione.registraArchiviazione(voto);
+							}							
 						}
-					}*/
+					}
 				}
 			}
 		}
+		
+
 		
 		/* Comunicazioni */
 		HashMap<String,String> comunicazioni= new HashMap<String,String>();

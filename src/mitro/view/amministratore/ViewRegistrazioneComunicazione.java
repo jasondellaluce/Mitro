@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import mitro.controller.ControllerFactory;
 import mitro.controller.amministratore.AmministrazioneClassi;
 import mitro.controller.amministratore.AmministrazioneIscritti;
+import mitro.deployment.Configurazione;
 import mitro.exceptions.OperazioneException;
 import mitro.model.Classe;
 import mitro.model.Comunicazione;
@@ -94,7 +95,7 @@ public class ViewRegistrazioneComunicazione extends ViewUtenteAstratta {
 								comunicazione.setOggetto(oggetto);
 								comunicazione.setContenuto(annotazione);
 								comunicazione.setDestinatario(prof);
-								comunicazione.setDataOra(LocalDateTime.now());
+								comunicazione.setDataOra(LocalDateTime.now(Configurazione.getInstance().getZoneId()));
 								amministrazioneIscritti.registraComunicazione(comunicazione);
 							}					
 				}
@@ -107,7 +108,7 @@ public class ViewRegistrazioneComunicazione extends ViewUtenteAstratta {
 								comunicazione.setOggetto(oggetto);
 								comunicazione.setContenuto(annotazione);
 								comunicazione.setDestinatario(stud);
-								comunicazione.setDataOra(LocalDateTime.now());
+								comunicazione.setDataOra(LocalDateTime.now(Configurazione.getInstance().getZoneId()));
 								amministrazioneIscritti.registraComunicazione(comunicazione);
 							}	
 				}
@@ -125,7 +126,7 @@ public class ViewRegistrazioneComunicazione extends ViewUtenteAstratta {
 										comunicazione.setOggetto(oggetto);
 										comunicazione.setContenuto(annotazione);
 										comunicazione.setDestinatario(stud);
-										comunicazione.setDataOra(LocalDateTime.now());
+										comunicazione.setDataOra(LocalDateTime.now(Configurazione.getInstance().getZoneId()));
 										amministrazioneIscritti.registraComunicazione(comunicazione);
 									}
 								}
