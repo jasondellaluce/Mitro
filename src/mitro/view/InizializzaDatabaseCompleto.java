@@ -295,25 +295,26 @@ public class InizializzaDatabaseCompleto extends ViewAstratta {
 		materie.add(materia);
 		
 		int sizeMaterie= materie.size();
+		int sizeProfessori= professori.size();
 		
 		/* Attivita */
 		LocalDate startDate = LocalDate.now(Configurazione.getInstance().getZoneId())
-				.withDayOfYear(1).plusWeeks(24)
+				.withDayOfYear(1).plusWeeks(21)
 				.with(DayOfWeek.MONDAY);
-		int c;
-		for(c=0;c<classi.size();c++){
-			for(int i = 0; i < 6; i++) {
-				for(int j = 8; j <= 14; j++) {
-					Attivita att = new Attivita();
-					att.setProfessore(professori.get(random.nextInt()/6));
-					att.setClasse(classi.get(c));
-					att.setOraInizio(j);
-					att.setMateria(materie.get(random.nextInt()/sizeMaterie));
-					for(int k = 0; k < 6; k++) {
-						att.setData(startDate.plusDays(i).plusWeeks(k));
+		for(int count=0;count<classi.size();count++){
+			Classe classe=classi.get(count);
+			for(int i = 0; i < 6; i++) { //#settimane
+				for(int k = 0; k < 6; k++) { //#giorni
+					for(int j = 8; j <= 14; j++) { //#ora
+						Attivita att = new Attivita();
+						att.setProfessore(professori.get(random.nextInt()/sizeProfessori));
+						att.setClasse(classe);
+						att.setMateria(materie.get(random.nextInt()/sizeMaterie));
+						att.setData(startDate.plusWeeks(i).plusDays(k));
+						att.setOraInizio(j);
 						daoAttivita.registraAttivita(att);
 						if(r.nextInt()%2==0 && att.getData().isBefore(LocalDate.now(Configurazione.getInstance().getZoneId()))) {
-							for(Studente stud: studenti.stream().filter(o -> o.getClasse().equals(classi.get(c))).collect(Collectors.toList())) {
+							for(Studente stud: studenti.stream().filter(o -> o.getClasse().equals(classe)).collect(Collectors.toList())) {
 								Presenza presenza= new Presenza();
 								Voto voto= new Voto();
 								voto.setValore((double)r.nextInt());
@@ -327,7 +328,7 @@ public class InizializzaDatabaseCompleto extends ViewAstratta {
 							}							
 						}
 					}
-				}
+				}	
 			}
 		}
 		
@@ -337,50 +338,45 @@ public class InizializzaDatabaseCompleto extends ViewAstratta {
 		HashMap<String,String> comunicazioni= new HashMap<String,String>();
 		comunicazioni.put("Circolare","Corso di recupero di Matematica domani alle 16 presso aula 2.6 .");
 		comunicazioni.put("Premio","Premio per gli studenti che hanno vinto le olimpiadi di matematica.");
-		comunicazioni.put("Comunicazione dalla presidenza","Si terrà domani la simulazione di prima prova, tutti i docenti sono tenuti a far rispettare ordine e silezio.");
-		//continua da qua
-		Comunicazione c = new Comunicazione();
-		c.setDataOra(LocalDateTime.now(Configurazione.getInstance().getZoneId()));
-		c.setOggetto("Messaggio privato dalla segreteria");
-		c.setContenuto("Lorem ipsum dolor sit amet, consectetur adipiscing elit, "
-				+ "sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. "
-				+ "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris"
-				+ "nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in"
-				+ "reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur."
-				+ "Excepteur sint occaecat cupidatat non proident,"
-				+ "sunt in culpa qui officia deserunt mollit anim id est laborum.");
-		c.setDestinatario(prof1);
-		daoComunicazione.registraComunicazione(c);
-		c.setDestinatario(stud1);
-		daoComunicazione.registraComunicazione(c);	
+		comunicazioni.put("Comunicazione dalla presidenza",
+				"Si terrà domani la simulazione di prima prova, tutti i docenti sono tenuti a far rispettare ordine e silenzio.");
+
+		Comunicazione comunicazione = new Comunicazione();
+		comunicazione.setDataOra(LocalDateTime.now(Configurazione.getInstance().getZoneId()));
+		comunicazione.setOggetto("Comunicazione dalla presidenza");
+		comunicazione.setContenuto(comunicazioni.get("Comunicazione dalla presidenza"));
 		
-		c.setDataOra(LocalDateTime.now(Configurazione.getInstance().getZoneId()).minusHours(3));
-		c.setOggetto("Avvisio sciopero docenti");
-		c.setContenuto("Lorem ipsum dolor sit amet, consectetur adipiscing elit, "
-				+ "sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. "
-				+ "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris"
-				+ "nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in"
-				+ "reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur."
-				+ "Excepteur sint occaecat cupidatat non proident,"
-				+ "sunt in culpa qui officia deserunt mollit anim id est laborum.");
-		c.setDestinatario(prof1);
-		daoComunicazione.registraComunicazione(c);
-		c.setDestinatario(stud1);
-		daoComunicazione.registraComunicazione(c);	
+		for(Professore prof: professori) {
+			comunicazione.setDestinatario(prof);
+			daoComunicazione.registraComunicazione(comunicazione);
+		}
 		
-		c.setDataOra(LocalDateTime.now(Configurazione.getInstance().getZoneId()).minusDays(8));
-		c.setOggetto("Emissione pratiche gita 2019/20");
-		c.setContenuto("Lorem ipsum dolor sit amet, consectetur adipiscing elit, "
-				+ "sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. "
-				+ "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris"
-				+ "nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in"
-				+ "reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur."
-				+ "Excepteur sint occaecat cupidatat non proident,"
-				+ "sunt in culpa qui officia deserunt mollit anim id est laborum.");
-		c.setDestinatario(prof1);
-		daoComunicazione.registraComunicazione(c);	
-		c.setDestinatario(stud1);
-		daoComunicazione.registraComunicazione(c);			
+		comunicazione = new Comunicazione();
+		comunicazione.setDataOra(LocalDateTime.now(Configurazione.getInstance().getZoneId()));
+		comunicazione.setOggetto("Premio");
+		comunicazione.setContenuto(comunicazioni.get("Premio"));
+		comunicazione.setDestinatario(stud1);
+		daoComunicazione.registraComunicazione(comunicazione);	
+		
+		comunicazione.setDestinatario(stud2);
+		daoComunicazione.registraComunicazione(comunicazione);
+		
+		comunicazione.setDestinatario(stud3);
+		daoComunicazione.registraComunicazione(comunicazione);
+		
+		comunicazione = new Comunicazione();
+		comunicazione.setDataOra(LocalDateTime.now(Configurazione.getInstance().getZoneId()));
+		comunicazione.setOggetto("Circolare");
+		comunicazione.setContenuto(comunicazioni.get("Circolare"));
+		for(Professore professore: professori) {
+			comunicazione.setDestinatario(professore);
+			daoComunicazione.registraComunicazione(comunicazione);
+		}
+		for(Studente studente: studenti) {
+			comunicazione.setDestinatario(studente);
+			daoComunicazione.registraComunicazione(comunicazione);
+		}
+		
 	}
 
 
