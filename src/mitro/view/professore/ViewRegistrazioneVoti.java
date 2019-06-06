@@ -2,6 +2,7 @@ package mitro.view.professore;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
 import java.util.Comparator;
 import java.util.Enumeration;
@@ -18,6 +19,8 @@ import mitro.controller.log.LoggerMessaggi;
 import mitro.controller.log.LoggerOperazioni;
 import mitro.controller.professore.GestioneClasse;
 import mitro.controller.professore.GestioneProfessore;
+import mitro.controller.professore.GestioneProfessoreController;
+import mitro.deployment.Configurazione;
 import mitro.exceptions.OperazioneException;
 import mitro.model.Attivita;
 import mitro.model.Professore;
@@ -43,7 +46,10 @@ public class ViewRegistrazioneVoti extends ViewUtenteAstratta {
 		
 		try {	
 			
-			String log= "Servlet ViewRegistrazioneVoti del Professore metodo get, parametri: ";
+			String log= LocalDateTime.now(Configurazione.getInstance().getZoneId()) + ", "
+					+ utente.getId() + ", "
+					+ ((Professore)utente).getNome()+" "+((Professore)utente).getCognome()
+					+ "ViewRegistrazioneVoti,get ";
 			Enumeration parametri=req.getParameterNames();
 			while(parametri.hasMoreElements()) {
 				String param=(String)parametri.nextElement();
@@ -108,7 +114,10 @@ public class ViewRegistrazioneVoti extends ViewUtenteAstratta {
 		
 		try {	
 			
-			String log= "Servlet ViewRegistrazionePresenze del Professore metodo post, parametri: ";
+			String log= LocalDateTime.now(Configurazione.getInstance().getZoneId()) + ", "
+					+ utente.getId() + ", "
+					+ ((Professore)utente).getNome()+" "+((Professore)utente).getCognome()
+					+ "ViewRegistrazioneVoti,post ";
 			Enumeration parametri=req.getParameterNames();
 			while(parametri.hasMoreElements()) {
 				String param=(String)parametri.nextElement();
@@ -129,10 +138,15 @@ public class ViewRegistrazioneVoti extends ViewUtenteAstratta {
 			Optional<Attivita> attivita = gestioneProfessore.getListaAttivita(date, date.plusDays(1)).stream()
 					.filter(a -> a.getData().equals(date) && a.getOraInizio() == time && a.getClasse().getId().equals(classeId))
 					.findAny();
-			if(!attivita.isPresent()) {
+			
+			if(!attivita.isPresent() || 
+					(attivita.get().getData().isAfter(LocalDate.now(Configurazione.getInstance().getZoneId()))
+					||(attivita.get().getData().isEqual(LocalDate.now(Configurazione.getInstance().getZoneId())) 
+					&& attivita.get().getOraInizio() >= LocalDateTime.now(Configurazione.getInstance().getZoneId()).getHour())) ) {
 				resp.sendRedirect("/professore");
 				return;
 			}
+			
 			GestioneClasse gestioneClasse = ControllerFactory.getInstance().getGestioneClasse(attivita.get().getClasse());
 			List<Studente> listaStudenti = gestioneClasse.getListaStudenti();
 			listaStudenti.sort(Comparator.comparing(Studente::getNome).thenComparing(Studente::getCognome));

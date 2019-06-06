@@ -2,6 +2,7 @@ package mitro.view.professore;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Enumeration;
@@ -43,7 +44,10 @@ public class ViewStoricoProfessore extends ViewUtenteAstratta {
 		LoggerMessaggi loggerMex= getLoggerMessaggi();
 		try {
 			
-			String log= "Servlet ViewStoricoVoti del Professore metodo get, parametri: ";
+			String log= LocalDateTime.now(Configurazione.getInstance().getZoneId()) + ", "
+					+ utente.getId() + ", "
+					+ ((Professore)utente).getNome()+" "+((Professore)utente).getCognome()
+					+ "ViewStoricoProfessore,get ";
 			Enumeration parametri=req.getParameterNames();
 			while(parametri.hasMoreElements()) {
 				String param=(String)parametri.nextElement();
@@ -120,7 +124,10 @@ public class ViewStoricoProfessore extends ViewUtenteAstratta {
 		
 		LoggerMessaggi loggerMex= getLoggerMessaggi();
 		
-		String log= "Servlet ViewStoricoVoti del Professore metodo post, parametri: ";
+		String log= LocalDateTime.now(Configurazione.getInstance().getZoneId()) + ", "
+				+ utente.getId() + ", "
+				+ ((Professore)utente).getNome()+" "+((Professore)utente).getCognome()
+				+ "ViewStoricoProfessore,post ";
 		Enumeration parametri=req.getParameterNames();
 		while(parametri.hasMoreElements()) {
 			String param=(String)parametri.nextElement();

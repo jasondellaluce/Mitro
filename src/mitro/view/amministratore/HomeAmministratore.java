@@ -1,6 +1,9 @@
 package mitro.view.amministratore;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.util.Enumeration;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -8,8 +11,12 @@ import javax.servlet.http.HttpServletResponse;
 import mitro.controller.ControllerFactory;
 import mitro.controller.amministratore.AmministrazioneClassi;
 import mitro.controller.amministratore.AmministrazioneIscritti;
+import mitro.controller.log.LoggerMessaggi;
+import mitro.deployment.Configurazione;
 import mitro.exceptions.OperazioneException;
+import mitro.model.Professore;
 import mitro.model.Ruolo;
+import mitro.model.Studente;
 import mitro.model.Utente;
 import mitro.view.ViewUtenteAstratta;
 
@@ -25,8 +32,21 @@ public class HomeAmministratore extends ViewUtenteAstratta {
 	@Override
 	protected void gestisciRichiestaGet(Utente utente, HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException{
-		//AmministrazioneClassi amministrazioneClassi = getAmministrazioneClassi();
+		LoggerMessaggi loggerMex= getLoggerMessaggi();
 		try {
+			
+			String log= LocalDateTime.now(Configurazione.getInstance().getZoneId()) + ", "
+					+ utente.getId() + ", "
+					+ "AMMINISTRATORE"+" - "
+					+ "HomeAmministratore,get ";
+			Enumeration parametri=req.getParameterNames();
+			while(parametri.hasMoreElements()) {
+				String param=(String)parametri.nextElement();
+				log+= param+": "+req.getParameter(param)+" ";
+			}
+			
+			loggerMex.scrivi(log);
+			
 			if("disconnetti".equals(req.getParameter("azione"))) {
 				this.eseguiDisconnessione(req, resp);
 				return;
@@ -52,6 +72,10 @@ public class HomeAmministratore extends ViewUtenteAstratta {
 	
 	private AmministrazioneClassi getAmministrazioneClassi() {
 		return ControllerFactory.getInstance().getAmministrazioneClassi();
+	}
+	
+	private LoggerMessaggi getLoggerMessaggi() {
+		return ControllerFactory.getInstance().getLoggerMessaggi();
 	}
 	
 }

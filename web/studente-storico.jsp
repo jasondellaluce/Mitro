@@ -114,6 +114,29 @@
 
 				</div>
 				
+				<!-- Breadcome start-->
+				<div class="breadcome-area mg-b-30 small-dn">
+					<div class="container-fluid">
+						<div class="row">
+							<div class="col-lg-12">
+								<div class="breadcome-list map-mg-t-40-gl shadow-reset">
+									<div class="row">
+										<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+											<div class="breadcome-heading" style="font-size: 12pt;">
+												<ul>
+													<li>La tua media è: <%if((double)request.getAttribute("media") > 0){%>
+													<%= request.getAttribute("media") %>
+													<%}else {%> </br>"Non hai ancora nessun voto :)"<%} %></li>
+												</ul>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>	
+							
 				<!-- Main container -->
 				<div class="welcome-adminpro-area" style="margin:50px">
 					<div class="row">

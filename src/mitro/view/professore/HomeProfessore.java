@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.URLEncoder;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.Optional;
@@ -44,7 +45,10 @@ public class HomeProfessore extends ViewUtenteAstratta {
 
 		try {	
 			
-			String log= "Servlet HomeProfessore parametro get, parametri: ";
+			String log= LocalDateTime.now(Configurazione.getInstance().getZoneId()) + ", "
+					+ utente.getId() + ", "
+					+ ((Professore)utente).getNome()+" "+((Professore)utente).getCognome()
+					+ "HomeStudente,get ";
 			Enumeration parametri=req.getParameterNames();
 			while(parametri.hasMoreElements()) {
 				String param=(String)parametri.nextElement();
@@ -104,7 +108,10 @@ public class HomeProfessore extends ViewUtenteAstratta {
 		
 		try {
 			
-			String log= "Servlet HomeProfessore metodo post, parametri: ";
+			String log= LocalDateTime.now(Configurazione.getInstance().getZoneId()) + ", "
+					+ utente.getId() + ", "
+					+ ((Professore)utente).getNome()+" "+((Professore)utente).getCognome()
+					+ "HomeStudente,post ";
 			Enumeration parametri=req.getParameterNames();
 			while(parametri.hasMoreElements()) {
 				String param=(String)parametri.nextElement();

@@ -2,6 +2,7 @@ package mitro.view.professore;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
 import java.util.Comparator;
 import java.util.Enumeration;
@@ -18,6 +19,7 @@ import mitro.controller.log.LoggerMessaggi;
 import mitro.controller.log.LoggerOperazioni;
 import mitro.controller.professore.GestioneClasse;
 import mitro.controller.professore.GestioneProfessore;
+import mitro.deployment.Configurazione;
 import mitro.exceptions.OperazioneException;
 import mitro.model.Attivita;
 import mitro.model.Presenza;
@@ -43,7 +45,10 @@ public class ViewRegistrazionePresenze extends ViewUtenteAstratta {
 		
 		try {	
 			
-			String log= "Servlet ViewRegistrazionePresenze del Professore metodo get, parametri: ";
+			String log= LocalDateTime.now(Configurazione.getInstance().getZoneId()) + ", "
+					+ utente.getId() + ", "
+					+ ((Professore)utente).getNome()+" "+((Professore)utente).getCognome()
+					+ "ViewRegistrazionePresenze,get ";
 			Enumeration parametri=req.getParameterNames();
 			while(parametri.hasMoreElements()) {
 				String param=(String)parametri.nextElement();
@@ -107,7 +112,10 @@ public class ViewRegistrazionePresenze extends ViewUtenteAstratta {
 		
 		try {	
 			
-			String log= "Servlet ViewRegistrazionePresenze del Professore metodo post, parametri: ";
+			String log= LocalDateTime.now(Configurazione.getInstance().getZoneId()) + ", "
+					+ utente.getId() + ", "
+					+ ((Professore)utente).getNome()+" "+((Professore)utente).getCognome()
+					+ "ViewRegistrazionePresenze,post ";
 			Enumeration parametri=req.getParameterNames();
 			while(parametri.hasMoreElements()) {
 				String param=(String)parametri.nextElement();

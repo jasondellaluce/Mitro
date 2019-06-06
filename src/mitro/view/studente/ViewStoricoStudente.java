@@ -2,8 +2,10 @@ package mitro.view.studente;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.Enumeration;
 import java.util.List;
 import java.util.Optional;
 import java.util.StringTokenizer;
@@ -15,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import mitro.controller.ControllerFactory;
+import mitro.controller.log.LoggerMessaggi;
 import mitro.controller.studente.GestioneStudente;
 import mitro.deployment.Configurazione;
 import mitro.exceptions.OperazioneException;
@@ -23,6 +26,7 @@ import mitro.model.Classe;
 import mitro.model.Ruolo;
 import mitro.model.Studente;
 import mitro.model.Utente;
+import mitro.model.Voto;
 import mitro.view.ViewUtenteAstratta;
 
 public class ViewStoricoStudente extends ViewUtenteAstratta {
@@ -36,7 +40,21 @@ public class ViewStoricoStudente extends ViewUtenteAstratta {
 	@Override
 	protected void gestisciRichiestaGet(Utente utente, HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
+		LoggerMessaggi loggerMex= getLoggerMessaggi();
 		try {
+			
+			String log= LocalDateTime.now(Configurazione.getInstance().getZoneId()) + ", "
+					+ utente.getId() + ", "
+					+ ((Studente)utente).getNome()+" "+((Studente)utente).getCognome()
+					+ "ViewStoricoStudente,get ";
+			Enumeration parametri=req.getParameterNames();
+			while(parametri.hasMoreElements()) {
+				String param=(String)parametri.nextElement();
+				log+= param+": "+req.getParameter(param)+" ";
+			}
+			
+			loggerMex.scrivi(log);
+		
 			int selectMateria = -1;
 			boolean selectVoto = true;
 			if(req.getAttribute("selectMateria") != null)
@@ -57,6 +75,14 @@ public class ViewStoricoStudente extends ViewUtenteAstratta {
 			req.setAttribute("listaMaterie", listaMaterie);
 			req.setAttribute("listaStudenti", new ArrayList<Studente>());
 			req.setAttribute("listaArchiviazioni", new ArrayList<Archiviazione>());
+			
+			List<Voto> voti= gestioneStudente.getListaVoti(yearBegin, yearBegin.plusYears(1).minusDays(1));
+			double media=0;
+			for(Voto voto: voti) media+=voto.getValore();
+			
+			media=media/voti.size();
+			req.setAttribute("media", media);
+			
 			if(selectMateria >= 0) {
 				StringTokenizer stk = new StringTokenizer(listaMaterie.get(selectMateria), "-");
 				stk.nextToken().trim();
@@ -89,6 +115,15 @@ public class ViewStoricoStudente extends ViewUtenteAstratta {
 	@Override
 	protected void gestisciRichiestaPost(Utente utente, HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
+		LoggerMessaggi loggerMex= getLoggerMessaggi();
+		String log= "Servlet ViewStoricoStudente di Studente di utente:"+((Studente)utente).getNome()+" metodo post, parametri: ";
+		Enumeration parametri=req.getParameterNames();
+		while(parametri.hasMoreElements()) {
+			String param=(String)parametri.nextElement();
+			log+= param+": "+req.getParameter(param)+" ";
+		}
+		
+		loggerMex.scrivi(log);
 		int selectMateria = -1;
 		boolean selectVoto = true;
 		String selectedMateria = req.getParameter("selectionMaterie");
@@ -102,6 +137,9 @@ public class ViewStoricoStudente extends ViewUtenteAstratta {
 		req.setAttribute("selectVoto", selectVoto);
 		
 		gestisciRichiestaGet(utente, req, resp);
+	}
+	private LoggerMessaggi getLoggerMessaggi() {
+		return ControllerFactory.getInstance().getLoggerMessaggi();
 	}
 
 }

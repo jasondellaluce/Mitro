@@ -2,8 +2,10 @@ package mitro.view.amministratore;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -13,6 +15,8 @@ import javax.servlet.http.HttpServletResponse;
 import mitro.controller.ControllerFactory;
 import mitro.controller.amministratore.AmministrazioneClassi;
 import mitro.controller.amministratore.AmministrazioneIscritti;
+import mitro.controller.log.LoggerMessaggi;
+import mitro.deployment.Configurazione;
 import mitro.exceptions.OperazioneException;
 import mitro.model.Classe;
 import mitro.model.Professore;
@@ -32,7 +36,20 @@ public class ViewRegistrazioneUtente extends ViewUtenteAstratta {
 	@Override
 	protected void gestisciRichiestaGet(Utente utente, HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
+		LoggerMessaggi loggerMex= getLoggerMessaggi();
 		try {	
+			String log= LocalDateTime.now(Configurazione.getInstance().getZoneId()) + ", "
+					+ utente.getId() + ", "
+					+ "AMMINISTRATORE"+" - "
+					+ "ViewRegistrazioneUtente,get ";
+			Enumeration parametri=req.getParameterNames();
+			while(parametri.hasMoreElements()) {
+				String param=(String)parametri.nextElement();
+				log+= param+": "+req.getParameter(param)+" ";
+			}
+			
+			loggerMex.scrivi(log);
+			
 			AmministrazioneClassi amministrazioneClassi = getAmministrazioneClassi();
 					
 			ArrayList<String> ruoli= new ArrayList<String>();
@@ -54,8 +71,21 @@ public class ViewRegistrazioneUtente extends ViewUtenteAstratta {
 	@Override
 	protected void gestisciRichiestaPost(Utente utente, HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-		
+		LoggerMessaggi loggerMex= getLoggerMessaggi();
 		try {
+			
+			String log= LocalDateTime.now(Configurazione.getInstance().getZoneId()) + ", "
+					+ utente.getId() + ", "
+					+ "AMMINISTRATORE"+" - "
+					+ "ViewRegistrazioneUtente,post ";
+			Enumeration parametri=req.getParameterNames();
+			while(parametri.hasMoreElements()) {
+				String param=(String)parametri.nextElement();
+				log+= param+": "+req.getParameter(param)+" ";
+			}
+			
+			loggerMex.scrivi(log);
+			
 			AmministrazioneIscritti amministrazioneIscritti = getAmministrazioneIscritti();
 			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 			String ruolo= req.getParameter("ruolo");
@@ -120,6 +150,10 @@ public class ViewRegistrazioneUtente extends ViewUtenteAstratta {
 	
 	private AmministrazioneClassi getAmministrazioneClassi() {
 		return ControllerFactory.getInstance().getAmministrazioneClassi();
+	}
+	
+	private LoggerMessaggi getLoggerMessaggi() {
+		return ControllerFactory.getInstance().getLoggerMessaggi();
 	}
 	
 }

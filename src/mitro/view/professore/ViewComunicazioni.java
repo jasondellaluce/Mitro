@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.URLEncoder;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Comparator;
 import java.util.Enumeration;
 import java.util.List;
@@ -42,7 +43,10 @@ public class ViewComunicazioni extends ViewUtenteAstratta {
 		
 		try {	
 			
-			String log= "Servlet ViewComunicazione del Professore, parametri: ";
+			String log= LocalDateTime.now(Configurazione.getInstance().getZoneId()) + ", "
+					+ utente.getId() + ", "
+					+ ((Professore)utente).getNome()+" "+((Professore)utente).getCognome()
+					+ "ViewComunicazioni,get ";
 			Enumeration parametri=req.getParameterNames();
 			while(parametri.hasMoreElements()) {
 				String param=(String)parametri.nextElement();

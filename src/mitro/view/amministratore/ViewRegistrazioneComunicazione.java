@@ -3,6 +3,7 @@ package mitro.view.amministratore;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -13,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import mitro.controller.ControllerFactory;
 import mitro.controller.amministratore.AmministrazioneClassi;
 import mitro.controller.amministratore.AmministrazioneIscritti;
+import mitro.controller.log.LoggerMessaggi;
 import mitro.deployment.Configurazione;
 import mitro.exceptions.OperazioneException;
 import mitro.model.Classe;
@@ -34,7 +36,21 @@ public class ViewRegistrazioneComunicazione extends ViewUtenteAstratta {
 	@Override
 	protected void gestisciRichiestaGet(Utente utente, HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
+		LoggerMessaggi loggerMex= getLoggerMessaggi();
 		try {
+			
+			String log= LocalDateTime.now(Configurazione.getInstance().getZoneId()) + ", "
+					+ utente.getId() + ", "
+					+ "AMMINISTRATORE"+" - "
+					+ "ViewRegistrazioneComunicazione,get ";
+			Enumeration parametri=req.getParameterNames();
+			while(parametri.hasMoreElements()) {
+				String param=(String)parametri.nextElement();
+				log+= param+": "+req.getParameter(param)+" ";
+			}
+			
+			loggerMex.scrivi(log);
+			
 			AmministrazioneIscritti amministrazioneIscritti= getAmministrazioneIscritti();
 			AmministrazioneClassi amministrazioneClassi = getAmministrazioneClassi();
 			List<Classe> classi= amministrazioneClassi.cercaClassi(null);
@@ -63,6 +79,19 @@ public class ViewRegistrazioneComunicazione extends ViewUtenteAstratta {
 	protected void gestisciRichiestaPost(Utente utente, HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		try {
+			LoggerMessaggi loggerMex= getLoggerMessaggi();
+			String log= LocalDateTime.now(Configurazione.getInstance().getZoneId()) + ", "
+					+ utente.getId() + ", "
+					+ "AMMINISTRATORE"+" - "
+					+ "ViewRegistrazioneComunicazione,post ";
+			Enumeration parametri=req.getParameterNames();
+			while(parametri.hasMoreElements()) {
+				String param=(String)parametri.nextElement();
+				log+= param+": "+req.getParameter(param)+" ";
+			}
+			
+			loggerMex.scrivi(log);
+			
 			AmministrazioneIscritti amministrazioneIscritti= getAmministrazioneIscritti();
 			AmministrazioneClassi amministrazioneClassi = getAmministrazioneClassi();
 			String[] classi= req.getParameterValues("classiSelected");
@@ -149,6 +178,10 @@ public class ViewRegistrazioneComunicazione extends ViewUtenteAstratta {
 	
 	private AmministrazioneClassi getAmministrazioneClassi() {
 		return ControllerFactory.getInstance().getAmministrazioneClassi();
+	}
+	
+	private LoggerMessaggi getLoggerMessaggi() {
+		return ControllerFactory.getInstance().getLoggerMessaggi();
 	}
 	
 }

@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.net.URLEncoder;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Enumeration;
 import java.util.List;
 import java.util.StringTokenizer;
 
@@ -12,10 +14,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import mitro.controller.ControllerFactory;
+import mitro.controller.log.LoggerMessaggi;
 import mitro.controller.studente.GestioneStudente;
 import mitro.deployment.Configurazione;
 import mitro.exceptions.OperazioneException;
 import mitro.model.Attivita;
+import mitro.model.Professore;
 import mitro.model.Ruolo;
 import mitro.model.Studente;
 import mitro.model.Utente;
@@ -33,7 +37,23 @@ public class HomeStudente extends ViewUtenteAstratta {
 	protected void gestisciRichiestaGet(Utente utente, HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		GestioneStudente gestioneStudente = ControllerFactory.getInstance().getGestioneStudente((Studente) utente);
+		LoggerMessaggi loggerMex= getLoggerMessaggi();
+		
 		try {	
+			
+			String log= LocalDateTime.now(Configurazione.getInstance().getZoneId()) + ", "
+					+ utente.getId() + ", "
+					+ ((Studente)utente).getNome()+" "+((Studente)utente).getCognome()
+					+ "HomeStudente,get ";
+			Enumeration parametri=req.getParameterNames();
+			while(parametri.hasMoreElements()) {
+				String param=(String)parametri.nextElement();
+				log+= param+": "+req.getParameter(param)+" ";
+			}
+			
+			loggerMex.scrivi(log);
+			
+			
 			if("disconnetti".equals(req.getParameter("azione"))) {
 				this.eseguiDisconnessione(req, resp);
 				return;
@@ -81,6 +101,9 @@ public class HomeStudente extends ViewUtenteAstratta {
 	protected void gestisciRichiestaPost(Utente utente, HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		gestisciRichiestaGet(utente, req, resp);
+	}
+	private LoggerMessaggi getLoggerMessaggi() {
+		return ControllerFactory.getInstance().getLoggerMessaggi();
 	}
 
 }
