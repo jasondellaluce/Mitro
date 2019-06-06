@@ -5,6 +5,7 @@ import java.net.URLEncoder;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.Comparator;
+import java.util.Enumeration;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -42,9 +43,10 @@ public class ViewComunicazioni extends ViewUtenteAstratta {
 		try {	
 			
 			String log= "Servlet ViewComunicazione del Professore, parametri: ";
-			String param;
-			while((param=(String) req.getParameterNames().nextElement())!=null) {
-				log+=param+": "+req.getParameter(param)+" ";
+			Enumeration parametri=req.getParameterNames();
+			while(parametri.hasMoreElements()) {
+				String param=(String)parametri.nextElement();
+				log+= param+": "+req.getParameter(param)+" ";
 			}
 			
 			loggerMex.scrivi(log);

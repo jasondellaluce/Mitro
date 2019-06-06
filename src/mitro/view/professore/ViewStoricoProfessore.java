@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.Enumeration;
 import java.util.List;
 import java.util.Optional;
 import java.util.StringTokenizer;
@@ -43,9 +44,10 @@ public class ViewStoricoProfessore extends ViewUtenteAstratta {
 		try {
 			
 			String log= "Servlet ViewStoricoVoti del Professore metodo get, parametri: ";
-			String param;
-			while((param=(String) req.getParameterNames().nextElement())!=null) {
-				log+=param+": "+req.getParameter(param)+" ";
+			Enumeration parametri=req.getParameterNames();
+			while(parametri.hasMoreElements()) {
+				String param=(String)parametri.nextElement();
+				log+= param+": "+req.getParameter(param)+" ";
 			}
 			
 			loggerMex.scrivi(log);
@@ -118,10 +120,11 @@ public class ViewStoricoProfessore extends ViewUtenteAstratta {
 		
 		LoggerMessaggi loggerMex= getLoggerMessaggi();
 		
-		String log= "Servlet ViewStoricoVoti del Professore metodo get, parametri: ";
-		String param;
-		while((param=(String) req.getParameterNames().nextElement())!=null) {
-			log+=param+": "+req.getParameter(param)+" ";
+		String log= "Servlet ViewStoricoVoti del Professore metodo post, parametri: ";
+		Enumeration parametri=req.getParameterNames();
+		while(parametri.hasMoreElements()) {
+			String param=(String)parametri.nextElement();
+			log+= param+": "+req.getParameter(param)+" ";
 		}
 		
 		loggerMex.scrivi(log);
