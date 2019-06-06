@@ -13,6 +13,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import mitro.controller.ControllerFactory;
+import mitro.controller.log.LoggerMessaggi;
+import mitro.controller.log.LoggerOperazioni;
 import mitro.controller.professore.GestioneClasse;
 import mitro.controller.professore.GestioneProfessore;
 import mitro.exceptions.OperazioneException;
@@ -36,8 +38,18 @@ public class ViewRegistrazionePresenze extends ViewUtenteAstratta {
 	protected void gestisciRichiestaGet(Utente utente, HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		GestioneProfessore gestioneProfessore = ControllerFactory.getInstance().getGestioneProfessore((Professore) utente);
+		LoggerMessaggi loggerMex= getLoggerMessaggi();
 		
 		try {	
+			
+			String log= "Servlet ViewRegistrazionePresenze del Professore metodo get, parametri: ";
+			String param;
+			while((param=(String) req.getParameterNames().nextElement())!=null) {
+				log+=param+": "+req.getParameter(param)+" ";
+			}
+			
+			loggerMex.scrivi(log);
+			
 			if("disconnetti".equals(req.getParameter("azione"))) {
 				this.eseguiDisconnessione(req, resp);
 				return;
@@ -89,7 +101,18 @@ public class ViewRegistrazionePresenze extends ViewUtenteAstratta {
 	protected void gestisciRichiestaPost(Utente utente, HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		GestioneProfessore gestioneProfessore = ControllerFactory.getInstance().getGestioneProfessore((Professore) utente);		
+		LoggerMessaggi loggerMex= getLoggerMessaggi();
+		
 		try {	
+			
+			String log= "Servlet ViewRegistrazionePresenze del Professore metodo post, parametri: ";
+			String param;
+			while((param=(String) req.getParameterNames().nextElement())!=null) {
+				log+=param+": "+req.getParameter(param)+" ";
+			}
+			
+			loggerMex.scrivi(log);
+			
 			if("disconnetti".equals(req.getParameter("azione"))) {
 				this.eseguiDisconnessione(req, resp);
 				return;
@@ -145,5 +168,9 @@ public class ViewRegistrazionePresenze extends ViewUtenteAstratta {
 		
 		//resp.sendRedirect("/professore");
 	}
+	private LoggerMessaggi getLoggerMessaggi() {
+		return ControllerFactory.getInstance().getLoggerMessaggi();
+	}
+	
 
 }

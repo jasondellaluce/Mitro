@@ -13,6 +13,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import mitro.controller.ControllerFactory;
+import mitro.controller.log.LoggerMessaggi;
+import mitro.controller.log.LoggerOperazioni;
+import mitro.controller.log.WriterLoggerOperazioni;
 import mitro.controller.professore.GestioneClasse;
 import mitro.controller.professore.GestioneProfessore;
 import mitro.deployment.Configurazione;
@@ -36,8 +39,18 @@ public class HomeProfessore extends ViewUtenteAstratta {
 	protected void gestisciRichiestaGet(Utente utente, HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		GestioneProfessore gestioneProfessore = getGestioneProfessore(utente, req, resp);
-		
+		LoggerMessaggi loggerMex= getLoggerMessaggi();
+
 		try {	
+			
+			String log= "Servlet HomeProfessore parametro get, parametri: ";
+			String param;
+			while((param=(String) req.getParameterNames().nextElement())!=null) {
+				log+=param+": "+req.getParameter(param)+" ";
+			}
+			
+			loggerMex.scrivi(log);
+			
 			if("disconnetti".equals(req.getParameter("azione"))) {
 				this.eseguiDisconnessione(req, resp);
 				return;
@@ -85,7 +98,18 @@ public class HomeProfessore extends ViewUtenteAstratta {
 	protected void gestisciRichiestaPost(Utente utente, HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		GestioneProfessore gestioneProfessore = getGestioneProfessore(utente, req, resp);
+		LoggerMessaggi loggerMex= getLoggerMessaggi();
+		
 		try {
+			
+			String log= "Servlet HomeProfessore metodo post, parametri: ";
+			String param;
+			while((param=(String) req.getParameterNames().nextElement())!=null) {
+				log+=param+": "+req.getParameter(param)+" ";
+			}
+			
+			loggerMex.scrivi(log);
+			
 			if(req.getParameter("annotazione") != null && req.getParameter("annotazione").trim().length() > 0) {
 				if(req.getParameter("selAtt") != null) {
 					StringTokenizer stk = new StringTokenizer(req.getParameter("selAtt"), ";");
@@ -116,5 +140,10 @@ public class HomeProfessore extends ViewUtenteAstratta {
 	private GestioneClasse getGestioneClasse(Classe classe, HttpServletRequest req, HttpServletResponse resp) {
 		return ControllerFactory.getInstance().getGestioneClasse(classe);
 	}
+	
+	private LoggerMessaggi getLoggerMessaggi() {
+		return ControllerFactory.getInstance().getLoggerMessaggi();
+	}
+	
 
 }

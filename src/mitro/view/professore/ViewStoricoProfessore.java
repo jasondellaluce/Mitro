@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import mitro.controller.ControllerFactory;
+import mitro.controller.log.LoggerMessaggi;
 import mitro.controller.professore.GestioneClasse;
 import mitro.controller.professore.GestioneProfessore;
 import mitro.deployment.Configurazione;
@@ -38,7 +39,17 @@ public class ViewStoricoProfessore extends ViewUtenteAstratta {
 	@Override
 	protected void gestisciRichiestaGet(Utente utente, HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
+		LoggerMessaggi loggerMex= getLoggerMessaggi();
 		try {
+			
+			String log= "Servlet ViewStoricoVoti del Professore metodo get, parametri: ";
+			String param;
+			while((param=(String) req.getParameterNames().nextElement())!=null) {
+				log+=param+": "+req.getParameter(param)+" ";
+			}
+			
+			loggerMex.scrivi(log);
+			
 			int selectMateria = -1;
 			int selectStudente = -1;
 			boolean selectVoto = true;
@@ -104,6 +115,17 @@ public class ViewStoricoProfessore extends ViewUtenteAstratta {
 	@Override
 	protected void gestisciRichiestaPost(Utente utente, HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
+		
+		LoggerMessaggi loggerMex= getLoggerMessaggi();
+		
+		String log= "Servlet ViewStoricoVoti del Professore metodo get, parametri: ";
+		String param;
+		while((param=(String) req.getParameterNames().nextElement())!=null) {
+			log+=param+": "+req.getParameter(param)+" ";
+		}
+		
+		loggerMex.scrivi(log);
+		
 		int selectMateria = -1;
 		int selectStudente = -1;
 		boolean selectVoto = true;
@@ -124,4 +146,8 @@ public class ViewStoricoProfessore extends ViewUtenteAstratta {
 		gestisciRichiestaGet(utente, req, resp);
 	}
 
+	private LoggerMessaggi getLoggerMessaggi() {
+		return ControllerFactory.getInstance().getLoggerMessaggi();
+	}
+	
 }

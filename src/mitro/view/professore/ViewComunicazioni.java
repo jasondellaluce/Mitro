@@ -12,9 +12,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import mitro.controller.ControllerFactory;
+import mitro.controller.log.LoggerMessaggi;
+import mitro.controller.log.LoggerOperazioni;
+import mitro.controller.professore.GestioneClasse;
 import mitro.controller.professore.GestioneProfessore;
 import mitro.deployment.Configurazione;
 import mitro.exceptions.OperazioneException;
+import mitro.model.Classe;
 import mitro.model.Comunicazione;
 import mitro.model.Professore;
 import mitro.model.Ruolo;
@@ -33,8 +37,18 @@ public class ViewComunicazioni extends ViewUtenteAstratta {
 	protected void gestisciRichiestaGet(Utente utente, HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		GestioneProfessore gestioneProfessore = ControllerFactory.getInstance().getGestioneProfessore((Professore) utente);
+		LoggerMessaggi loggerMex= getLoggerMessaggi();
 		
 		try {	
+			
+			String log= "Servlet ViewComunicazione del Professore, parametri: ";
+			String param;
+			while((param=(String) req.getParameterNames().nextElement())!=null) {
+				log+=param+": "+req.getParameter(param)+" ";
+			}
+			
+			loggerMex.scrivi(log);
+			
 			if("disconnetti".equals(req.getParameter("azione"))) {
 				this.eseguiDisconnessione(req, resp);
 				return;
@@ -66,5 +80,14 @@ public class ViewComunicazioni extends ViewUtenteAstratta {
 			throws ServletException, IOException {
 		gestisciRichiestaGet(utente, req, resp);
 	}
+
+	private GestioneClasse getGestioneClasse(Classe classe, HttpServletRequest req, HttpServletResponse resp) {
+		return ControllerFactory.getInstance().getGestioneClasse(classe);
+	}
+	
+	private LoggerMessaggi getLoggerMessaggi() {
+		return ControllerFactory.getInstance().getLoggerMessaggi();
+	}
+	
 
 }
