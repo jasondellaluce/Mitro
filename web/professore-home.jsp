@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <%@ page import="mitro.deployment.Configurazione" %>
+<%@ page import="java.time.*"%>
+<%@ page import="java.util.*"%>
 <!DOCTYPE html>
 <html class=" js flexbox canvas canvastext webgl touch geolocation postmessage no-websqldatabase indexeddb hashchange history draganddrop websockets rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients no-cssreflections csstransforms csstransforms3d csstransitions fontface generatedcontent video audio localstorage sessionstorage webworkers applicationcache svg inlinesvg smil svgclippaths js flexbox canvas canvastext webgl touch geolocation postmessage no-websqldatabase indexeddb hashchange history draganddrop websockets rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients no-cssreflections csstransforms csstransforms3d csstransitions fontface generatedcontent video audio localstorage sessionstorage webworkers applicationcache svg inlinesvg smil svgclippaths" style="" lang="en">
 	<head>
@@ -228,8 +230,21 @@
 								</div> 
 								<div class="compose-email"> 
 									<br>   
+									<%
+									LocalDate date=null;
+									int time=0;
+									if(request.getParameter("selAtt")!=null){
+										StringTokenizer stk= new StringTokenizer(request.getParameter("selAtt"), ";");
+										date = LocalDate.parse(stk.nextToken().trim());
+										time = Integer.parseInt(stk.nextToken().trim());
+									}								
+									 %>
 									<a href='/professore-voti?selAtt=<%= request.getParameter("selAtt") %>'> 
-										<button type='submit' class="btn btn-custon-rounded-three btn-default" style="width:100%;" <%= (request.getParameter("selAtt") != null) ? "" : "disabled" %>>Registra voti</button>
+										<button type='submit' class="btn btn-custon-rounded-three btn-default" style="width:100%;" <%=									
+										( date!=null && time!=0 && 
+										( date.isAfter(LocalDate.now(Configurazione.getInstance().getZoneId())) ||
+										( date.isEqual(LocalDate.now(Configurazione.getInstance().getZoneId())) && 
+										  time >= LocalDateTime.now(Configurazione.getInstance().getZoneId()).getHour()) )==false ) ? "" : "disabled" %>>Registra voti</button>
 									</a>
 								</div>
 							</div>

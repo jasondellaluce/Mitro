@@ -16,10 +16,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import mitro.controller.ControllerFactory;
 import mitro.controller.log.LoggerMessaggi;
-import mitro.controller.log.LoggerOperazioni;
 import mitro.controller.professore.GestioneClasse;
 import mitro.controller.professore.GestioneProfessore;
-import mitro.controller.professore.GestioneProfessoreController;
 import mitro.deployment.Configurazione;
 import mitro.exceptions.OperazioneException;
 import mitro.model.Attivita;
