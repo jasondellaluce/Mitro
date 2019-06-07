@@ -48,7 +48,7 @@ public class ViewRegistrazionePresenze extends ViewUtenteAstratta {
 			String log= LocalDateTime.now(Configurazione.getInstance().getZoneId()) + ", "
 					+ utente.getId() + ", "
 					+ ((Professore)utente).getNome()+" "+((Professore)utente).getCognome()
-					+ "ViewRegistrazionePresenze,get ";
+					+ " - ViewRegistrazionePresenze,get ";
 			Enumeration parametri=req.getParameterNames();
 			while(parametri.hasMoreElements()) {
 				String param=(String)parametri.nextElement();
@@ -115,7 +115,7 @@ public class ViewRegistrazionePresenze extends ViewUtenteAstratta {
 			String log= LocalDateTime.now(Configurazione.getInstance().getZoneId()) + ", "
 					+ utente.getId() + ", "
 					+ ((Professore)utente).getNome()+" "+((Professore)utente).getCognome()
-					+ "ViewRegistrazionePresenze,post ";
+					+ " - ViewRegistrazionePresenze,post ";
 			Enumeration parametri=req.getParameterNames();
 			while(parametri.hasMoreElements()) {
 				String param=(String)parametri.nextElement();

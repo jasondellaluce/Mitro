@@ -222,15 +222,7 @@
 										</div> 
 									</div>  
 								</form>
-								<div class="compose-email"> 
-									<br>
-									<a href='/professore-appello?selAtt=<%= request.getParameter("selAtt") %>'> 
-										<button type='submit' class="btn btn-custon-rounded-three btn-default" style="width:100%;" <%= (request.getParameter("selAtt") != null) ? "" : "disabled" %>>Inserisci appello</button>
-									</a>
-								</div> 
-								<div class="compose-email"> 
-									<br>   
-									<%
+								<%
 									LocalDate date=null;
 									int time=0;
 									if(request.getParameter("selAtt")!=null){
@@ -238,7 +230,19 @@
 										date = LocalDate.parse(stk.nextToken().trim());
 										time = Integer.parseInt(stk.nextToken().trim());
 									}								
-									 %>
+								%>
+								<div class="compose-email"> 
+									<br>
+									<a href='/professore-appello?selAtt=<%= request.getParameter("selAtt") %>'> 
+										<button type='submit' class="btn btn-custon-rounded-three btn-default" style="width:100%;" <%= 
+												( date!=null && time!=0 && 
+												( date.isAfter(LocalDate.now(Configurazione.getInstance().getZoneId())) ||
+												( date.isEqual(LocalDate.now(Configurazione.getInstance().getZoneId())) && 
+												  time >= LocalDateTime.now(Configurazione.getInstance().getZoneId()).getHour()) )==false ) ? "" : "disabled" %>>Inserisci appello</button>
+									</a>
+								</div> 
+								<div class="compose-email"> 
+									<br>   
 									<a href='/professore-voti?selAtt=<%= request.getParameter("selAtt") %>'> 
 										<button type='submit' class="btn btn-custon-rounded-three btn-default" style="width:100%;" <%=									
 										( date!=null && time!=0 && 

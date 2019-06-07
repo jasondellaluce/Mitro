@@ -99,7 +99,7 @@ public class InizializzaDatabaseCompleto extends ViewAstratta {
 		c3.setAnnoScolastico("18/19");
 		c3.setDescrizione("Terza A Tradizionale");
 		daoClasse.registraClasse(c3);
-		classi.add(c3);
+		//classi.add(c3);
 		
 		Classe c4 = new Classe();
 		c4.setNome("4A");
@@ -161,25 +161,13 @@ public class InizializzaDatabaseCompleto extends ViewAstratta {
 		
 		/*Popolamento classe c1*/
 		
-		for(int i=0;i<10;i++) {
+		for(int i=0;i<6;i++) {
 			String nome=nomi.get(random.nextInt(10));
 			String cognome=cognomi.get(random.nextInt(10));
 			Studente studente= new Studente();
 			studente.setNome(nome);
 			studente.setCognome(cognome);
 			studente.setClasse(c1);
-			daoUtente.registraUtente(studente);
-			daoUtente.inserisciCredenziali(studente, "stud-"+studente.getId(), "password");
-			studenti.add(studente);
-		}
-		/*Popolamento classe c3*/		
-		for(int i=0;i<10;i++) {
-			String nome=nomi.get(random.nextInt(10));
-			String cognome=cognomi.get(random.nextInt(10));
-			Studente studente= new Studente();
-			studente.setNome(nome);
-			studente.setCognome(cognome);
-			studente.setClasse(c3);
 			daoUtente.registraUtente(studente);
 			daoUtente.inserisciCredenziali(studente, "stud-"+studente.getId(), "password");
 			studenti.add(studente);
@@ -209,7 +197,7 @@ public class InizializzaDatabaseCompleto extends ViewAstratta {
 		Studente stud2 = new Studente();
 		stud2.setNome("Federico");
 		stud2.setCognome("Baldini");
-		stud2.setClasse(c3);
+		stud2.setClasse(c1);
 		daoUtente.registraUtente(stud2);
 		daoUtente.inserisciCredenziali(stud2, "stud2", "password");
 		studenti.add(stud2);
@@ -225,7 +213,7 @@ public class InizializzaDatabaseCompleto extends ViewAstratta {
 		/*Professori*/
 		ArrayList<Professore> professori = new ArrayList<Professore>();
 		
-		for(int i=0;i<6;i++) {
+		for(int i=0;i<3;i++) {
 			String nome=nomi.get(random.nextInt(10));
 			String cognome=cognomi.get(random.nextInt(10));			
 			Professore professore= new Professore();
@@ -283,22 +271,12 @@ public class InizializzaDatabaseCompleto extends ViewAstratta {
 		materie.add(materia);
 		
 		materia= new Materia();
-		materia.setNome("Scienze");
+		materia.setNome("Informatica");
 		materia.setDescrizione("Scienze liceo tradizionale");
 		materie.add(materia);
 		
-		materia= new Materia();
-		materia.setNome("Italiano");
-		materia.setDescrizione("Italiano liceo tradizionale");
-		materie.add(materia);
-		
-		materia= new Materia();
-		materia.setNome("Storia e Filosofia");
-		materia.setDescrizione("Storia e Filosofia liceo tradizionale");
-		materie.add(materia);
 		
 		int sizeMaterie= materie.size();
-		int sizeClassi= classi.size();
 		int sizeProfessori=professori.size();
 		
 		/* Attivita */
@@ -347,7 +325,7 @@ public class InizializzaDatabaseCompleto extends ViewAstratta {
 					att.setClasse(classe);
 					att.setOraInizio(j);
 					att.setMateria(materie.get(random.nextInt(sizeMaterie)));
-					for(int k = 0; k < 6; k++) {
+					for(int k = 0; k < 4; k++) {
 						att.setData(startDate.plusDays(i).plusWeeks(k));
 						daoAttivita.registraAttivita(att);
 						for(Studente stud: studenti.stream().filter(o -> o.getClasse().equals(classe)).collect(Collectors.toList())) {

@@ -139,7 +139,7 @@
 								<div class="sparkline16-list shadow-reset mg-t-30">
 									<div class="sparkline16-hd">
 										<div class="main-sparkline9-hd">
-											<h1>Comunicazini ricevute</h1>
+											<h1>Comunicazioni ricevute</h1>
 										</div>
 									</div>
 									<div class="sparkline16-graph" style="height:50px;" >

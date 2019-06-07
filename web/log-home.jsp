@@ -150,7 +150,7 @@
 										</div>
 										<div class="col-lg-4">
 											<span></span>
-											<button type='submit' class="btn btn-custon-rounded-three btn-default" style="width:100%;height:60px" >Avvia ricerca Log</button>
+											<button type='submit' class="btn btn-custon-rounded-three btn-default" style="width:100%;height:60px" >Avvia ricerca</button>
 										</div>
 									</form> 
 								</div>
@@ -214,7 +214,7 @@
 										</div>
 										<div class="col-lg-4">
 											<span></span>
-											<button type='submit' class="btn btn-custon-rounded-three btn-default" style="width:100%;height:60px" >Avvia analisi Log</button>
+											<button type='submit' class="btn btn-custon-rounded-three btn-default" style="width:100%;height:60px" >Avvia analisi</button>
 										</div>
 									</form> 
 								</div>

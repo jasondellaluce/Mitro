@@ -48,7 +48,7 @@ public class HomeProfessore extends ViewUtenteAstratta {
 			String log= LocalDateTime.now(Configurazione.getInstance().getZoneId()) + ", "
 					+ utente.getId() + ", "
 					+ ((Professore)utente).getNome()+" "+((Professore)utente).getCognome()
-					+ "HomeStudente,get ";
+					+ " - HomeStudente,get ";
 			Enumeration parametri=req.getParameterNames();
 			while(parametri.hasMoreElements()) {
 				String param=(String)parametri.nextElement();
@@ -111,7 +111,7 @@ public class HomeProfessore extends ViewUtenteAstratta {
 			String log= LocalDateTime.now(Configurazione.getInstance().getZoneId()) + ", "
 					+ utente.getId() + ", "
 					+ ((Professore)utente).getNome()+" "+((Professore)utente).getCognome()
-					+ "HomeStudente,post ";
+					+ " - HomeStudente,post ";
 			Enumeration parametri=req.getParameterNames();
 			while(parametri.hasMoreElements()) {
 				String param=(String)parametri.nextElement();

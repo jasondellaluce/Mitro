@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Comparator;
+import java.util.Enumeration;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -12,7 +13,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import mitro.controller.ControllerFactory;
 import mitro.controller.log.GestioneLog;
+import mitro.controller.log.LoggerMessaggi;
 import mitro.deployment.Configurazione;
+import mitro.model.Professore;
 import mitro.model.Ruolo;
 import mitro.model.Utente;
 import mitro.model.VoceLog;
@@ -30,7 +33,19 @@ public class HomeLog extends ViewUtenteAstratta {
 	protected void gestisciRichiestaGet(Utente utente, HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		int richiesta = 0;
+		LoggerMessaggi loggerMex= getLoggerMessaggi();
 		try {
+			String log= LocalDateTime.now(Configurazione.getInstance().getZoneId()) + ", "
+					+ utente.getId() + ", "
+					+ "GESTORE"
+					+ " - ViewRegistrazioneVoti,get ";
+			Enumeration parametri=req.getParameterNames();
+			while(parametri.hasMoreElements()) {
+				String param=(String)parametri.nextElement();
+				log+= param+": "+req.getParameter(param)+" ";
+			}
+			
+			loggerMex.scrivi(log);
 			if("disconnetti".equals(req.getParameter("azione"))) {
 				this.eseguiDisconnessione(req, resp);
 				return;
@@ -92,5 +107,7 @@ public class HomeLog extends ViewUtenteAstratta {
 			throws ServletException, IOException {
 		gestisciRichiestaGet(utente, req, resp);		
 	}
-
+	private LoggerMessaggi getLoggerMessaggi() {
+		return ControllerFactory.getInstance().getLoggerMessaggi();
+	}
 }

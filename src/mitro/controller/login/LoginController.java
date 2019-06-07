@@ -26,11 +26,13 @@ public class LoginController extends ControllerAstratto implements Login{
 
 	@Override
 	public boolean autentica(String username, String password) throws OperazioneException {
+		String cifrata="";
+		for(int i=0;i<password.length();i++) cifrata+="*";
 		if(utenteAutenticato != null)
-			this.eseguiLogOperazione(utenteAutenticato, "autentica, " + username + ", " + password);
-		else
-			this.eseguiLogOperazione("autentica, " + username + ", " + password);
-		
+			this.eseguiLogOperazione(utenteAutenticato, "autentica, " + username + ", " + cifrata);
+		else			
+			this.eseguiLogOperazione("autentica, " + username + ", " + cifrata);
+					
 		if(username == null || username.length() == 0)
 			throw new IllegalArgumentException("username");
 		if(password == null || password.length() == 0)

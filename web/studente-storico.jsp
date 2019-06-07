@@ -126,7 +126,7 @@
 												<ul>
 													<li>La tua media è: <%if((double)request.getAttribute("media") > 0){%>
 													<%= request.getAttribute("media") %>
-													<%}else {%> </br>"Non hai ancora nessun voto :)"<%} %></li>
+													<%}else {%> </br>Non hai ancora nessun voto :)<%} %></li>
 												</ul>
 											</div>
 										</div>

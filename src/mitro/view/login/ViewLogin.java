@@ -1,13 +1,17 @@
 package mitro.view.login;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.util.Enumeration;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import mitro.controller.ControllerFactory;
+import mitro.controller.log.LoggerMessaggi;
 import mitro.controller.login.Login;
+import mitro.deployment.Configurazione;
 import mitro.exceptions.OperazioneException;
 import mitro.exceptions.UtenteGiaAutenticatoException;
 import mitro.exceptions.UtenteNonRegistratoException;
@@ -95,5 +99,4 @@ public class ViewLogin extends ViewAstratta {
 		}
 		return false;
 	}
-
 }

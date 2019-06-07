@@ -47,7 +47,7 @@ public class ViewRegistrazioneVoti extends ViewUtenteAstratta {
 			String log= LocalDateTime.now(Configurazione.getInstance().getZoneId()) + ", "
 					+ utente.getId() + ", "
 					+ ((Professore)utente).getNome()+" "+((Professore)utente).getCognome()
-					+ "ViewRegistrazioneVoti,get ";
+					+ " - ViewRegistrazioneVoti,get ";
 			Enumeration parametri=req.getParameterNames();
 			while(parametri.hasMoreElements()) {
 				String param=(String)parametri.nextElement();
@@ -115,7 +115,7 @@ public class ViewRegistrazioneVoti extends ViewUtenteAstratta {
 			String log= LocalDateTime.now(Configurazione.getInstance().getZoneId()) + ", "
 					+ utente.getId() + ", "
 					+ ((Professore)utente).getNome()+" "+((Professore)utente).getCognome()
-					+ "ViewRegistrazioneVoti,post ";
+					+ " - ViewRegistrazioneVoti,post ";
 			Enumeration parametri=req.getParameterNames();
 			while(parametri.hasMoreElements()) {
 				String param=(String)parametri.nextElement();
