@@ -64,6 +64,13 @@ public class HomeStudente extends ViewUtenteAstratta {
 			LocalDate inizioSett = LocalDate.now(Configurazione.getInstance().getZoneId()).with(DayOfWeek.MONDAY);
 			if(req.getParameter("inizioSett") != null)
 				inizioSett = LocalDate.parse(req.getParameter("inizioSett"));
+			
+			if(req.getParameter("selAtt") != null) {
+				StringTokenizer stk = new StringTokenizer(req.getParameter("selAtt"), ";");
+				LocalDate date = LocalDate.parse(stk.nextToken().trim());
+				inizioSett = date.with(DayOfWeek.MONDAY);
+			}
+			
 			req.setAttribute("inizioSett", inizioSett);
 			req.setAttribute("fineSett", inizioSett.plusDays(6));
 			req.setAttribute("prossimaSett", URLEncoder.encode(inizioSett.plusDays(7).toString(), "UTF-8"));
