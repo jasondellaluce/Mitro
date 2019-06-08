@@ -173,7 +173,7 @@ public class InizializzaDatabaseCompleto extends ViewAstratta {
 			studenti.add(studente);
 		}
 		/*Popolamento classe c5*/
-		for(int i=0;i<10;i++) {
+		for(int i=0;i<6;i++) {
 			String nome=nomi.get(random.nextInt(10));
 			String cognome=cognomi.get(random.nextInt(10));
 			Studente studente= new Studente();
@@ -272,7 +272,7 @@ public class InizializzaDatabaseCompleto extends ViewAstratta {
 		
 		materia= new Materia();
 		materia.setNome("Informatica");
-		materia.setDescrizione("Scienze liceo tradizionale");
+		materia.setDescrizione("Informatica liceo tradizionale");
 		materie.add(materia);
 		
 		
@@ -317,14 +317,22 @@ public class InizializzaDatabaseCompleto extends ViewAstratta {
 					
 			}
 		}*/
+		
+		HashMap<Materia,Professore> mapMatProf= new HashMap<Materia,Professore>();
+		
+		mapMatProf.put(materie.get(0),prof1);
+		mapMatProf.put(materie.get(1),prof2);
+		mapMatProf.put(materie.get(2),professori.get(0));
+		
 		for(Classe classe: classi) {
 			for(int i = 0; i < 6; i++) {
 				for(int j = 8; j <= 12; j++) {
+					int selectMateria=random.nextInt(sizeMaterie);
 					Attivita att = new Attivita();
-					att.setProfessore(professori.get(random.nextInt(sizeProfessori)));
+					att.setProfessore(mapMatProf.get(materie.get(selectMateria)));
 					att.setClasse(classe);
 					att.setOraInizio(j);
-					att.setMateria(materie.get(random.nextInt(sizeMaterie)));
+					att.setMateria(materie.get(selectMateria));
 					for(int k = 0; k < 4; k++) {
 						att.setData(startDate.plusDays(i).plusWeeks(k));
 						daoAttivita.registraAttivita(att);

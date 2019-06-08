@@ -125,7 +125,7 @@
 											<div class="breadcome-heading" style="font-size: 12pt;">
 												<ul>
 													<li>La tua media è: <%if((double)request.getAttribute("media") > 0){%>
-													<%= request.getAttribute("media") %>
+													<%= String.format("%.2f", (double)request.getAttribute("media")) %>
 													<%}else {%> </br>Non hai ancora nessun voto :)<%} %></li>
 												</ul>
 											</div>
@@ -190,7 +190,8 @@
 												<table class="table">
 													<tbody>
 														<tr>
-															<td>Nome Studente</td>
+															<td>Data</td>
+															<td>Ora</td>
 															<td><%= selectVoto ? "Voto" : "Presenza" %></td>
 														</tr>
 														<%	List<? extends Archiviazione> listaArch = (List<? extends Archiviazione>) request.getAttribute("listaArchiviazioni");
@@ -198,7 +199,8 @@
 																for(int i = 0; i < listaArch.size(); i++) {
 														%>
 															<tr>
-																<td><%= listaArch.get(i).getStudente().getNome() + " " + listaArch.get(i).getStudente().getCognome()%></td>
+																<td><%= listaArch.get(i).getAttivita().getData()%></td>
+																<td><%= listaArch.get(i).getAttivita().getOraInizio() - 7 %>°</td>
 																<td><input type="text" disabled value='<%= ((Voto) listaArch.get(i)).getValore() %>'></td>
 															</tr>
 														<%		}
@@ -208,7 +210,8 @@
 																for(int i = 0; i < listaArch.size(); i++) {
 														%>
 															<tr>
-																<td><%= listaArch.get(i).getStudente().getNome() + " " + listaArch.get(i).getStudente().getCognome()%></td>
+																<td><%= listaArch.get(i).getAttivita().getData()%></td>
+																<td><%= listaArch.get(i).getAttivita().getOraInizio() - 7 %>°</td>
 																<td><input type="checkbox" disabled <%= ((Presenza) listaArch.get(i)).isValore() ? "checked" : "" %> ></td>
 															</tr>
 														<%		}

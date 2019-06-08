@@ -92,18 +92,22 @@ public class ViewRegistrazioneUtente extends ViewUtenteAstratta {
 			String nome= req.getParameter("nome");
 			String cognome= req.getParameter("cognome");
 			String email=req.getParameter("email");
-			String telefono=req.getParameter("telefono");
+			int telefono=-1;
+			try{
+				telefono=Integer.parseInt(req.getParameter("telefono"));
+			}
+			catch(NumberFormatException e) {}
 			String residenza=req.getParameter("residenza");
 			String nascita=req.getParameter("nascita");
 			String classe= req.getParameter("classe");
 			
-			if(!ruolo.isEmpty() && !nome.isEmpty() && !cognome.isEmpty() && ruolo!=null && nome!= null && cognome!= null && email!=null && telefono!=null && residenza!=null && nascita!=null) {
+			if(!ruolo.isEmpty() && !nome.isEmpty() && !cognome.isEmpty() && ruolo!=null && nome!= null && cognome!= null && residenza!=null && telefono>0 && nascita!=null) {
 				if(ruolo.equals(""+Ruolo.STUDENTE) && classe!=null) {
 					Studente s= new Studente();
 					s.setNome(nome);
 					s.setCognome(cognome);
 					s.setEmail(email);
-					s.setTelefono(telefono);
+					s.setTelefono(""+telefono);
 					s.setIndirizzoResidenza(residenza);
 					s.setDataNascita(LocalDate.parse(nascita,formatter));
 					AmministrazioneClassi amministrazioneClassi = getAmministrazioneClassi();
@@ -122,7 +126,7 @@ public class ViewRegistrazioneUtente extends ViewUtenteAstratta {
 						p.setNome(nome);
 						p.setCognome(cognome);
 						p.setEmail(email);
-						p.setTelefono(telefono);
+						p.setTelefono(""+telefono);
 						p.setIndirizzoResidenza(residenza);
 						p.setDataNascita(LocalDate.parse(nascita,formatter));
 						amministrazioneIscritti.registraIscritto(p);
