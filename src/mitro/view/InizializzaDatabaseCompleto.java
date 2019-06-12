@@ -245,17 +245,7 @@ public class InizializzaDatabaseCompleto extends ViewAstratta {
 		Utente gestore1 = new Utente();
 		gestore1.setRuolo(Ruolo.GESTORESICUREZZA);	
 		daoUtente.registraUtente(gestore1);
-		daoUtente.inserisciCredenziali(gestore1, "gestore1", "password");
-
-		Utente gestore2 = new Utente();
-		gestore2.setRuolo(Ruolo.GESTORESICUREZZA);	
-		daoUtente.registraUtente(gestore2);
-		daoUtente.inserisciCredenziali(gestore2, "gestore2", "password");
-		
-		Utente gestore3 = new Utente();
-		gestore3.setRuolo(Ruolo.GESTORESICUREZZA);	
-		daoUtente.registraUtente(gestore3);
-		daoUtente.inserisciCredenziali(gestore3, "gestore3", "password");
+		daoUtente.inserisciCredenziali(gestore1, "gestore", "password");
 		
 		/*Materie*/
 		ArrayList<Materia> materie= new ArrayList<Materia>();
