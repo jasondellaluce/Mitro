@@ -36,20 +36,16 @@ public class ViewRegistrazioneComunicazione extends ViewUtenteAstratta {
 	@Override
 	protected void gestisciRichiestaGet(Utente utente, HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-		LoggerMessaggi loggerMex= getLoggerMessaggi();
 		try {
 			
-			String log= LocalDateTime.now(Configurazione.getInstance().getZoneId()) + ", "
-					+ utente.getId() + ", "
-					+ "AMMINISTRATORE"+" - "
-					+ "ViewRegistrazioneComunicazione,get ";
+			String log= "";
 			Enumeration parametri=req.getParameterNames();
 			while(parametri.hasMoreElements()) {
 				String param=(String)parametri.nextElement();
 				log+= param+": "+req.getParameter(param)+" ";
 			}
 			
-			loggerMex.scrivi(log);
+			this.eseguiLogMessaggioInviato(utente,log);
 			
 			AmministrazioneIscritti amministrazioneIscritti= getAmministrazioneIscritti();
 			AmministrazioneClassi amministrazioneClassi = getAmministrazioneClassi();
@@ -79,18 +75,14 @@ public class ViewRegistrazioneComunicazione extends ViewUtenteAstratta {
 	protected void gestisciRichiestaPost(Utente utente, HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		try {
-			LoggerMessaggi loggerMex= getLoggerMessaggi();
-			String log= LocalDateTime.now(Configurazione.getInstance().getZoneId()) + ", "
-					+ utente.getId() + ", "
-					+ "AMMINISTRATORE"+" - "
-					+ "ViewRegistrazioneComunicazione,post ";
+			String log= "";
 			Enumeration parametri=req.getParameterNames();
 			while(parametri.hasMoreElements()) {
 				String param=(String)parametri.nextElement();
 				log+= param+": "+req.getParameter(param)+" ";
 			}
 			
-			loggerMex.scrivi(log);
+			this.eseguiLogMessaggioRicevuto(utente,log);
 			
 			AmministrazioneIscritti amministrazioneIscritti= getAmministrazioneIscritti();
 			AmministrazioneClassi amministrazioneClassi = getAmministrazioneClassi();

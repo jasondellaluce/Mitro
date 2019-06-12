@@ -44,17 +44,14 @@ public class ViewStoricoProfessore extends ViewUtenteAstratta {
 		LoggerMessaggi loggerMex= getLoggerMessaggi();
 		try {
 			
-			String log= LocalDateTime.now(Configurazione.getInstance().getZoneId()) + ", "
-					+ utente.getId() + ", "
-					+ ((Professore)utente).getNome()+" "+((Professore)utente).getCognome()
-					+ " - ViewStoricoProfessore,get ";
+			String log= "";
 			Enumeration parametri=req.getParameterNames();
 			while(parametri.hasMoreElements()) {
 				String param=(String)parametri.nextElement();
 				log+= param+": "+req.getParameter(param)+" ";
 			}
 			
-			loggerMex.scrivi(log);
+			this.eseguiLogMessaggioInviato(utente, log);
 			
 			int selectMateria = -1;
 			int selectStudente = -1;
@@ -124,17 +121,14 @@ public class ViewStoricoProfessore extends ViewUtenteAstratta {
 		
 		LoggerMessaggi loggerMex= getLoggerMessaggi();
 		
-		String log= LocalDateTime.now(Configurazione.getInstance().getZoneId()) + ", "
-				+ utente.getId() + ", "
-				+ ((Professore)utente).getNome()+" "+((Professore)utente).getCognome()
-				+ " - ViewStoricoProfessore,post ";
+		String log= "";
 		Enumeration parametri=req.getParameterNames();
 		while(parametri.hasMoreElements()) {
 			String param=(String)parametri.nextElement();
 			log+= param+": "+req.getParameter(param)+" ";
 		}
 		
-		loggerMex.scrivi(log);
+		this.eseguiLogMessaggioRicevuto(utente, log);
 		
 		int selectMateria = -1;
 		int selectStudente = -1;

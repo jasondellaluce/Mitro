@@ -33,19 +33,16 @@ public class HomeLog extends ViewUtenteAstratta {
 	protected void gestisciRichiestaGet(Utente utente, HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		int richiesta = 0;
-		LoggerMessaggi loggerMex= getLoggerMessaggi();
 		try {
-			String log= LocalDateTime.now(Configurazione.getInstance().getZoneId()) + ", "
-					+ utente.getId() + ", "
-					+ "GESTORE"
-					+ " - ViewRegistrazioneVoti,get ";
+			String log= "";
 			Enumeration parametri=req.getParameterNames();
 			while(parametri.hasMoreElements()) {
 				String param=(String)parametri.nextElement();
 				log+= param+": "+req.getParameter(param)+" ";
 			}
 			
-			loggerMex.scrivi(log);
+			this.eseguiLogMessaggioInviato(utente,log);
+			
 			if("disconnetti".equals(req.getParameter("azione"))) {
 				this.eseguiDisconnessione(req, resp);
 				return;

@@ -40,20 +40,15 @@ public class ViewStoricoStudente extends ViewUtenteAstratta {
 	@Override
 	protected void gestisciRichiestaGet(Utente utente, HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-		LoggerMessaggi loggerMex= getLoggerMessaggi();
 		try {
-			
-			String log= LocalDateTime.now(Configurazione.getInstance().getZoneId()) + ", "
-					+ utente.getId() + ", "
-					+ ((Studente)utente).getNome()+" "+((Studente)utente).getCognome()
-					+ "ViewStoricoStudente,get ";
+			String log="";
 			Enumeration parametri=req.getParameterNames();
 			while(parametri.hasMoreElements()) {
 				String param=(String)parametri.nextElement();
 				log+= param+": "+req.getParameter(param)+" ";
 			}
 			
-			loggerMex.scrivi(log);
+			this.eseguiLogMessaggioInviato(utente, log);
 		
 			int selectMateria = -1;
 			boolean selectVoto = true;
@@ -115,15 +110,14 @@ public class ViewStoricoStudente extends ViewUtenteAstratta {
 	@Override
 	protected void gestisciRichiestaPost(Utente utente, HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-		LoggerMessaggi loggerMex= getLoggerMessaggi();
-		String log= "Servlet ViewStoricoStudente di Studente di utente:"+((Studente)utente).getNome()+" metodo post, parametri: ";
+		String log= "";
 		Enumeration parametri=req.getParameterNames();
 		while(parametri.hasMoreElements()) {
 			String param=(String)parametri.nextElement();
 			log+= param+": "+req.getParameter(param)+" ";
 		}
 		
-		loggerMex.scrivi(log);
+		this.eseguiLogMessaggioRicevuto(utente, log);
 		int selectMateria = -1;
 		boolean selectVoto = true;
 		String selectedMateria = req.getParameter("selectionMaterie");

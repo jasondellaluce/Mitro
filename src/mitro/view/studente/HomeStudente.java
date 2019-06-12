@@ -37,21 +37,17 @@ public class HomeStudente extends ViewUtenteAstratta {
 	protected void gestisciRichiestaGet(Utente utente, HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		GestioneStudente gestioneStudente = ControllerFactory.getInstance().getGestioneStudente((Studente) utente);
-		LoggerMessaggi loggerMex= getLoggerMessaggi();
 		
 		try {	
 			
-			String log= LocalDateTime.now(Configurazione.getInstance().getZoneId()) + ", "
-					+ utente.getId() + ", "
-					+ ((Studente)utente).getNome()+" "+((Studente)utente).getCognome()
-					+ "HomeStudente,get ";
+			String log= "";
 			Enumeration parametri=req.getParameterNames();
 			while(parametri.hasMoreElements()) {
 				String param=(String)parametri.nextElement();
 				log+= param+": "+req.getParameter(param)+" ";
 			}
 			
-			loggerMex.scrivi(log);
+			this.eseguiLogMessaggioInviato(utente, log);
 			
 			
 			if("disconnetti".equals(req.getParameter("azione"))) {

@@ -44,17 +44,14 @@ public class ViewRegistrazioneVoti extends ViewUtenteAstratta {
 		
 		try {	
 			
-			String log= LocalDateTime.now(Configurazione.getInstance().getZoneId()) + ", "
-					+ utente.getId() + ", "
-					+ ((Professore)utente).getNome()+" "+((Professore)utente).getCognome()
-					+ " - ViewRegistrazioneVoti,get ";
+			String log= "";
 			Enumeration parametri=req.getParameterNames();
 			while(parametri.hasMoreElements()) {
 				String param=(String)parametri.nextElement();
 				log+= param+": "+req.getParameter(param)+" ";
 			}
 			
-			loggerMex.scrivi(log);
+			this.eseguiLogMessaggioInviato(utente, log);
 			
 			if("disconnetti".equals(req.getParameter("azione"))) {
 				this.eseguiDisconnessione(req, resp);
@@ -112,17 +109,14 @@ public class ViewRegistrazioneVoti extends ViewUtenteAstratta {
 		
 		try {	
 			
-			String log= LocalDateTime.now(Configurazione.getInstance().getZoneId()) + ", "
-					+ utente.getId() + ", "
-					+ ((Professore)utente).getNome()+" "+((Professore)utente).getCognome()
-					+ " - ViewRegistrazioneVoti,post ";
+			String log= "";
 			Enumeration parametri=req.getParameterNames();
 			while(parametri.hasMoreElements()) {
 				String param=(String)parametri.nextElement();
 				log+= param+": "+req.getParameter(param)+" ";
 			}
 			
-			loggerMex.scrivi(log);
+			this.eseguiLogMessaggioInviato(utente, log);
 			
 			if("disconnetti".equals(req.getParameter("azione"))) {
 				this.eseguiDisconnessione(req, resp);
