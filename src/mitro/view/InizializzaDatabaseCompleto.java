@@ -327,7 +327,7 @@ public class InizializzaDatabaseCompleto extends ViewAstratta {
 						att.setData(startDate.plusDays(i).plusWeeks(k));
 						daoAttivita.registraAttivita(att);
 						for(Studente stud: studenti.stream().filter(o -> o.getClasse().equals(classe)).collect(Collectors.toList())) {
-							if(att.getData().isBefore(LocalDate.now(Configurazione.getInstance().getZoneId()))) {
+							if(att.getData().isBefore(LocalDate.now(Configurazione.getInstance().getZoneId()).minusDays(1))) {
 								Presenza presenza= new Presenza();
 								presenza.setValore(random.nextBoolean());
 								presenza.setStudente(stud);
